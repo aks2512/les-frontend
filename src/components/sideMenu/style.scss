@@ -1,0 +1,23 @@
+@import '../../styles/global/variables.scss';
+
+.side-menu {
+    nav {
+        ul {
+            list-style: none;
+
+            li {
+                border-bottom: 1px solid $backgroundColor;
+                
+                &:first-child {
+                    border-top: 1px solid $backgroundColor;
+                }
+
+                a {
+                    padding-left: 20px;
+                    text-decoration: none;
+                    color: $textColor2;
+                }
+            }
+        }
+    }
+}

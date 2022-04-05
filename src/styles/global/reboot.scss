@@ -1,0 +1,58 @@
+@import 'variables';
+
+html, body {
+    font-family: Montserrat, sans-serif;
+    width: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+}
+
+main {
+    background-color: $backgroundColor3;
+
+    &.admin {
+        background-color: $backgroundColor6;
+    }
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    color: $textColor;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+h1, h4 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -0.6px;
+}
+
+h1 {
+    color: $textColor2;
+    margin-bottom: 31px;
+}
+
+
+h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    color: $textColor;
+}

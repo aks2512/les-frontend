@@ -1,0 +1,125 @@
+@import '../../styles/global/variables.scss';
+
+.carrinho-produtos {
+
+    .produtos {
+        padding: 5px;
+        height: 492px;
+        overflow-y: auto;
+        
+        @media (min-width: 565px) {
+            height: 310px;
+        }
+
+        .carrinho-produto {
+            position: relative;
+            width: 90%;
+    
+            + .carrinho-produto {
+                margin-top: 5px;
+            }
+    
+            .remove-produto {
+                all: unset;
+                cursor: pointer;
+                position: absolute;
+                top: 5px;
+                left: 95%;
+                padding: 0 10px;
+                background-color: red;
+                color: $backgroundColor4;
+                border-radius: 5px;
+                z-index: 1;
+            }
+    
+            .body {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                height: 492px;
+                border-bottom: 1px solid $borderColor5;
+                padding: 5px;
+
+                @media (min-width: 565px) {
+                    flex-direction: row;
+                    align-items: flex-end;
+                    justify-content: space-between;
+                    height: 150px;
+                }
+    
+                .image {
+        
+                    img {
+                        width: 100%;
+
+                        @media (min-width: 565px) {
+                            width: 125px;
+                        }
+                    }
+                }
+        
+                .content {
+                    padding: 20px 0;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+        
+                    .amount {
+                        width: 150px;
+                        position: relative;
+                        display: flex;
+                        align-self: center;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 20px 0;
+                        
+                        input {
+                            width: 50px;
+                        }
+                        
+                        .add, .remove {
+                            all: unset;
+                            cursor: pointer;
+                            width: 30px;
+                            height: 30px;
+                            color: $textColor3;
+                            transition: 1s;
+                            margin: 2px;
+                            border-radius: 5px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+        
+                            &:hover {
+                                background-color: $backgroundColor;
+                                color: $textColor2;
+                            }
+                        }
+                        
+                    }
+                }
+        
+                .price {
+
+                    p {
+                        font-weight: bold;
+                    }
+                }
+            }
+    
+    
+        }
+    }
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90%;
+    
+    p {
+        width: 75px;
+    }
+}

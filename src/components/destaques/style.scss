@@ -1,0 +1,41 @@
+@import '../../styles/global/variables.scss';
+
+.destaques {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 88px;
+
+    @media (min-width: 992px) {
+        justify-content: space-between;
+    }
+
+    .destaque {
+        position: relative;
+        margin: 5px;
+
+        img {
+            width: 100%;
+        }
+
+        p, a {
+            position: absolute;
+            left: 10px;
+            color: $textColor2;
+            text-decoration: none;
+        }
+
+        p {
+            top: 10px;
+        }
+
+        a {
+            bottom: 10px;
+            font-weight: bold;
+            padding: 10px 30px;
+            border-radius: 5px;
+            border: 1px solid $borderColor3;
+        }
+
+    }
+}

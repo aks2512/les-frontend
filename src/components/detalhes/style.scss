@@ -1,0 +1,94 @@
+@import '../../styles/global/variables.scss';
+
+.produto-detalhes {
+    background-color: $backgroundColor4;
+    padding: 35px 60px;
+    margin-bottom: 55px;
+
+    .titulo {
+        margin-bottom: 59px;
+    }
+
+    .preco {
+        margin-bottom: 38px;
+    }
+
+    .produto-img {
+        margin-bottom: 20px;
+        img {
+            width: 100%;
+        }
+    }
+
+    .stars {
+        margin-top: 37px;
+        margin-bottom: 30px;
+        display: flex;
+
+        .star {
+
+            + .star {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .buy {
+        all: unset;
+        cursor: pointer;
+        background-color: $backgroundColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 223px;
+        height: 65px;
+        color: $textColor2;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        margin-bottom: 18px;
+    }
+
+    .information {
+        width: 100%;
+        margin-bottom: 30px;
+
+        div {
+
+            &.even {
+                div:nth-child(even) {
+                    background-color: $backgroundColor4;
+                }
+            }
+
+            div {
+                display: flex;
+                background-color: $backgroundColor2;
+                padding: 12px 15px;
+                margin: 0;
+
+                p {
+                    width: 50%;
+                    margin: 0;
+
+                    &:nth-child(2) {
+                        margin-left: 80px;
+                    }
+                }
+            }
+        }
+    }
+
+    .descricao {
+        margin-bottom: 23px;
+
+        p {
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 15px;
+            margin: 0;
+        }
+    }
+}

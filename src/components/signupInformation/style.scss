@@ -1,0 +1,48 @@
+@import '../../styles/global/variables.scss';
+
+.signup-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 23px;
+
+    h3 {
+        color: $textColor2;
+        margin-bottom: 68px;
+    }
+
+    .content {
+        margin-bottom: 35px;
+
+        p {
+            text-align: center;
+            color: $textColor2;
+            margin-bottom: 32px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 14px 80px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 20px;
+            color: $textColor2;
+            margin: auto;
+            background-color: $backgroundColor;
+            border-radius: 5px;
+        }
+
+    }
+
+    .disclaimer {
+        p {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 15px;
+            color: $textColor2;
+        }
+    }
+}

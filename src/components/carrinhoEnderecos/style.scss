@@ -1,0 +1,41 @@
+@import '../../styles/global/variables.scss';
+
+.carrinho-enderecos {
+    .enderecos {
+        height: 140px;
+        overflow-y: auto;
+
+        .carrinho-endereco {
+            cursor: pointer;
+            display: flex;
+            padding: 1px;
+            transition: 1s;
+
+            &.active {
+                border: 1px solid $backgroundColor;
+            }
+            
+            + .carrinho-endereco {
+                margin-top: 10px;
+            }
+    
+            .content {
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .novo-endereco {
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+
+        a {
+            color: $textColor3;
+            text-decoration: none;
+        }
+    }
+
+}

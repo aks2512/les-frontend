@@ -1,0 +1,109 @@
+@import '../../styles/global/variables';
+
+.footer {
+    margin-top: auto; 
+    background-color: $backgroundColor3;
+
+    .container {
+        width: 100%;
+
+        .top {
+            padding-top: 93px;
+            padding-bottom: 42px;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid $borderColor2;
+
+            @media (min-width: 992px) {
+                flex-direction: row;
+            }
+
+            .column {
+                width: 100%;
+                padding: 0 10px;
+
+                @media (min-width: 992px) {
+                    width: 25%;
+                }
+    
+                .logo {
+                    text-align: center;
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    @media (min-width: 992px) {
+                        text-align: start;
+                    }
+                }
+    
+                .redes-sociais {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    border: 1px solid $backgroundColor2;
+                    border-radius: 5px;
+    
+                    li {
+                        color: $textColor2;
+                    }
+                }
+    
+                .formas-de-pagamento {
+                    span {
+                        color: $textColor2;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 12px;
+                        line-height: 15px;
+                    }
+    
+                    ul {
+                        display: flex;
+    
+                        li {
+                            + li {
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                }
+    
+                .sobre, .razao-social {
+                    margin-bottom: 20px;
+                    span {
+                        color: $textColor2;
+                    }
+                }
+            }
+        }
+
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 56px;
+
+            @media (min-width: 992px) {
+                flex-direction: row;
+            }
+
+            p {
+                width: max-content;
+                color: $textColor2;
+
+                .autor {
+                    color: $textColor3;
+                }
+
+                + p {
+                    @media (min-width: 992px) {
+                        margin-left: 52px;
+                    }
+                }
+            }
+        }
+    }
+}

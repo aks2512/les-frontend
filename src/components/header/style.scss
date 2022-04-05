@@ -1,0 +1,246 @@
+@import '../../styles/global/variables';
+
+.header {
+    .top {
+        display: flex;
+        align-items: center;
+        height: auto;
+        border-bottom: 5px solid $backgroundColor;
+        margin-top: 10px;
+        
+        @media (min-width: 992px) {
+            height: 123px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+
+            @media (min-width: 992px) {
+                flex-direction: row;
+            }
+
+            .logo {
+                text-decoration: none;
+                padding: 10px;
+            
+                @media (min-width: 992px) {
+                    margin-right: 100px;        
+                }
+
+                img {
+                    width: 129px;
+                }
+            }
+            
+            .menuTop {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 20px; 
+                
+                @media (min-width: 992px) {
+                    flex-wrap: unset;
+                    justify-content: unset;
+                }
+    
+                .search {
+                    max-width: 466px;
+                    width: 100%;
+                    max-width: 466px;
+                    height: 56px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: $backgroundColor2;
+                    border: 1px solid $borderColor;
+                    box-sizing: border-box;
+                    border-radius: 10px;
+                    padding: 18px 10px;
+                    margin-bottom: 20px;
+        
+                    input {
+                        all: unset;
+                        padding-left: 30px;
+                    }
+
+                    label {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 56px;
+                    }
+                    
+                }
+
+                .menuToggle {
+                    display: block;
+
+                    @media (min-width: 992px) {
+                        display: none!important;
+                    }
+                }
+        
+                .login, .cart, .menuToggle {
+                    cursor: pointer;
+                    text-decoration: none;
+                    width: 54px;
+                    height: 54px;
+                    display: flex;
+                    border: 1px solid $borderColor;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    margin-left: 20px;
+
+                    @media (min-width: 992px) {
+                        width: 162px;
+                    }
+        
+                    .content {
+                        display: none;
+                        @media(min-width: 992px) {
+                            display: block;
+                            width: 101px;
+                            padding: 11px 8px;
+            
+                            * {
+                                font-style: normal;
+                                font-size: 12px;
+                                line-height: 15px;
+                            }
+                        }
+                    }
+        
+                    .image {
+                        width: 52px;
+                        background-color: $backgroundColor;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 15px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .bottom {
+        .container {
+            .primary-menu {
+                display: none;
+                align-items: center;
+
+                @media (min-width: 992px) {
+                    display: flex;
+                }
+
+                &.active {
+                    display: block;
+                }
+                
+                > li {
+                    position: relative;
+                    width: 30%;
+                    text-align: center;
+                    z-index: 1;
+
+                    @media (min-width: 992px) {
+                        width: 25%;
+                    }
+                    
+                    > p {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 58px;
+                        text-transform: uppercase;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 12px;
+                        line-height: 15px;
+                        margin: 0;
+                    }
+                    
+                    > .sub-menu {
+                        display: none;
+                        position: absolute;
+                        top: 0;
+                        left: 100%;
+                        width: 180px;
+                        height: auto;
+                        padding: 13px 10px 13px 40px;
+
+                        @media (min-width: 992px) {
+                            left: unset;
+                            top: unset;
+                            width: 100%;
+                            min-height: 257px;
+                        }
+                        
+
+                        li {
+                            text-align: left;
+
+                            a {
+                                text-decoration: none;
+                                text-transform: uppercase;
+                                color: $textColor2;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+
+                    &:hover {
+
+                        p {
+                            color: $textColor2;
+                        }
+
+                        .sub-menu {
+                            display: block; 
+                        }
+
+                        &.playstation {
+                            background-color: $playstation;
+    
+                            .sub-menu {
+                                background: $linearPlaystation;
+                            }
+                        }
+
+                        &.xbox {
+                            background-color: $xbox;
+    
+                            .sub-menu {
+                                background: $linearXbox;
+                            }
+                        }
+
+                        &.nintendo {
+                            background-color: $nintendo;
+    
+                            .sub-menu {
+                                background: $linearNintendo;
+                            }
+                        }
+
+                        &.pc {
+                            background-color: $pc;
+    
+                            .sub-menu {
+                                background: $linearPc;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

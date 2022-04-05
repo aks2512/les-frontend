@@ -1,0 +1,88 @@
+@import '../../styles/global/variables.scss';
+
+.admin-listagem {
+    padding: 0 60px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .crud {
+        background-color: $backgroundColor2;
+        padding: 25px 20px;
+        width: 100%;
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            background-color: $backgroundColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 25px;
+            color: $textColor2;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 15px;
+            margin-bottom: 18px;
+        }
+
+        button {
+            all: unset;
+            cursor: pointer;
+            text-decoration: none;
+            background-color: $backgroundColor3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 25px;
+            color: $textColor2;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 15px;
+            margin-bottom: 18px;
+        }
+
+        fieldset {
+            display: flex;
+
+            input {
+                all: unset;
+                width: 60%;
+                height: 25px;
+                background-color: $backgroundColor4;
+            }
+
+            button {
+                margin-left: 10px;
+            }
+            
+        }
+
+        table {
+            width: 100%;
+
+            tbody {
+                tr {
+                    display: flex;
+                    align-items: center;
+
+                    td {
+                        &:first-child {
+                            width: 80%;
+                        }
+
+                        a, button {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

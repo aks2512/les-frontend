@@ -1,0 +1,132 @@
+@import '../../styles/global/variables.scss';
+
+.custom-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(180deg, #25262C 0%, rgba(82, 83, 88, 0.12) 100%);
+    border: 2px solid $backgroundColor;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 50px;
+
+    h3 {
+        color: $textColor2;
+        margin-bottom: 33px;
+        text-align: center;
+    }
+
+    .group {
+        width: 100%;
+        padding-bottom: 120px;
+
+        .title {
+            display: flex;
+            align-items: center;
+
+            img {
+                margin-right: 10px;
+            }
+
+            h4 {
+                color: $textColor2;
+                margin: 0;
+            }
+        }
+
+
+        fieldset {
+            width: 90%;
+            margin-bottom: 26px;
+
+            &.p10 {
+                width: 10%;
+            }
+
+            &.p20 {
+                width: 20%;
+            }
+
+            &.p30 {
+                width: 30%;
+            }
+
+            &.p40 {
+                width: 40%;
+            }
+
+            &.p50 {
+                width: 100%;
+                
+                @media (min-width: 768px) {
+                    width: 50%;
+                }
+            }
+
+            &.p60 {
+                width: 100%;
+                
+                @media (min-width: 768px) {
+                    width: 60%;
+                }
+            }
+
+            &.p90 {
+                width: 100%;
+                
+                @media (min-width: 768px) {
+                    width: 90%;
+                }
+            }
+
+            &.p100 {
+                width: 100%;
+            }
+    
+            label {
+                display: block;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 20px;
+                color: $textColor2;
+            }
+    
+            input, select {
+                all: unset;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                width: 96%;
+                height: 38px;
+                background: $backgroundColor4;
+                border-radius: 5px;
+            }
+        }
+
+    }
+    
+    button {
+        all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translate(-50%, -50%);
+        max-width: 406px;
+        width: 90%;
+        height: 68px;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        color: $textColor2;
+        margin: auto;
+        background-color: $backgroundColor;
+        border-radius: 5px;
+    }
+}

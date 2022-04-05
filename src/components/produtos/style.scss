@@ -1,0 +1,66 @@
+@import '../../styles/global/variables.scss';
+
+.produtos {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 135px;
+
+    .produto {
+        position: relative;
+        background-color: $backgroundColor4;
+        border-radius: 5px;
+        margin: 5px;
+
+        .image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px 5px 0px 0px;
+        }
+
+        .content {
+            padding: 23px;
+
+            p {
+                margin: 0;
+            }
+    
+            h4 {
+                margin-bottom: 3px;
+            }
+    
+            .stars {
+                margin-top: 37px;
+                margin-bottom: 5px;
+                display: flex;
+    
+                .star {
+    
+                    + .star {
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+        }
+
+        .buy {
+            position: relative;
+            left: 0;
+            bottom: 41px;
+            width: 100%;
+            height: 41px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 20px;
+            color: $textColor2;
+            background-color: $backgroundColor;
+            text-decoration: none;
+        }
+        
+    }
+}

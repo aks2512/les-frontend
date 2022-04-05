@@ -1,0 +1,105 @@
+@import '../../styles/global/variables.scss';
+
+.white-box {
+    background-color: $backgroundColor4;
+    padding: 50px;
+    border-radius: 5px;
+
+    .table-container {
+        overflow: auto;
+        height: 220px;
+        margin-bottom: 10px;
+
+        table {
+            width: 100%;
+
+            tbody {
+                tr {
+
+                    td {
+                        padding: 5px;
+
+                        a {
+                            text-decoration: none;
+                            color: #827A7A;
+                        }
+                    }
+                }
+            }
+
+            &.odd {
+                tbody {
+                    tr {
+                        background-color: $backgroundColor5;
+
+                        &:nth-child(odd) {
+                            background-color: $backgroundColor2;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .accordion {
+        margin-bottom: 2px;
+
+        &-radio {
+            display: none;
+            &:checked {
+                ~ .accordion-body {
+                    display: block;
+                }
+
+            }
+        }
+
+        &-header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: $backgroundColor5;
+        }
+
+        &-body {
+            display: none;
+        }
+    }
+
+    .group {
+        margin-bottom: 20px;
+
+        .title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+
+            h4 {
+                margin: 0;
+                margin-left: 5px;
+            }
+        }
+
+        .btns {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+
+            a {    
+                text-decoration: none;
+                background-color: $backgroundColor;
+                color: $textColor2;
+                padding: 8px;
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+
+
+            }
+        }
+
+    }
+}
