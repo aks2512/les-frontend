@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import api from '../api/index';
 
@@ -8,8 +8,10 @@ import { Header } from '../components/header/Header';
 import { Titulo } from '../components/titulo/Titulo';
 
 import dadosDaConta from '../assets/imgs/dados_da_conta.svg';
+import { Context } from '../contexts/AuthContext';
 
 export function UpdatePassword() {
+    const { handleLogout, user } = useContext(Context);
 
     //senha
     const [password, setPassword] = useState('');
@@ -18,9 +20,15 @@ export function UpdatePassword() {
     async function updatePassword(e) {
         e.preventDefault();
 
-        await api.update('sessions/password', {
-            
+        await api.put('users/password', {
+            user: {
+                new_password: password,
+                confirm_password: confirmPassword
+            }
         })
+
+        handleLogout();
+
     }
 
     return (

@@ -1,8 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter, Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { AuthProvider, Context } from './contexts/AuthContext';
 
-// pages loja
+//pages loja
 import { Home } from './pages/Home';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
@@ -31,56 +32,259 @@ import { AdminEstoque } from './pages/AdminEstoque';
 import { AdminClientes } from './pages/AdminClientes';
 import { RegisterBandeira } from './pages/RegisterBandeira';
 import { UpdateBandeira } from './pages/UpdateBandeira';
+import { RegisterProduto } from './pages/RegisterProduto';
 
 // styles
 import './styles/font/font.scss';
 import './styles/plugins/bootstrap.scss';
 import './styles/global/reboot.scss';
-import { RegisterProduto } from './pages/RegisterProduto';
+
+function UserRoute({ isPrivate = false, children, redirectTo }) {
+  const { loading, authenticated } = useContext(Context);
+
+  if (loading) {
+      return <h1>Loading...</h1>;
+  }
+
+  if (isPrivate && !authenticated) {
+      return <Navigate to={redirectTo} />
+  }
+
+  return children;
+}
+  
 
 function App() {
   return (
-    <BrowserRouter history={createBrowserHistory()}>
-      <Routes>
-        <Route  path="/" exact element={<Home/>} />
-        <Route  path="/signin" exact element={<Signin/>} />
-        <Route  path="/signup" exact element={<Signup/>} />
-        <Route  path="/register-card" exact element={<RegisterCard/>} />
-        <Route  path="/register-address" exact element={<RegisterAddress/>} />
-        <Route  path="/update-personal-data" exact element={<UpdatePersonalData/>} />
-        <Route  path="/update-address" exact element={<UpdateAddress/>} />
-        <Route  path="/update-password" exact element={<UpdatePassword/>} />
-        <Route  path="/update-card" exact element={<UpdateCard/>} />
-        <Route  path="/result" exact element={<Result/>} />
-        <Route  path="/playstation/playstation5" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/playstation/playstation4" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/playstation/playstation3" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/xbox/xbox360" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/xbox/xboxone" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/xbox/xboxseriesxs" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/nintendo/nintendowii" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/nintendo/nintendo3ds" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/nintendo/nintendoswitch" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/pc/perifericos" exact element={<ProdutosCategorizados/>} />
-        <Route  path="/meu-perfil" exact element={<MeuPerfil/>} />
-        <Route  path="/meus-pedidos" exact element={<MeusPedidos/>} />
-        <Route  path="/troca-produto" exact element={<TrocaProduto/>} />
-        <Route  path="/carrinho" exact element={<Carrinho/>} />
-        <Route  path="/produto-detalhes" exact element={<ProdutoDetalhes/>} />
-        <Route  path="/admin-login" exact element={<AdminLogin/>} />
-        <Route  path="/admin-dashboard" exact element={<AdminDashboard/>} />
-        <Route  path="/admin-produtos" exact element={<AdminProdutos/>} />
-        <Route  path="/admin-bandeiras" exact element={<AdminBandeiras/>} />
-        <Route  path="/admin-trocas" exact element={<AdminTrocas/>} />
-        <Route  path="/admin-vendas" exact element={<AdminVendas/>} />
-        <Route  path="/admin-estoque" exact element={<AdminEstoque/>} />
-        <Route  path="/admin-clientes" exact element={<AdminClientes/>} />
-        <Route  path="/register-bandeira" exact element={<RegisterBandeira/>} />
-        <Route  path="/register-produto" exact element={<RegisterProduto/>} />
-        <Route  path="/update-produto" exact element={<RegisterProduto/>} />
-        <Route  path="/update-bandeira" exact element={<UpdateBandeira/>} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route  
+            path="/"
+            exact 
+            element={
+              <UserRoute redirectTo="/"><Home/></UserRoute>
+            } 
+          />
+          <Route  
+            path="/signin" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><Signin/></UserRoute>
+            } />
+          <Route  
+            path="/signup" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><Signup/></UserRoute>
+            } />
+          <Route  
+            path="/register-card" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><RegisterCard/></UserRoute>
+            } />
+          <Route  
+            path="/register-address" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><RegisterAddress/></UserRoute>
+            } />
+          <Route  
+            path="/update-personal-data" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><UpdatePersonalData/></UserRoute>
+            } />
+          <Route  
+            path="/update-address" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><UpdateAddress/></UserRoute>
+            } />
+          <Route  
+            path="/update-password" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><UpdatePassword/></UserRoute>
+            } />
+          <Route  
+            path="/update-card" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><UpdateCard/></UserRoute>
+            } />
+          <Route  
+            path="/result" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><Result/></UserRoute>
+            } />
+          <Route  
+            path="/playstation/playstation5" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/playstation/playstation4" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/playstation/playstation3" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/xbox/xbox360" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/xbox/xboxone" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/xbox/xboxseriesxs" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/nintendo/nintendowii" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/nintendo/nintendo3ds" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/nintendo/nintendoswitch" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/pc/perifericos" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+            } />
+          <Route  
+            path="/meu-perfil" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><MeuPerfil/></UserRoute>
+            } />
+          <Route  
+            path="/meus-pedidos" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><MeusPedidos/></UserRoute>
+            } />
+          <Route  
+            path="/troca-produto" 
+            exact 
+            element={
+              <UserRoute isPrivate={true} redirectTo="/"><TrocaProduto/></UserRoute>
+            } />
+          <Route  
+            path="/carrinho" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><Carrinho/></UserRoute>
+            } />
+          <Route  
+            path="/produto-detalhes" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><ProdutoDetalhes/></UserRoute>
+            } />
+          <Route  
+            path="/admin-login" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminLogin/></UserRoute>
+            } />
+          <Route  
+            path="/admin-dashboard" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminDashboard/></UserRoute>
+            } />
+          <Route  
+            path="/admin-produtos" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminProdutos/></UserRoute>
+            } />
+          <Route  
+            path="/admin-bandeiras" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminBandeiras/></UserRoute>
+            } />
+          <Route  
+            path="/admin-trocas" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminTrocas/></UserRoute>
+            } />
+          <Route  
+            path="/admin-vendas" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminVendas/></UserRoute>
+            } />
+          <Route  
+            path="/admin-estoque" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminEstoque/></UserRoute>
+            } />
+          <Route  
+            path="/admin-clientes" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><AdminClientes/></UserRoute>
+            } />
+          <Route  
+            path="/register-bandeira" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><RegisterBandeira/></UserRoute>
+            } />
+          <Route  
+            path="/register-produto" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><RegisterProduto/></UserRoute>
+            } />
+          <Route  
+            path="/update-produto" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><RegisterProduto/></UserRoute>
+            } />
+          <Route  
+            path="/update-bandeira" 
+            exact 
+            element={
+              <UserRoute redirectTo="/"><UpdateBandeira/></UserRoute>
+            } />
+        </Routes> 
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

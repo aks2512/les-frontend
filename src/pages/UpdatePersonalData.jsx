@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import moment from 'moment';
+
+import { Context } from '../contexts/AuthContext';
 
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
@@ -8,48 +11,28 @@ import { Titulo } from '../components/titulo/Titulo';
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import api from '../api';
 
+
 export function UpdatePersonalData() {
-
+    const { user } = useContext(Context)
+    
     //dados pessoais
-    const [name, setName] = useState('');
-    const [CPF, setCPF] = useState('');
-    const [cellphone, setCellphone] = useState('');
-    const [DDD, setDDD] = useState('');
-    const [phone, setPhone] = useState('');
-    const [gender, setGender] = useState(1);
-    const [birthdate, setBirthdate] = useState('');
-
-    useEffect(async () => {
-        let res = await api.get('/users/4575936f-8c3a-4de1-9c53-7f7385467573');
-
-        if(res.status === 201) {
-            let data = res.data;
-
-            setName(data.person.name);
-            setCPF(data.person.cpf);
-            setCellphone(data.person.cellphone);
-            setDDD(data.person.phone.ddd);
-            setPhone(data.person.phone.number);
-            setGender(data.person.gender_id);
-            setBirthdate(data.person.birth_date.slice(0,10));
-            
-        }
-    }, [])
+    const [name, setName] = useState(user.person.name);
+    const [CPF, setCPF] = useState(user.person.cpf);
+    const [cellphone, setCellphone] = useState(user.person.cellphone);
+    const [DDD, setDDD] = useState(user.person.phone.ddd);
+    const [phone, setPhone] = useState(user.person.phone.number);
+    const [gender, setGender] = useState(user.person.gender_id);
+    const [birthdate, setBirthdate] = useState(moment(user.person.birth_date).format('yyyy-MM-DD'));
 
     async function updatePersonalData(e) {
         e.preventDefault();
 
-        //formatado
-        let formatedBirthdate = birthdate.replace(/(\d{4})-(\d{2})-(\d{2})/, (match, group1, group2, group3) => {
-            return `${group3}/${group2}/${group1}` 
-        });
-
-        let res = await api.put('/persons/eb4c3037-57ff-4199-9a58-fe8f54124a61', {
+        let res = await api.put('/persons/' + user.person.id, {
             "name": name,
             "cpf": CPF,
             "cellphone": cellphone,
             "gender_id": gender,
-            "birth_date": formatedBirthdate,
+            "birth_date": moment(birthdate).format('DD/MM/yyyy'),
             "phone": {
                 "ddd": DDD,
                 "number": phone
