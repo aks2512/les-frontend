@@ -4,7 +4,7 @@ export function CarrinhoEndereco() {
     return (
         <div className="carrinho-endereco">
             <div className="image">
-                <img src={localizacao} />
+                <img src={localizacao} alt=""/>
             </div>
             <div className="content">
                 <p className="name">Casa 1</p>

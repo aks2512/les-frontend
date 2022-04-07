@@ -11,7 +11,7 @@ import dadosDaConta from '../assets/imgs/dados_da_conta.svg';
 import { Context } from '../contexts/AuthContext';
 
 export function UpdatePassword() {
-    const { handleLogout, user } = useContext(Context);
+    const { handleLogout } = useContext(Context);
 
     //senha
     const [password, setPassword] = useState('');

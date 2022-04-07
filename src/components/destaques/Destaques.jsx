@@ -11,7 +11,7 @@ export function Destaques() {
             <div className="col-md-12 col-lg-6 col-xl-4">
                 <div className="destaque">
                     <p><span>Pré-Venda</span><br/><strong>Horizon Forbidden West</strong></p>
-                    <img src={hfw} />
+                    <img src={hfw} alt="" />
                     <Link to="/">Comprar</Link>
                 </div>
             </div>
@@ -19,7 +19,7 @@ export function Destaques() {
             <div className="col-md-12 col-lg-6 col-xl-4">
                 <div className="destaque">
                     <p><span>Pré-Venda</span><br/><strong>Horizon Forbidden West</strong></p>
-                    <img src={hfw} />
+                    <img src={hfw} alt="" />
                     <Link to="/">Comprar</Link>
                 </div>
             </div>
@@ -27,7 +27,7 @@ export function Destaques() {
             <div className="col-md-12 col-lg-6 col-xl-4">
                 <div className="destaque">
                     <p><span>Pré-Venda</span><br/><strong>Horizon Forbidden West</strong></p>
-                    <img src={hfw} />
+                    <img src={hfw} alt="" />
                     <Link to="/">Comprar</Link>
                 </div>
             </div>

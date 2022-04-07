@@ -11,7 +11,7 @@ export function MenuToggle() {
             }}
         >
             <div className="image">
-                <img src={menuToggle} />
+                <img src={menuToggle} alt="" />
             </div>
         </div>
     );

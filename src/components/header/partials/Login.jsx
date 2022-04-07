@@ -4,7 +4,7 @@ import { Context } from '../../../contexts/AuthContext';
 import login from '../../../assets/imgs/login.svg';
 
 export function Login() {
-    const { authenticated, user } = useContext(Context)
+    const { authenticated } = useContext(Context)
 
     function checkAuthentication() {
         if (authenticated) {

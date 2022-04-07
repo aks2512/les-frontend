@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import moment from 'moment';
 
 import { Context } from '../contexts/AuthContext';

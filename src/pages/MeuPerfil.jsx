@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from 'moment';
-
-import api from "../api/index";
+import api from "../api";
+import { Context } from "../contexts/AuthContext";
 
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
@@ -12,9 +12,9 @@ import { WhiteBox } from "../components/whiteBox/WhiteBox";
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import cartao from '../assets/imgs/cartao.svg';
 import localizacao from '../assets/imgs/localizacao.svg';
-import { Context } from "../contexts/AuthContext";
 
 export function MeuPerfil() {
+    const { user } = useContext(Context);
 
     //dados da conta
     const [email, setEmail] = useState();
@@ -22,25 +22,38 @@ export function MeuPerfil() {
     //dados pessoais
     const [name, setName] = useState();
     const [CPF, setCPF] = useState();
-    const [cellphone, setCellphone] = useState();
     const [DDD, setDDD] = useState();
     const [phone, setPhone] = useState();
-    const [gender, setGender] = useState();
     const [birthdate, setBirthdate] = useState();
 
-    useEffect(async () => {
-        const userData = await api.get('users');
-        const user = userData.data;
+    //cards
+    const [cards, setCards] = useState();
 
-        setEmail(user.email);
-        setName(user.person.name);
-        setCPF(user.person.cpf);
-        setCellphone(user.person.cellphone);
-        setDDD(user.person.phone.ddd);
-        setPhone(user.person.phone.number);
-        setGender(user.person.gender_id);
-        setBirthdate(moment(user.person.birthdate).format('DD/MM/yyyy'))
-    })
+    useEffect(() => {
+        if (user) {
+            setEmail(user.email);
+            setName(user.person.name);
+            setCPF(user.person.cpf);
+            setDDD(user.person.phone.ddd);
+            setPhone(user.person.phone.number);
+            setBirthdate(moment(user.person.birth_date).format('DD/MM/yyyy'));
+        }
+
+        async function cardsLoadData() {
+            const cardsData = await api.get('/cards/index');
+            setCards(cardsData.data.results);
+            console.log(cardsData.data.results);
+        }
+
+        cardsLoadData();
+
+    }, [user]);
+
+    async function deleteCard(id) {
+        await api.delete(`/cards/${id}`);
+        const cardsData = await api.get('/cards/index');
+        setCards(cardsData.data.results);
+    }
 
     return (
         <>
@@ -68,8 +81,8 @@ export function MeuPerfil() {
                                                     <td>{name}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Sexo</td>
-                                                    <td>{gender}</td>
+                                                    <td>CPF</td>
+                                                    <td>{CPF}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Data de Nascimento</td>
@@ -115,7 +128,7 @@ export function MeuPerfil() {
                                                 </tr>
                                                 <tr>
                                                     <td>Minha casa</td>
-                                                    <td><Link to="/update-address">editar</Link></td>
+                                                    <td><Link to="/update-address/">editar</Link></td>
                                                     <td><Link to="/update-address">remover</Link></td>
                                                 </tr>
                                                 <tr>
@@ -175,31 +188,15 @@ export function MeuPerfil() {
                                     <div className="table-container">
                                         <table className="odd">
                                             <tbody>
-                                                <tr>
-                                                    <td>Cartão 1</td>
-                                                    <td><Link to="/update-card">editar</Link></td>
-                                                    <td><Link to="/update-card">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cartão 1</td>
-                                                    <td><Link to="/update-card">editar</Link></td>
-                                                    <td><Link to="/update-card">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cartão 1</td>
-                                                    <td><Link to="/update-card">editar</Link></td>
-                                                    <td><Link to="/update-card">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cartão 1</td>
-                                                    <td><Link to="/update-card">editar</Link></td>
-                                                    <td><Link to="/update-card">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cartão 1</td>
-                                                    <td><Link to="/update-card">editar</Link></td>
-                                                    <td><Link to="/update-card">remover</Link></td>
-                                                </tr>
+                                                {cards && cards.map(card => 
+                                                    (
+                                                        <tr key={card.id}>
+                                                            <td>{card.number}</td>
+                                                            <td><Link to={`/update-card?id=${card.id}`}>editar</Link></td>
+                                                            <td><button onClick={() => deleteCard(card.id)}>remover</button></td>
+                                                        </tr>
+                                                    )
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>

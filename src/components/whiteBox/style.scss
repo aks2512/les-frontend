@@ -19,9 +19,16 @@
                     td {
                         padding: 5px;
 
-                        a {
+                        a, button {
+                            all: unset;
+                            cursor: pointer;
                             text-decoration: none;
-                            color: #827A7A;
+                            color: $textColor;
+                            opacity: .8;
+
+                            &:hover {
+                                opacity: 1;
+                            }
                         }
                     }
                 }

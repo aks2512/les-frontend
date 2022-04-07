@@ -38,11 +38,11 @@ export function Detalhes() {
                 <h4 className="titulo">Jogo Uma Aventura LEGO 2 Videogame - PS4</h4>
 
                 <ul className="stars">
-                    <li className="star"><img src={star} /></li>
-                    <li className="star"><img src={star} /></li>
-                    <li className="star"><img src={star} /></li>
-                    <li className="star"><img src={star} /></li>
-                    <li className="star"><img src={star} /></li>
+                    <li className="star"><img src={star} alt="" /></li>
+                    <li className="star"><img src={star} alt="" /></li>
+                    <li className="star"><img src={star} alt="" /></li>
+                    <li className="star"><img src={star} alt="" /></li>
+                    <li className="star"><img src={star} alt="" /></li>
                 </ul>
 
                 <h4 className="preco">R$ 59,89</h4>

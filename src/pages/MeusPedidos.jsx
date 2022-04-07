@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 
-import api from "../api/index";
 
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";

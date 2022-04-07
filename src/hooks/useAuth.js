@@ -3,26 +3,37 @@ import { useState, useEffect } from 'react';
 import api from '../api';
 
 export default function useAuth() {
+  const [user, setUser] = useState();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
+  useEffect(() => {
+
+    async function userLoadData() {
+      const userData = await api.get('users');
+      setUser(userData.data);
+    }
+
     let userExist = localStorage.getItem('access_token');
-    console.log(userExist)
+
     if (userExist) {
+
       api.defaults.headers.authorization = userExist;
+      userLoadData();
       setAuthenticated(true);
+
     } else {
+
       setAuthenticated(false);
       api.defaults.headers.authorization = undefined;
+
     }
+
     setLoading(false);
+
   }, []);
   
   async function handleLogin(email, password) {
-
-    console.log(email);
-    console.log(password);
 
     const auth = await api.post('users/auth',(
       {
@@ -50,5 +61,5 @@ export default function useAuth() {
     api.defaults.headers.authorization = undefined;
   }
   
-  return { authenticated, setAuthenticated, loading, handleLogin, handleLogout };
+  return { user, setUser, authenticated, setAuthenticated, loading, handleLogin, handleLogout };
 }

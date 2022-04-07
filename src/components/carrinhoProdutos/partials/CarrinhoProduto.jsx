@@ -17,7 +17,7 @@ export function CarrinhoProduto() {
             <button className="remove-produto">x</button>
             <div className="body">
                 <div className="image">
-                    <img src={produto} />
+                    <img src={produto} alt="" />
                 </div>
                 <div className="content">
                     <div className="title">Jogo Uma  Aventura Movie  Lego 2 </div>

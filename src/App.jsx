@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { BrowserRouter, Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, Context } from './contexts/AuthContext';
 
 //pages loja

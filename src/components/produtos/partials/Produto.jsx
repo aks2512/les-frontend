@@ -9,16 +9,16 @@ export function Produto() {
         <div className="col-12 col-md-6 col-lg-4 col-xl-3">
             <div className="produto">
                 <div className="image">
-                    <img src={lego} />
+                    <img src={lego} alt="" />
                 </div>
                 <div className="content">
                     <p>Jogo Uma Aventura LEGO 2 Videogame - PS4</p>
                     <ul className="stars">
-                        <li className="star"><img src={star} /></li>
-                        <li className="star"><img src={star} /></li>
-                        <li className="star"><img src={star} /></li>
-                        <li className="star"><img src={star} /></li>
-                        <li className="star"><img src={star} /></li>
+                        <li className="star"><img src={star} alt="" /></li>
+                        <li className="star"><img src={star} alt="" /></li>
+                        <li className="star"><img src={star} alt="" /></li>
+                        <li className="star"><img src={star} alt="" /></li>
+                        <li className="star"><img src={star} alt="" /></li>
                     </ul>
                     <h4>R$ 59,89</h4>
                     <Link className="buy" to="/produto-detalhes">Comprar</Link>
