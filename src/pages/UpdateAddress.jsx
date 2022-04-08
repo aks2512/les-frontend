@@ -86,7 +86,7 @@ export function UpdateAddress() {
                                         id="bairro" 
                                         type="text" 
                                         value={neighborhood}
-                                        onchange={(e) => setNeighborhood(e.value)}
+                                        onChange={(e) => setNeighborhood(e.value)}
                                     />
                                 </fieldset>
 
@@ -96,7 +96,7 @@ export function UpdateAddress() {
                                         id="tipo_de_endereco" 
                                         type="text" 
                                         value={typeOfAddress}
-                                        onchange={(e) => setTypeOfAddress(e.value)}
+                                        onChange={(e) => setTypeOfAddress(e.value)}
                                     />
                                 </fieldset>
 
@@ -106,7 +106,7 @@ export function UpdateAddress() {
                                         id="tipo_de_logradouro" 
                                         type="text" 
                                         value={typeOfPlace}
-                                        onchange={(e) => setTypeOfPlace(e.value)}
+                                        onChange={(e) => setTypeOfPlace(e.value)}
                                     />
                                 </fieldset>
 
@@ -116,7 +116,7 @@ export function UpdateAddress() {
                                         id="cidade" 
                                         type="text"
                                         value={city}
-                                        onchange={(e) => setCity(e.value)} 
+                                        onChange={(e) => setCity(e.value)} 
                                     />
                                 </fieldset>
 
@@ -126,7 +126,7 @@ export function UpdateAddress() {
                                         id="estado" 
                                         type="text" 
                                         value={state}
-                                        onchange={(e) => setState(e.value)}
+                                        onChange={(e) => setState(e.value)}
                                     />
                                 </fieldset>
 
@@ -136,7 +136,7 @@ export function UpdateAddress() {
                                         id="pais" 
                                         type="text" 
                                         value={country}
-                                        onchange={(e) => setCountry(e.value)}
+                                        onChange={(e) => setCountry(e.value)}
                                     />
                                 </fieldset>
                                 
