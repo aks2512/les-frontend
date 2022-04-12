@@ -29,9 +29,12 @@ export function MeuPerfil() {
     //cards
     const [cards, setCards] = useState();
 
+    //addresses
+    const [addresses, setAddresses] = useState();
+
     useEffect(() => {
-        console.log()
         if (user) {
+            console.log(user.person.addresses)
             setEmail(user.email);
             setName(user.person.name);
             setCPF(user.person.cpf);
@@ -40,14 +43,17 @@ export function MeuPerfil() {
             setBirthdate(moment(user.person.birth_date.slice(0, 9)).format('DD/MM/yyyy'));
             
             setCards(user.cards)
+            setAddresses(user.person.addresses)
         }
 
     }, [user]);
 
     async function deleteCard(id) {
         await api.delete(`/cards/${id}`);
-        const cardsData = await api.get('/cards/index');
-        setCards(cardsData.data.results);
+    }
+
+    async function deleteAddress(id) {
+        await api.delete(`/addresses/${id}`);
     }
 
     return (
@@ -111,31 +117,16 @@ export function MeuPerfil() {
                                     <div className="table-container">
                                         <table className="odd">
                                             <tbody>
-                                                <tr>
-                                                    <td>Minha casa</td>
-                                                    <td><Link to="/update-address">editar</Link></td>
-                                                    <td><Link to="/update-address">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minha casa</td>
-                                                    <td><Link to="/update-address">editar</Link></td>
-                                                    <td><Link to="/update-address">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minha casa</td>
-                                                    <td><Link to="/update-address/">editar</Link></td>
-                                                    <td><Link to="/update-address">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minha casa</td>
-                                                    <td><Link to="/update-address">editar</Link></td>
-                                                    <td><Link to="/update-address">remover</Link></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minha casa</td>
-                                                    <td><Link to="/update-address">editar</Link></td>
-                                                    <td><Link to="/update-address">remover</Link></td>
-                                                </tr>
+                                                
+                                                {addresses && addresses.map((address, index) => 
+                                                    (
+                                                        <tr key={address.id}>
+                                                            <td className="ellipsis">Endereco{index+1}</td>
+                                                            <td><Link to={`/update-address?id=${address.id}`}>editar</Link></td>
+                                                            <td><button onClick={() => deleteAddress(address.id)}>remover</button></td>
+                                                        </tr>
+                                                    )
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>

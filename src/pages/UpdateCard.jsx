@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api';
 
 import { CustomForm } from '../components/customForm/CustomForm';
@@ -10,7 +10,7 @@ import { Titulo } from '../components/titulo/Titulo';
 import cartao from '../assets/imgs/cartao.svg';
 
 export function UpdateCard() {
-
+    const navigate = useNavigate();
     const [brands, setBrands] = useState();
 
     //params
@@ -62,6 +62,8 @@ export function UpdateCard() {
                 security_code: securityCode
             }
         })
+
+        navigate('/meu-perfil');
     }
 
     return (

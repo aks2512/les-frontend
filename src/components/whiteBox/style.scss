@@ -30,6 +30,13 @@
                                 opacity: 1;
                             }
                         }
+
+                        &.ellipsis {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            max-width: 50px;
+                        }
                     }
                 }
             }

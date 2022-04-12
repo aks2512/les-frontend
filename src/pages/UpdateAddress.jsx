@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import api from '../api';
 
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
@@ -8,18 +10,81 @@ import { Titulo } from '../components/titulo/Titulo';
 import localizacao from '../assets/imgs/localizacao.svg';
 
 export function UpdateAddress() {
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id');
 
-     //endereço
-     const [CEP, setCEP] = useState();
-     const [place, setPlace] = useState();
-     const [number, setNumber] = useState();
-     const [complement, setComplement] = useState();
-     const [neighborhood, setNeighborhood] = useState();
-     const [typeOfAddress, setTypeOfAddress] = useState();
-     const [typeOfPlace, setTypeOfPlace] = useState();
-     const [city, setCity] = useState();
-     const [state, setState] = useState();
-     const [country, setCountry] = useState();
+    //types
+    const [typesOfAddress, setTypesOfAddress] = useState();
+    const [typesOfPlace, setTypesOfPlace] = useState();
+
+    //endereço
+    const [address_id, setAddress_id] = useState();
+    const [CEP, setCEP] = useState();
+    const [place, setPlace] = useState();
+    const [number, setNumber] = useState();
+    const [complement, setComplement] = useState();
+    const [neighborhood, setNeighborhood] = useState();
+    const [typeOfAddress, setTypeOfAddress] = useState();
+    const [typeOfPlace, setTypeOfPlace] = useState();
+    const [city, setCity] = useState();
+    const [state, setState] = useState();
+    const [country, setCountry] = useState();
+
+    useEffect(() => {
+
+        async function typesLoadData() {
+            const typesOfAddressData = await api.get('/addresses-types');
+            const typesOfPlaceData = await api.get('/places-types');
+
+            setTypesOfAddress(typesOfAddressData.data.results);
+            setTypesOfPlace(typesOfPlaceData.data.results);
+        }
+        
+        async function addressLoadData() {
+            const addressData = await api.post('/addresses/show', {
+                id: id
+            });
+
+            const address = addressData.data;
+
+            setAddress_id(address.id);
+            setCEP(address.cep);
+            setPlace(address.place);
+            setNumber(address.number);
+            setComplement((address.complement !== null) ? address.complement : '');
+            setNeighborhood(address.neighborhood);
+            setTypeOfAddress(address.address_type_id);
+            setTypeOfPlace(address.place_type_id);
+            setCity(address.city);
+            setState(address.state);
+            setCountry(address.country);
+        }
+
+        typesLoadData();
+        addressLoadData();
+
+    }, [id]);
+
+    async function updateAddress(e) {
+        e.preventDefault();
+
+        await api.put('/addresses', {
+            id: address_id,
+            cep: CEP,
+            place: place,
+            number: number,
+            city: city,
+            state: state,
+            country: country,
+            complement: complement,
+            neighborhood: neighborhood,
+            address_type_id: typeOfAddress,
+            place_type_id: typeOfPlace
+            
+        })
+        navigate('/meu-perfil');
+    }
 
     return (
         <>
@@ -27,7 +92,7 @@ export function UpdateAddress() {
             <main>
                 <div className="container py-5">
                     <Titulo title="Atualizar endereço"/>
-                    <CustomForm>
+                    <CustomForm onSubmit={updateAddress}>
 
                         <h3>Atualizar endereço</h3>
 
@@ -46,7 +111,7 @@ export function UpdateAddress() {
                                         id="cep" 
                                         type="text" 
                                         value={CEP}
-                                        onChange={(e) => setCEP(e.value)}
+                                        onChange={(e) => setCEP(e.target.value)}
                                     />
                                 </fieldset>
 
@@ -56,7 +121,7 @@ export function UpdateAddress() {
                                         id="logradouro" 
                                         type="text"
                                         value={place}
-                                        onChange={(e) => setPlace(e.value)} 
+                                        onChange={(e) => setPlace(e.target.value)} 
                                     />
                                 </fieldset>
                                 
@@ -66,7 +131,7 @@ export function UpdateAddress() {
                                         id="numero" 
                                         type="text" 
                                         value={number}
-                                        onChange={(e) => setNumber(e.value)}
+                                        onChange={(e) => setNumber(e.target.value)}
                                     />
                                 </fieldset>
                                 
@@ -76,7 +141,7 @@ export function UpdateAddress() {
                                         id="complemento" 
                                         type="text" 
                                         value={complement}
-                                        onChange={(e) => setComplement(e.value)}
+                                        onChange={(e) => setComplement(e.target.value)}
                                     />
                                 </fieldset>
 
@@ -86,28 +151,39 @@ export function UpdateAddress() {
                                         id="bairro" 
                                         type="text" 
                                         value={neighborhood}
-                                        onChange={(e) => setNeighborhood(e.value)}
+                                        onChange={(e) => setNeighborhood(e.target.value)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
-                                    <input 
+                                    <select 
                                         id="tipo_de_endereco" 
-                                        type="text" 
                                         value={typeOfAddress}
-                                        onChange={(e) => setTypeOfAddress(e.value)}
-                                    />
+                                        onChange={(e) => setTypeOfAddress(e.target.value)}
+                                    >
+                                        {typesOfAddress && typesOfAddress.map((type) => 
+                                            (
+                                                <option key={type.id} value={type.id}>{type.name}</option>
+                                            )
+                                        )}
+                                    </select>
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="tipo_de_logradouro">Tipo de Logradouro</label>
-                                    <input 
+                                    <select 
                                         id="tipo_de_logradouro" 
                                         type="text" 
                                         value={typeOfPlace}
-                                        onChange={(e) => setTypeOfPlace(e.value)}
-                                    />
+                                        onChange={(e) => setTypeOfPlace(e.target.value)}
+                                    >
+                                        {typesOfPlace && typesOfPlace.map((type) => 
+                                            (
+                                                <option key={type.id} value={type.id}>{type.name}</option>
+                                            )
+                                        )}
+                                    </select>
                                 </fieldset>
 
                                 <fieldset className="p50">
@@ -116,7 +192,7 @@ export function UpdateAddress() {
                                         id="cidade" 
                                         type="text"
                                         value={city}
-                                        onChange={(e) => setCity(e.value)} 
+                                        onChange={(e) => setCity(e.target.value)} 
                                     />
                                 </fieldset>
 
@@ -126,7 +202,7 @@ export function UpdateAddress() {
                                         id="estado" 
                                         type="text" 
                                         value={state}
-                                        onChange={(e) => setState(e.value)}
+                                        onChange={(e) => setState(e.target.value)}
                                     />
                                 </fieldset>
 
@@ -136,7 +212,7 @@ export function UpdateAddress() {
                                         id="pais" 
                                         type="text" 
                                         value={country}
-                                        onChange={(e) => setCountry(e.value)}
+                                        onChange={(e) => setCountry(e.target.value)}
                                     />
                                 </fieldset>
                                 
