@@ -1,6 +1,6 @@
 import mastercard from '../../../assets/imgs/mastercard.svg';
 
-export function Cartao() {
+export function Cartao({name, image}) {
 
     return (
         <div className="cartao" >
@@ -8,7 +8,7 @@ export function Cartao() {
                 <img src={mastercard} alt="" />
             </div>
             <div className="content">
-                <p>Nubank **** 0000</p>
+                <p>{name}</p>
             </div>
         </div>
     );

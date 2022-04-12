@@ -3,7 +3,7 @@ import cart from '../../../assets/imgs/cart.svg';
 
 export function Cart() {
     return (
-        <Link to="/" className="cart">
+        <Link to="/carrinho" className="cart">
             <div className="content">
                 <p> Meu carrinho<br/><strong>0 itens</strong>
                 </p>

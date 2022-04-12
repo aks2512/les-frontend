@@ -9,11 +9,6 @@ export default function useAuth() {
 
   useEffect(() => {
 
-    async function userLoadData() {
-      const userData = await api.get('users');
-      setUser(userData.data);
-    }
-
     let userExist = localStorage.getItem('access_token');
 
     if (userExist) {
@@ -32,6 +27,11 @@ export default function useAuth() {
     setLoading(false);
 
   }, []);
+
+  async function userLoadData() {
+    const userData = await api.get('users');
+    setUser(userData.data);
+  }
   
   async function handleLogin(email, password) {
 
@@ -61,5 +61,5 @@ export default function useAuth() {
     api.defaults.headers.authorization = undefined;
   }
   
-  return { user, setUser, authenticated, setAuthenticated, loading, handleLogin, handleLogout };
+  return { user, setUser, userLoadData, authenticated, setAuthenticated, loading, handleLogin, handleLogout };
 }

@@ -69,7 +69,7 @@ export function UpdateAddress() {
     async function updateAddress(e) {
         e.preventDefault();
 
-        await api.put('/addresses', {
+        const response = await api.put('/addresses', {
             id: address_id,
             cep: CEP,
             place: place,
@@ -82,8 +82,11 @@ export function UpdateAddress() {
             address_type_id: typeOfAddress,
             place_type_id: typeOfPlace
             
-        })
-        navigate('/meu-perfil');
+        });
+
+        if(response.status === 201) {
+            navigate('/meu-perfil');
+        }
     }
 
     return (

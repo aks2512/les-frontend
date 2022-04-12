@@ -14,7 +14,7 @@ import cartao from '../assets/imgs/cartao.svg';
 import localizacao from '../assets/imgs/localizacao.svg';
 
 export function MeuPerfil() {
-    const { user } = useContext(Context);
+    const { user, userLoadData } = useContext(Context);
 
     //dados da conta
     const [email, setEmail] = useState();
@@ -33,8 +33,10 @@ export function MeuPerfil() {
     const [addresses, setAddresses] = useState();
 
     useEffect(() => {
+
+        userLoadData();
+
         if (user) {
-            console.log(user.person.addresses)
             setEmail(user.email);
             setName(user.person.name);
             setCPF(user.person.cpf);
@@ -46,7 +48,7 @@ export function MeuPerfil() {
             setAddresses(user.person.addresses)
         }
 
-    }, [user]);
+    }, [user, userLoadData]);
 
     async function deleteCard(id) {
         await api.delete(`/cards/${id}`);

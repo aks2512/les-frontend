@@ -7,16 +7,32 @@ import cupom from '../../assets/imgs/cupom.svg';
 import cadeado from '../../assets/imgs/cadeado.svg';
 
 import './style.scss';
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../contexts/AuthContext";
 
 export function Pagamento() {
+    const { user } = useContext(Context);
+    const [cards, setCards] = useState();
+
+    useEffect(() => {
+
+        if (user) {
+            setCards(user.cards);
+        }
+
+    }, [user]);
+
     return (
         <div className="pagamento">
             <p>Selecione um cartão</p>
 
             <div className="cartoes">
-                <Cartao/>
-                <Cartao/>
-                <Cartao/>
+                {cards && cards.map((card, index) => (
+                    <Cartao
+                        name={card.number}
+                        image=""
+                    />
+                ))}
             </div>
 
             <div className="novo-cartao">

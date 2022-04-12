@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
 import { Header } from '../components/header/Header';
@@ -6,9 +9,9 @@ import { Titulo } from '../components/titulo/Titulo';
 import api from '../api';
 
 import cartao from '../assets/imgs/cartao.svg';
-import { useEffect, useState } from 'react';
 
 export function RegisterCard() {
+    const navigate = useNavigate();
     const [brands, setBrands] = useState();
 
     //inputs
@@ -34,12 +37,16 @@ export function RegisterCard() {
 
         console.log(ownerName, number, brandId, securityCode);
 
-        await api.post('/cards', {
+        const response = await api.post('/cards', {
             owner_name: ownerName,
             number: number,
             brand_id: brandId,
             security_code: securityCode
         })
+
+        if(response.status === 201) {
+            navigate('/meu-perfil');
+        }
 
     }
 

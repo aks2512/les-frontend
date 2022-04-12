@@ -53,7 +53,7 @@ export function UpdateCard() {
     async function updateCard(e) {
         e.preventDefault();
 
-        await api.put('/cards', {
+        const response = await api.put('/cards', {
             id: id,
             card:{
                 owner_name: ownerName,
@@ -63,7 +63,9 @@ export function UpdateCard() {
             }
         })
 
-        navigate('/meu-perfil');
+        if(response.status === 201) {
+            navigate('/meu-perfil');
+        }
     }
 
     return (

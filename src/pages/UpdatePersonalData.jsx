@@ -10,10 +10,12 @@ import { Titulo } from '../components/titulo/Titulo';
 
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 
 export function UpdatePersonalData() {
-    const { user } = useContext(Context)
+    const navigate = useNavigate();
+    const { user } = useContext(Context);
     
     //dados pessoais
     const [name, setName] = useState(user.person.name);
@@ -27,7 +29,7 @@ export function UpdatePersonalData() {
     async function updatePersonalData(e) {
         e.preventDefault();
 
-        let res = await api.put('/persons/' + user.person.id, {
+        const response = await api.put('/persons/' + user.person.id, {
             "name": name,
             "cpf": CPF,
             "cellphone": cellphone,
@@ -39,7 +41,9 @@ export function UpdatePersonalData() {
             }
         });
 
-        console.log(res)
+        if(response.status === 201) {
+            navigate('/meu-perfil');
+        }
     }
 
     return (
