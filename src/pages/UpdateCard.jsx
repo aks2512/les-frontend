@@ -14,7 +14,8 @@ export function UpdateCard() {
     const [brands, setBrands] = useState();
 
     //params
-    const [id] = useSearchParams();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id');
 
     //inputs
     const [ownerName, setOwnerName] = useState();
@@ -26,10 +27,8 @@ export function UpdateCard() {
     useEffect(() => {
 
         async function cardLoadData() {
-            console.log(api.defaults.headers.authorization);
-            console.log(typeof id.get('id'))
             const cardData = await api.post('/cards/show', {
-                id: id.get('id')
+                id: id
             } );
 
             const card = cardData.data;
@@ -53,9 +52,10 @@ export function UpdateCard() {
 
     async function updateCard(e) {
         e.preventDefault();
+
         await api.put('/cards', {
-            id: id.get('id'),
-            card: {
+            id: id,
+            card:{
                 owner_name: ownerName,
                 number: number,
                 brand_id: brandId,

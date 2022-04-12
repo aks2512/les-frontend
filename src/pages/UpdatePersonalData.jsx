@@ -22,7 +22,7 @@ export function UpdatePersonalData() {
     const [DDD, setDDD] = useState(user.person.phone.ddd);
     const [phone, setPhone] = useState(user.person.phone.number);
     const [gender, setGender] = useState(user.person.gender_id);
-    const [birthdate, setBirthdate] = useState(moment(user.person.birth_date).format('yyyy-MM-DD'));
+    const [birthdate, setBirthdate] = useState(moment(user.person.birth_date.slice(0,9)).format('yyyy-MM-DD'));
 
     async function updatePersonalData(e) {
         e.preventDefault();

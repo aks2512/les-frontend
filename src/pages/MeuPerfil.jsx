@@ -30,22 +30,17 @@ export function MeuPerfil() {
     const [cards, setCards] = useState();
 
     useEffect(() => {
+        console.log()
         if (user) {
             setEmail(user.email);
             setName(user.person.name);
             setCPF(user.person.cpf);
             setDDD(user.person.phone.ddd);
             setPhone(user.person.phone.number);
-            setBirthdate(moment(user.person.birth_date).format('DD/MM/yyyy'));
+            setBirthdate(moment(user.person.birth_date.slice(0, 9)).format('DD/MM/yyyy'));
+            
+            setCards(user.cards)
         }
-
-        async function cardsLoadData() {
-            const cardsData = await api.get('/cards/index');
-            setCards(cardsData.data.results);
-            console.log(cardsData.data.results);
-        }
-
-        cardsLoadData();
 
     }, [user]);
 
