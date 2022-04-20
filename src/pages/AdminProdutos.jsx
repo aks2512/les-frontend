@@ -10,7 +10,10 @@ export function AdminProdutos() {
                 </div>
 
                 <div className="col-12 col-xl-9 px-0">
-                    <AdminListagem title="Produtos"/>
+                    <AdminListagem 
+                        title="Produtos"
+                        registerLink="/register-produto"
+                    />
                 </div>
             </div>
         </main>

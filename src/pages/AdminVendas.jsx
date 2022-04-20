@@ -10,7 +10,10 @@ export function AdminVendas() {
                 </div>
 
                 <div className="col-12 col-xl-9 px-0">
-                    <AdminListagem title="Vendas"/>
+                    <AdminListagem 
+                        title="Vendas"
+                        registerLink="/register-venda"
+                    />
                 </div>
             </div>
         </main>

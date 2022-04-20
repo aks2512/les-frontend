@@ -9,41 +9,14 @@ export function AdminListagem(props) {
         <div className="admin-listagem">
             <h4>{props.title}</h4>
             <div className="crud">
-                <Link to="/">Cadastrar</Link>
+                {props.hasRegisterLink && <Link to={props.registerLink}>Cadastrar</Link>}
 
                 <fieldset>
                     <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <button>Filtrar</button>
                 </fieldset>
 
-                <table>
-
-                    <tbody>
-
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td><Link to="/">Editar</Link></td>
-                            <td><button>Remover</button></td>
-                        </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td><Link to="/">Editar</Link></td>
-                            <td><button>Remover</button></td>
-                        </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td><Link to="/">Editar</Link></td>
-                            <td><button>Remover</button></td>
-                        </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td><Link to="/">Editar</Link></td>
-                            <td><button>Remover</button></td>
-                        </tr>
-                        
-                    </tbody>
-
-                </table>
+                <table>{props.children}</table>
             </div>
         </div>
     );

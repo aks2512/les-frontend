@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import api from '../api';
 
 import { AdminCustomForm } from "../components/adminCustomForm/AdminCustomForm";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
@@ -6,6 +8,20 @@ import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 export function RegisterBandeira() {
     const [nomeDaBandeira, setNomeDaBandeira] = useState('');
     const [linkDaBandeira, setLinkDaBandeira] = useState('');
+
+    async function createBrand(e) {
+        e.preventDefault();
+        const response = await api.post('brands', 
+            {
+                name: nomeDaBandeira,
+                image: linkDaBandeira
+            }
+        )
+
+        if(response.status === 201) {
+            alert('Bandeira cadastrada com sucesso!')
+        }
+    }
 
     return (
         <main className="admin">
@@ -15,7 +31,7 @@ export function RegisterBandeira() {
                 </div>
 
                 <div className="col-12 col-xl-9 px-0">
-                    <AdminCustomForm>
+                    <AdminCustomForm onSubmit={createBrand}>
                         <h4>Cadastrar Bandeira</h4>
 
                         <fieldset>
@@ -29,7 +45,7 @@ export function RegisterBandeira() {
                         </fieldset>
 
                         <div className="btns">
-                            <button className="voltar">Voltar</button>
+                            <Link className="voltar" to="/admin-bandeiras">Voltar</Link>
                             <button className="submit">Cadastrar</button>
                         </div>
 

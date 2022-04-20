@@ -65,20 +65,21 @@
         }
 
         table {
-            width: 100%;
+            
 
             tbody {
                 tr {
-                    display: flex;
-                    align-items: center;
 
                     td {
-                        &:first-child {
-                            width: 80%;
-                        }
+                        padding: 4px;
+                        width: 200px;
 
                         a, button {
                             margin: 0;
+                        }
+
+                        &.btn {
+                            width: 100px;
                         }
                     }
                 }
