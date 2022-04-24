@@ -6,6 +6,7 @@ import { Titulo } from '../components/titulo/Titulo';
 import { Produtos } from '../components/produtos/Produtos';
 
 export function Home() {
+
     return (
         <>
             <Header />

@@ -1,0 +1,79 @@
+@import '../../styles/global/variables.scss';
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-inner {
+        position: relative;
+        width: 100%;
+        padding: 10px;
+        max-width: 320px;
+        background: $backgroundColor3;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-header {
+        margin-bottom: 10px;
+
+        h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: $textColor3;
+        }
+
+    }
+
+    &-body {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: auto;
+        text-align: center;
+
+        p {
+            color: $textColor2;
+        }
+    }
+
+    &-footer {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: auto;
+        text-align: center;
+
+        button {
+            all: unset;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 50%;
+            box-sizing: border-box;
+            overflow: auto;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid $borderColor4;
+            background: transparent;
+            color: $textColor3;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

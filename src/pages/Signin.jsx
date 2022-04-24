@@ -5,6 +5,8 @@ import { SignupInformation } from '../components/signupInformation/SignupInforma
 import { Titulo } from '../components/titulo/Titulo';
 
 export function Signin() {
+
+
     return (
         <>
             <Header/>
@@ -21,6 +23,7 @@ export function Signin() {
                     </div>
                 </div>
             </main>
+            
             <Footer/>
         </>
     );
