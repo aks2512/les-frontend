@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../contexts/AuthContext";
-import { Popup1 } from "../popup1/popup";
+import { toast } from 'react-toastify';
 import "./style.scss";
 
 export function LoginForm() {
@@ -11,20 +11,9 @@ export function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [popupIsOpen, setPopupIsOpen] = useState(false);
-    const [popupText, setPopupText] = useState('');
-
-    function closePopup(e) {
+    async function login(e) {
         e.preventDefault();
-        setPopupIsOpen(false);
-    }
-
-    function login(e) {
-        e.preventDefault();
-        let isLogin = handleLogin(email, password);
-        if(isLogin === true)
-            setPopupText('Login realizado com sucesso!');
-        setPopupIsOpen(true);
+        toast(await handleLogin(email, password));
     }
 
     return (
@@ -55,14 +44,6 @@ export function LoginForm() {
                 <button type="submit">Entrar</button>
 
             </form>
-            {popupIsOpen &&
-                (<Popup1
-                    title="Login"
-                    text={popupText}
-                    button="Ok"
-                    close={closePopup}
-                />)
-            }
         </>
     );
 }

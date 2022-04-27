@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api';
+import { toast } from 'react-toastify';
 
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
@@ -69,24 +70,31 @@ export function UpdateAddress() {
     async function updateAddress(e) {
         e.preventDefault();
 
-        const response = await api.put('/addresses', {
-            id: address_id,
-            cep: CEP,
-            place: place,
-            number: number,
-            city: city,
-            state: state,
-            country: country,
-            complement: complement,
-            neighborhood: neighborhood,
-            address_type_id: typeOfAddress,
-            place_type_id: typeOfPlace
-            
-        });
+        try {
+            const response = await api.put('/addresses', {
+                id: address_id,
+                cep: CEP,
+                place: place,
+                number: number,
+                city: city,
+                state: state,
+                country: country,
+                complement: complement,
+                neighborhood: neighborhood,
+                address_type_id: typeOfAddress,
+                place_type_id: typeOfPlace
+                
+            });
+    
+            if(response.status === 201) {
+                toast.success('Endereço atualizado com sucesso!');
+                navigate('/meu-perfil');
+            }
 
-        if(response.status === 201) {
-            navigate('/meu-perfil');
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
         }
+        
     }
 
     return (

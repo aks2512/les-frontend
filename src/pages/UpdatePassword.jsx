@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import api from '../api/index';
 
@@ -20,14 +21,18 @@ export function UpdatePassword() {
     async function updatePassword(e) {
         e.preventDefault();
 
-        await api.put('users/password', {
-            user: {
-                new_password: password,
-                confirm_password: confirmPassword
-            }
-        })
-
-        handleLogout();
+        try {
+            await api.put('users/password', {
+                user: {
+                    new_password: password,
+                    confirm_password: confirmPassword
+                }
+            })
+            toast.success('Senha atualizada com sucesso!');
+            handleLogout();
+        } catch (e) {
+            toast.error(e.response.data.message);
+        }
 
     }
 

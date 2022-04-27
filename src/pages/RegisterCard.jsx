@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
@@ -37,16 +38,24 @@ export function RegisterCard() {
 
         console.log(ownerName, number, brandId, securityCode);
 
-        const response = await api.post('/cards', {
-            owner_name: ownerName,
-            number: number,
-            brand_id: brandId,
-            security_code: securityCode
-        })
+        try {
+            const response = await api.post('/cards', {
+                owner_name: ownerName,
+                number: number,
+                brand_id: brandId,
+                security_code: securityCode
+            })
 
-        if(response.status === 201) {
-            navigate('/meu-perfil');
+            if(response.status === 201) {
+                toast.success('Cartão cadastrado com sucesso!');
+                navigate('/meu-perfil');
+            }
+
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
         }
+
+
 
     }
 

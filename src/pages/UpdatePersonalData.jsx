@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import { Context } from '../contexts/AuthContext';
 
@@ -29,21 +30,28 @@ export function UpdatePersonalData() {
     async function updatePersonalData(e) {
         e.preventDefault();
 
-        const response = await api.put('/persons/' + user.person.id, {
-            "name": name,
-            "cpf": CPF,
-            "cellphone": cellphone,
-            "gender_id": gender,
-            "birth_date": moment(birthdate).format('DD/MM/yyyy'),
-            "phone": {
-                "ddd": DDD,
-                "number": phone
+        try {
+            const response = await api.put('/persons/' + user.person.id, {
+                "name": name,
+                "cpf": CPF,
+                "cellphone": cellphone,
+                "gender_id": gender,
+                "birth_date": moment(birthdate).format('DD/MM/yyyy'),
+                "phone": {
+                    "ddd": DDD,
+                    "number": phone
+                }
+            });
+    
+            if(response.status === 201) {
+                toast.success('Dados pessoais atualizados com sucesso!');
+                navigate('/meu-perfil');
             }
-        });
-
-        if(response.status === 201) {
-            navigate('/meu-perfil');
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
         }
+
+        
     }
 
     return (

@@ -35,23 +35,25 @@ export default function useAuth() {
   
   async function handleLogin(email, password) {
 
-    const auth = await api.post('users/auth',(
-      {
-        "email": email,
-        "password": password
+    try {
+      const auth = await api.post('users/auth',(
+        {
+          "email": email,
+          "password": password
+        }
+      ));
+  
+      if (auth.data) {
+        localStorage.setItem('access_token', auth.data.access_token);
+        localStorage.setItem('refresh_token', auth.data.refresh_token);
+        api.defaults.headers.authorization = auth.data.token;
+        setAuthenticated(true);
+        return 'Login efetuado com sucesso!';
       }
-    ));
 
-    console.log(auth.data)
-
-    if (auth.data) {
-      localStorage.setItem('access_token', auth.data.access_token);
-      localStorage.setItem('refresh_token', auth.data.refresh_token);
-      api.defaults.headers.authorization = auth.data.token;
-      setAuthenticated(true);
-      return true;
-    }
-    return false;
+    } catch (e) {
+      return e?.response?.data?.message || 'Error :(';
+    } 
   }
 
   async function handleLogout() {

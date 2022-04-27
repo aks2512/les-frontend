@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { CustomForm } from '../components/customForm/CustomForm';
 import { Footer } from '../components/footer/Footer';
@@ -45,25 +46,30 @@ export function RegisterAddress() {
     async function createAddress(e) {
         e.preventDefault();
 
-        const response = await api.post('/addresses', {
-            addresses: [
-                {
-                    cep: CEP,
-                    place: place,
-                    number: number,
-                    complement: complement,
-                    neighborhood: neighborhood,
-                    address_type_id: typeOfAddress,
-                    place_type_id: typeOfPlace,
-                    city: city,
-                    state: state,
-                    country: country
-                }
-            ]
-        });
-
-        if (response.status === 201) {
-            navigate('/meu-perfil');
+        try {
+            const response = await api.post('/addresses', {
+                addresses: [
+                    {
+                        cep: CEP,
+                        place: place,
+                        number: number,
+                        complement: complement,
+                        neighborhood: neighborhood,
+                        address_type_id: typeOfAddress,
+                        place_type_id: typeOfPlace,
+                        city: city,
+                        state: state,
+                        country: country
+                    }
+                ]
+            });
+    
+            if (response.status === 201) {
+                toast.success('Endereço cadastrado com sucesso!');	
+                navigate('/meu-perfil');
+            }
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
         }
     }
 

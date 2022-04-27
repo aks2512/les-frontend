@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import moment from 'moment';
 import api from "../api";
 import { Context } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
@@ -44,18 +45,28 @@ export function MeuPerfil() {
             setPhone(user.person.phone.number);
             setBirthdate(moment(user.person.birth_date.slice(0, 9)).format('DD/MM/yyyy'));
             
-            setCards(user.cards)
+            setCards(user.person.cards)
             setAddresses(user.person.addresses)
         }
 
     }, [user, userLoadData]);
 
     async function deleteCard(id) {
-        await api.delete(`/cards/${id}`);
+        try {
+            await api.delete(`/cards/${id}`);
+            toast.success('Cartão removido com sucesso!');
+        } catch(e) {
+            toast.error(e.response.data.message);
+        }
     }
 
     async function deleteAddress(id) {
-        await api.delete(`/addresses/${id}`);
+        try {
+            await api.delete(`/addresses/${id}`);
+            toast.success('Endereço removido com sucesso!');
+        } catch(e) {
+            toast.error(e.response.data.message);
+        }
     }
 
     return (
