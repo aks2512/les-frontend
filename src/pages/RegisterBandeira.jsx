@@ -7,10 +7,13 @@ import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
 export function RegisterBandeira() {
     const [nomeDaBandeira, setNomeDaBandeira] = useState('');
-    const [linkDaBandeira, setLinkDaBandeira] = useState('');
+    const [linkDaBandeira, setLinkDaBandeira] = useState();
 
     async function createBrand(e) {
         e.preventDefault();
+        // const fd = new FormData();
+        // fd.append('image', linkDaBandeira, linkDaBandeira.name);
+        console.log(linkDaBandeira)
         const response = await api.post('brands', 
             {
                 name: nomeDaBandeira,
@@ -41,7 +44,8 @@ export function RegisterBandeira() {
 
                         <fieldset>
                             <label htmlFor="link_da_bandeira">Link da Bandeira</label>
-                            <input type="text" id="link_da_bandeira" value={linkDaBandeira} onChange={(e) => setLinkDaBandeira(e.target.value)}/>
+                            <input type="file" id="link_da_bandeira"
+                            onChange={(e) => setLinkDaBandeira(e.target.files[0])}/>
                         </fieldset>
 
                         <div className="btns">
