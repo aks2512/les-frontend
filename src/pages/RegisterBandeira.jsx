@@ -11,15 +11,18 @@ export function RegisterBandeira() {
 
     async function createBrand(e) {
         e.preventDefault();
-        // const fd = new FormData();
-        // fd.append('image', linkDaBandeira, linkDaBandeira.name);
+        const fd = new FormData();
+        fd.append('image', linkDaBandeira, linkDaBandeira.name);
         console.log(linkDaBandeira)
-        const response = await api.post('brands', 
+        const response = await api.post('brands', fd,
             {
-                name: nomeDaBandeira,
-                image: linkDaBandeira
+                onUploadProgress: progressEvent => {
+                    console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
+                }
             }
-        )
+        ).then(res => {
+            console.log(res);
+        })
 
         if(response.status === 201) {
             alert('Bandeira cadastrada com sucesso!')
