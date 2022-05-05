@@ -26,18 +26,22 @@ export function UpdateBandeira() {
 
     async function updateBrand(e) {
         e.preventDefault();
-        console.log(nomeDaBandeira)
-        const response = await api.put('/brands', {
-            id: id,
-            brand: {
-                name: nomeDaBandeira,
-                image: linkDaBandeira
+        const fd = new FormData();
+        fd.append('image', linkDaBandeira, linkDaBandeira.name);
+        fd.append('name', nomeDaBandeira);
+        console.log(id)
+        const response = await api.put('brands/'+ id, fd,
+            {
+                onUploadProgress: progressEvent => {
+                    console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
+                }
             }
-        });
+        ).then(res => {
+            console.log(res);
+        })
 
         if(response.status === 201) {
-            alert("Bandeira atualizada com sucesso!");
-            console.log(response);
+            alert('Bandeira atualizada com sucesso!')
         }
 
     }
@@ -60,7 +64,8 @@ export function UpdateBandeira() {
 
                         <fieldset>
                             <label htmlFor="link_da_bandeira">Link da Bandeira</label>
-                            <input type="text" id="link_da_bandeira" value={linkDaBandeira} onChange={(e) => setLinkDaBandeira(e.target.value)}/>
+                            <input type="file" id="link_da_bandeira"
+                            onChange={(e) => setLinkDaBandeira(e.target.files[0])}/>
                         </fieldset>
 
                         <div className="btns">

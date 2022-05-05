@@ -13,6 +13,7 @@ export function RegisterBandeira() {
         e.preventDefault();
         const fd = new FormData();
         fd.append('image', linkDaBandeira, linkDaBandeira.name);
+        fd.append('name', nomeDaBandeira);
         console.log(linkDaBandeira)
         const response = await api.post('brands', fd,
             {
