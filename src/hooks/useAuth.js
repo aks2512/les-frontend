@@ -47,6 +47,7 @@ export default function useAuth() {
         localStorage.setItem('access_token', auth.data.access_token);
         localStorage.setItem('refresh_token', auth.data.refresh_token);
         api.defaults.headers.authorization = auth.data.token;
+        userLoadData();
         setAuthenticated(true);
         return 'Login efetuado com sucesso!';
       }
