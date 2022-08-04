@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api";
 
 import { AdminCustomForm } from "../components/adminCustomForm/AdminCustomForm";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
 export function UpdateBandeira() {
+
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const [nomeDaBandeira, setNomeDaBandeira] = useState('');
@@ -13,11 +15,15 @@ export function UpdateBandeira() {
 
     useEffect(() => {
         async function loadData() {
-            const response = await api.get('/brands?id='+id);
-            console.log(response.status)
-            if(response.status === 201) {
-                setNomeDaBandeira(response.data.name);
-                setLinkDaBandeira(response.data.image);
+            if (id) {
+                const response = await api.get(`/brands?id=${id}`);
+                console.log(response.status)
+                if(response.status === 201) {
+                    setNomeDaBandeira(response.data.name);
+                    setLinkDaBandeira(response.data.image);
+                }
+            } else {
+                navigate('/admin-bandeiras');
             }
         }
 

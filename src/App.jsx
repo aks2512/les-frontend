@@ -39,6 +39,7 @@ import { RegisterProduto } from './pages/RegisterProduto';
 import './styles/font/font.scss';
 import './styles/plugins/bootstrap.scss';
 import './styles/global/reboot.scss';
+import { UpdateProduto } from './pages/UpdateProduto';
 
 function UserRoute({ isPrivate = false, children, redirectTo }) {
   const { loading, authenticated } = useContext(Context);
@@ -286,7 +287,7 @@ function App() {
             path="/update-produto" 
             exact 
             element={
-              <UserRoute redirectTo="/"><RegisterProduto/></UserRoute>
+              <UserRoute redirectTo="/"><UpdateProduto/></UserRoute>
             } />
           <Route  
             path="/update-bandeira" 

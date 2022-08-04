@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import api from "../api";
 
 import { AdminCustomForm } from "../components/adminCustomForm/AdminCustomForm";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
 export function RegisterProduto() {
+    const navigate = useNavigate();
+
     const [nome, setNome] = useState('');
     const [preco, setPreco] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -21,6 +27,46 @@ export function RegisterProduto() {
     const [jogadoresOnline, setJogadoresOnline] = useState('');
     const [resolucao, setResolucao] = useState('');
 
+    async function registerNewProduct(e) {
+        e.preventDefault();
+
+        console.log(nome, preco, descricao, requisitos, item1, item2, garantia, desenvolvedora, publicadora, dataDeLancamento, idioma, legenda, idadeRecomendada, jogadoresOffline, jogadoresOnline, resolucao);
+
+        try {
+            const response = await api.post('/products', {
+                product:{
+                    name: nome,
+                    description: descricao,
+                    price: preco,
+                    stock: 1,
+                    requirements: requisitos,
+                    publisher: publicadora,
+                    developer: desenvolvedora,
+                    guarantee: garantia,
+                    language: idioma,
+                    subtitle: legenda,
+                    release_date: dataDeLancamento,
+                    recomended_age: idadeRecomendada,
+                    players_offline: jogadoresOffline,
+                    players_online: jogadoresOnline,
+                    resolution: resolucao,
+                    image:"http://127.0.0.1:3333/public/products/the_last_of_us_ii.jpg"
+                }
+            })
+
+            if(response.status === 201) {
+                toast.success('Produto cadastrado com sucesso!');
+                navigate('/admin-produtos');
+            }
+
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
+        }
+
+
+
+    }
+
     return (
         <main className="admin">
             <div className="row w-100 px-0 m-0">   
@@ -31,7 +77,7 @@ export function RegisterProduto() {
 
                 <div className="col-12 col-xl-9 px-0">
 
-                    <AdminCustomForm>
+                    <AdminCustomForm onSubmit={registerNewProduct}>
                         <h4>Cadastrar  produto</h4>
 
                         <div className="row justify-content-center">

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import api from "../api";
+
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
@@ -59,7 +61,7 @@ export function AdminBandeiras() {
                             {loading === false && brands.map((brand) => 
                                 (
                                     <tr key={brand.id}>
-                                        <td><img width="20" src={brand.image} alt="" /></td>
+                                        <td><img width="100" src={brand.image} alt="" /></td>
                                         <td>{brand.name}</td>
                                         <td className="btn"><Link to={'/update-bandeira?id='+brand.id}>Editar</Link></td>
                                         <td className="btn"><button onClick={(e) => deleteBrand(e, brand.id)}>Excluir</button></td>

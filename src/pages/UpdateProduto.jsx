@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import api from "../api";
 
 import { AdminCustomForm } from "../components/adminCustomForm/AdminCustomForm";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
 export function UpdateProduto() {
+
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+
     const [nome, setNome] = useState('');
     const [preco, setPreco] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -21,6 +30,75 @@ export function UpdateProduto() {
     const [jogadoresOnline, setJogadoresOnline] = useState('');
     const [resolucao, setResolucao] = useState('');
 
+    useEffect(() => {
+        async function loadData() {
+            if(id) {
+                const response = await api.get(`/products/${id}`);
+                console.log(response.status)
+                if(response.status === 200) {
+                    setNome(response.data.name);
+                    setPreco(response.data.price);
+                    setDescricao(response.data.description);
+                    setRequisitos(response.data.requirements);
+                    setGarantia(response.data.guarantee);
+                    setDesenvolvedora(response.data.developer);
+                    setPublicadora(response.data.publisher);
+                    setDataDeLancamento(response.data.release_date);
+                    setIdioma(response.data.language);
+                    setLegenda(response.data.subtitle);
+                    setIdadeRecomendada(response.data.recomended_age);
+                    setJogadoresOffline(response.data.players_offline);
+                    setJogadoresOnline(response.data.players_online);
+                    setResolucao(response.data.resolution);
+                }
+            } else {
+                navigate('/admin-produtos');
+            }
+        }
+
+        console.log('teste master')
+        loadData();
+    }, [id]);
+
+    async function updateProduct(e) {
+        e.preventDefault();
+
+        console.log(nome, preco, descricao, requisitos, item1, item2, garantia, desenvolvedora, publicadora, dataDeLancamento, idioma, legenda, idadeRecomendada, jogadoresOffline, jogadoresOnline, resolucao);
+
+        try {
+            const response = await api.put(`/products/${id}`, {
+                product:{
+                    name: nome,
+                    description: descricao,
+                    price: preco,
+                    stock: 1,
+                    requirements: requisitos,
+                    publisher: publicadora,
+                    developer: desenvolvedora,
+                    guarantee: garantia,
+                    language: idioma,
+                    subtitle: legenda,
+                    release_date: dataDeLancamento,
+                    recomended_age: idadeRecomendada,
+                    players_offline: jogadoresOffline,
+                    players_online: jogadoresOnline,
+                    resolution: resolucao,
+                    image:"http://127.0.0.1:3333/public/products/the_last_of_us_ii.jpg"
+                }
+            })
+
+            if(response.status === 201) {
+                toast.success('Produto atualizado com sucesso!');
+                navigate('/admin-produtos');
+            }
+
+        } catch (e) {
+            toast.error(e?.response?.data?.message);
+            navigate(`/update-produto?id=${id}`);
+        }
+
+    }
+
     return (
         <main className="admin">
             <div className="row w-100 px-0 m-0">   
@@ -31,7 +109,7 @@ export function UpdateProduto() {
 
                 <div className="col-12 col-xl-9 px-0">
 
-                    <AdminCustomForm>
+                    <AdminCustomForm onSubmit={updateProduct}>
                         <h4>Atualizar  produto</h4>
 
                         <div className="row justify-content-center">
@@ -125,7 +203,7 @@ export function UpdateProduto() {
                         </div>
 
                         <div className="btns">
-                            <button className="voltar">Voltar</button>
+                            <Link className="voltar" to="/admin-produtos">Voltar</Link>
                             <button className="submit">Atualizar</button>
                         </div>
                         
