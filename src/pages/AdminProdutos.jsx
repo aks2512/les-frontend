@@ -45,6 +45,7 @@ export function AdminProdutos() {
                 <div className="col-12 col-xl-9 px-0">
                     <AdminListagem 
                         title="Produtos"
+                        hasRegisterLink={true}
                         registerLink="/register-produto"
                     >
                         <thead>
