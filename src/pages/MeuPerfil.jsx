@@ -35,9 +35,9 @@ export function MeuPerfil() {
 
     useEffect(() => {
 
-        userLoadData();
-
-        if (user) {
+        if (!user) {
+            userLoadData();
+        } else {
             setEmail(user.email);
             setName(user.person.name);
             setCPF(user.person.cpf);

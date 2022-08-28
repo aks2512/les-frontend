@@ -65,7 +65,7 @@ export function UpdateProduto() {
         fd.append('release_date', dataDeLancamento);
 
         try {
-            const response = await api.put(`products/${id}`, {product: fd},
+            await api.put(`products/${id}`, fd,
                 {
                     onUploadProgress: progressEvent => {
                         console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
@@ -73,12 +73,13 @@ export function UpdateProduto() {
                 }
             ).then(res => {
                 console.log(res);
+                if(res.status === 201) {
+                    toast.success('Produto atualizado com sucesso!');
+                    navigate('/admin-produtos');
+                }
             })
 
-            if(response.status === 201) {
-                toast.success('Produto atualizado com sucesso!');
-                navigate('/admin-produtos');
-            }
+            
         } catch (e) {
             toast.error(e?.response?.data?.message);
             navigate(`/update-produto?id=${id}`);
@@ -111,8 +112,12 @@ export function UpdateProduto() {
 
                                 <fieldset>
                                     <label htmlFor="imagem">Imagem</label>
-                                    <input type="file" id="imagem"
-                                    onChange={(e) => setImagem(e.target.files[0])}/>
+                                    <input 
+                                        type="file" 
+                                        id="imagem"
+                                        required={true}
+                                        onChange={(e) => setImagem(e.target.files[0])}
+                                    />
                                 </fieldset>
 
                                 <fieldset>

@@ -61,7 +61,7 @@ export function AdminProdutos() {
                             {loading === false && products.map((product) => 
                                 (
                                     <tr key={product.id}>
-                                        <td><img width="100" src={product.image} alt="" /></td>
+                                        <td><img width="100" src={product.image_url} alt="" /></td>
                                         <td>{product.name}</td>
                                         <td className="btn"><Link to={'/update-produto?id='+product.id}>Editar</Link></td>
                                         <td className="btn"><button onClick={(e) => deleteProduct(e, product.id)}>Excluir</button></td>

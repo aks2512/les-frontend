@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../../api';
-import lego from '../../assets/imgs/lego.svg';
 import star from '../../assets/imgs/star.svg';
 
 import './style.scss';
@@ -11,6 +10,7 @@ export function Detalhes() {
     const id = searchParams.get("id");
 
     const [nome, setNome] = useState('');
+    const [image, setImage] = useState('');
     const [preco, setPreco] = useState('');
     const [descricao, setDescricao] = useState('');
     const [requisitos, setRequisitos] = useState('');
@@ -27,6 +27,7 @@ export function Detalhes() {
                 console.log(response.status)
                 if(response.status === 200) {
                     setNome(response.data.name);
+                    setImage(response.data.image_url);
                     setPreco(response.data.price);
                     setDescricao(response.data.description);
                     setRequisitos(response.data.requirements);
@@ -48,7 +49,7 @@ export function Detalhes() {
             <div className="col-12 col-md-4">
 
                 <div className="produto-img">
-                    <img src={lego} alt="" />
+                    <img src={image} alt="" />
                 </div>
 
                 <div className="information">

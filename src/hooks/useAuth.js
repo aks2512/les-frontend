@@ -13,14 +13,13 @@ export default function useAuth() {
 
     if (userExist) {
 
-      api.defaults.headers.authorization = userExist;
+      api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
       userLoadData();
       setAuthenticated(true);
 
     } else {
 
       setAuthenticated(false);
-      api.defaults.headers.authorization = undefined;
 
     }
 
@@ -43,10 +42,12 @@ export default function useAuth() {
         }
       ));
   
+      console.log(auth)
       if (auth.data) {
         localStorage.setItem('access_token', auth.data.access_token);
         localStorage.setItem('refresh_token', auth.data.refresh_token);
-        api.defaults.headers.authorization = auth.data.token;
+        console.log(auth.data.access_token)
+        api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
         return 'Login efetuado com sucesso!';
@@ -61,7 +62,6 @@ export default function useAuth() {
     setAuthenticated(false);
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    api.defaults.headers.authorization = undefined;
   }
   
   return { user, setUser, userLoadData, authenticated, setAuthenticated, loading, handleLogin, handleLogout };

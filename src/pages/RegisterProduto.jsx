@@ -36,8 +36,10 @@ export function RegisterProduto() {
         fd.append('subtitle', legenda);
         fd.append('release_date', dataDeLancamento);
 
+        console.log(fd)
+
         try {
-            const response = await api.post('products', {product: fd},
+            await api.post('products', fd,
                 {
                     onUploadProgress: progressEvent => {
                         console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
@@ -45,12 +47,12 @@ export function RegisterProduto() {
                 }
             ).then(res => {
                 console.log(res);
+                if(res.status === 201) {
+                    toast.success('Produto cadastrado com sucesso!');
+                    navigate('/admin-produtos');
+                }
             })
 
-            if(response.status === 201) {
-                toast.success('Produto cadastrado com sucesso!');
-                navigate('/admin-produtos');
-            }
         } catch (e) {
             toast.error(e?.response?.data?.message);
         }

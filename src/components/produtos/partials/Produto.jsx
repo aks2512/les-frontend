@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import lego from '../../../assets/imgs/lego.svg';
 import star from '../../../assets/imgs/star.svg';
 import starFull from '../../../assets/imgs/star_full.svg';
 
-export function Produto({name, price, id}) {
+export function Produto({name, price, id, imageURL}) {
     return (
         <div className="col-12 col-md-6 col-lg-4 col-xl-3">
             <div className="produto">
                 <div className="image">
-                    <img src={lego} alt="" />
+                    <img src={imageURL} alt="" />
                 </div>
                 <div className="content">
                     <p>{name}</p>

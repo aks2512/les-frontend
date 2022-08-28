@@ -25,7 +25,13 @@ export function Produtos() {
         <section className="produtos container">
             {loading === false && (
                 products.map( (product) => (
-                    <Produto key={product.id} id={product.id} name={product.name} price={product.price} />
+                    <Produto 
+                        key={product.id} 
+                        id={product.id} 
+                        imageURL={product.image_url} 
+                        name={product.name} 
+                        price={product.price} 
+                    />
                 ))
             )}
         </section>
