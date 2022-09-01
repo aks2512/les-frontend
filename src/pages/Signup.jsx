@@ -40,6 +40,34 @@ export function Signup() {
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
 
+    // endereços
+    const [enderecos, setEnderecos] = useState([
+        {
+            cep: '',
+            place: '',
+            number: '',
+            complement: '',
+            neighborhood: '',
+            typeOfAddress: '',
+            typeOfPlace: '',
+            city: '',
+            state: '',
+            country: ''
+        },
+        {
+            cep: '',
+            place: '',
+            number: '',
+            complement: '',
+            neighborhood: '',
+            typeOfAddress: '',
+            typeOfPlace: '',
+            city: '',
+            state: '',
+            country: ''
+        }
+    ]);
+
     async function registerClient(e) {
         e.preventDefault();
 
@@ -236,118 +264,132 @@ export function Signup() {
 
                         <div className="group">
 
-                            <div className="title">
-                                <img src={localizacao} alt="" />
-                                <h4>Endereço</h4>
-                            </div>
+                            { enderecos.map(() => (
+                                <div className="accordion">
+                                    <div className="accordion__header" >
+                                        <div className="title">
+                                            <img src={localizacao} alt="" />
+                                            <h4>Endereço</h4>
+                                        </div>
+                                        <div className="btns">
+                                            <div className="address__removed">Remover</div>
+                                            <div className="accordion__open" onClick={(e) => e.target.parentNode.parentNode.parentNode.classList.toggle('active')}>+</div>
+                                        </div>
+                                    </div>
+                                    <div className="accordion__content">
 
-                            <div className="row">
+                                        <div className="row">
 
-                                <fieldset className="p50">
-                                    <label htmlFor="cep">CEP</label>
-                                    <input 
-                                        id="cep" 
-                                        type="text" 
-                                        value={CEP}
-                                        onChange={(e) => setCEP(e.target.value)}
-                                    />
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="cep">CEP</label>
+                                                <input 
+                                                    id="cep" 
+                                                    type="text" 
+                                                    value={CEP}
+                                                    onChange={(e) => setCEP(e.target.value)}
+                                                />
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="logradouro">Logradouro</label>
-                                    <input 
-                                        id="logradouro" 
-                                        type="text"
-                                        value={place}
-                                        onChange={(e) => setPlace(e.target.value)} 
-                                    />
-                                </fieldset>
-                                
-                                <fieldset className="p50">
-                                    <label htmlFor="numero">Número</label>
-                                    <input 
-                                        id="numero" 
-                                        type="text" 
-                                        value={number}
-                                        onChange={(e) => setNumber(e.target.value)}
-                                    />
-                                </fieldset>
-                                
-                                <fieldset className="p50">
-                                    <label htmlFor="complemento">Complemento</label>
-                                    <input 
-                                        id="complemento" 
-                                        type="text" 
-                                        value={complement}
-                                        onChange={(e) => setComplement(e.target.value)}
-                                    />
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="logradouro">Logradouro</label>
+                                                <input 
+                                                    id="logradouro" 
+                                                    type="text"
+                                                    value={place}
+                                                    onChange={(e) => setPlace(e.target.value)} 
+                                                />
+                                            </fieldset>
+                                            
+                                            <fieldset className="p50">
+                                                <label htmlFor="numero">Número</label>
+                                                <input 
+                                                    id="numero" 
+                                                    type="text" 
+                                                    value={number}
+                                                    onChange={(e) => setNumber(e.target.value)}
+                                                />
+                                            </fieldset>
+                                            
+                                            <fieldset className="p50">
+                                                <label htmlFor="complemento">Complemento</label>
+                                                <input 
+                                                    id="complemento" 
+                                                    type="text" 
+                                                    value={complement}
+                                                    onChange={(e) => setComplement(e.target.value)}
+                                                />
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="bairro">Bairro</label>
-                                    <input 
-                                        id="bairro" 
-                                        type="text" 
-                                        value={neighborhood}
-                                        onChange={(e) => setNeighborhood(e.target.value)}
-                                    />
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="bairro">Bairro</label>
+                                                <input 
+                                                    id="bairro" 
+                                                    type="text" 
+                                                    value={neighborhood}
+                                                    onChange={(e) => setNeighborhood(e.target.value)}
+                                                />
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
-                                    <select id="tipo_de_endereco" value={typeOfAddress} onChange={(e) => setTypeOfAddress(e.target.value)}>
-                                        <option value={3}>ambos</option>
-                                    </select>
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
+                                                <select id="tipo_de_endereco" value={typeOfAddress} onChange={(e) => setTypeOfAddress(e.target.value)}>
+                                                    <option value={3}>ambos</option>
+                                                </select>
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="tipo_de_logradouro">Tipo de Logradouro</label>
-                                    <select id="tipo_de_logradouro" value={typeOfPlace} onChange={(e) => setTypeOfPlace(e.target.value)} >
-                                        <option value={1}>Alameda</option>
-                                        <option value={2}>Avenida</option>
-                                        <option value={3}>Beco</option>
-                                        <option value={4}>Bloco</option>
-                                        <option value={5}>Condomínio</option>
-                                        <option value={6}>Distrito</option>
-                                        <option value={7}>Rua</option>
-                                        <option value={8}>Residencial</option>
-                                        <option value={9}>Sitio</option>
-                                        <option value={10}>Vila</option>
-                                    </select>
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="tipo_de_logradouro">Tipo de Logradouro</label>
+                                                <select id="tipo_de_logradouro" value={typeOfPlace} onChange={(e) => setTypeOfPlace(e.target.value)} >
+                                                    <option value={1}>Alameda</option>
+                                                    <option value={2}>Avenida</option>
+                                                    <option value={3}>Beco</option>
+                                                    <option value={4}>Bloco</option>
+                                                    <option value={5}>Condomínio</option>
+                                                    <option value={6}>Distrito</option>
+                                                    <option value={7}>Rua</option>
+                                                    <option value={8}>Residencial</option>
+                                                    <option value={9}>Sitio</option>
+                                                    <option value={10}>Vila</option>
+                                                </select>
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="cidade">Cidade</label>
-                                    <input 
-                                        id="cidade" 
-                                        type="text"
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)} 
-                                    />
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="cidade">Cidade</label>
+                                                <input 
+                                                    id="cidade" 
+                                                    type="text"
+                                                    value={city}
+                                                    onChange={(e) => setCity(e.target.value)} 
+                                                />
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="estado">Estado</label>
-                                    <input 
-                                        id="estado" 
-                                        type="text" 
-                                        value={state}
-                                        onChange={(e) => setState(e.target.value)}
-                                    />
-                                </fieldset>
+                                            <fieldset className="p50">
+                                                <label htmlFor="estado">Estado</label>
+                                                <input 
+                                                    id="estado" 
+                                                    type="text" 
+                                                    value={state}
+                                                    onChange={(e) => setState(e.target.value)}
+                                                />
+                                            </fieldset>
 
-                                <fieldset className="p50">
-                                    <label htmlFor="pais">País</label>
-                                    <input 
-                                        id="pais" 
-                                        type="text" 
-                                        value={country}
-                                        onChange={(e) => setCountry(e.target.value)}
-                                    />
-                                </fieldset>
-                                
+                                            <fieldset className="p50">
+                                                <label htmlFor="pais">País</label>
+                                                <input 
+                                                    id="pais" 
+                                                    type="text" 
+                                                    value={country}
+                                                    onChange={(e) => setCountry(e.target.value)}
+                                                />
+                                            </fieldset>
+                                            
 
-                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            
                         </div>
 
                         <button type="submit">Cadastrar</button>
