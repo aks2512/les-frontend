@@ -28,18 +28,6 @@ export function Signup() {
     const [gender, setGender] = useState(1);
     const [birthdate, setBirthdate] = useState('');
 
-    //endereço
-    const [CEP, setCEP] = useState('');
-    const [place, setPlace] = useState('');
-    const [number, setNumber] = useState();
-    const [complement, setComplement] = useState('');
-    const [neighborhood, setNeighborhood] = useState('');
-    const [typeOfAddress, setTypeOfAddress] = useState(3);
-    const [typeOfPlace, setTypeOfPlace] = useState(1);
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-
     // endereços
     const [enderecos, setEnderecos] = useState([
         {
