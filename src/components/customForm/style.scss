@@ -167,6 +167,14 @@
         }
 
     }
+
+    .btn_add_addresses {
+        color: $backgroundColor;
+        border: 1px solid $borderColor4;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
     
     button {
         all: unset;

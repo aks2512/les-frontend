@@ -20,6 +20,7 @@ export function UpdateAddress() {
     const [typesOfPlace, setTypesOfPlace] = useState();
 
     //endereço
+    const [name, setName] = useState();
     const [address_id, setAddress_id] = useState();
     const [CEP, setCEP] = useState();
     const [place, setPlace] = useState();
@@ -49,6 +50,7 @@ export function UpdateAddress() {
 
             const address = addressData.data;
 
+            setName(address.name);
             setAddress_id(address.id);
             setCEP(address.cep);
             setPlace(address.place);
@@ -73,6 +75,7 @@ export function UpdateAddress() {
         try {
             const response = await api.put('/addresses', {
                 id: address_id,
+                name: name,
                 cep: CEP,
                 place: place,
                 number: number,
@@ -115,6 +118,16 @@ export function UpdateAddress() {
                             </div>
 
                             <div className="row">
+
+                                <fieldset className="p100">
+                                    <label htmlFor="nome">Nome</label>
+                                    <input 
+                                        id="nome" 
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)} 
+                                    />
+                                </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="cep">CEP</label>

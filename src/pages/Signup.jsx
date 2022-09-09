@@ -31,6 +31,7 @@ export function Signup() {
     // endereços
     const [enderecos, setEnderecos] = useState([
         {
+            "name": '',
             "cep": '',
             "place": '',
             "number": '',
@@ -251,10 +252,18 @@ export function Signup() {
 
                                         <div className="row">
 
+                                            <fieldset className="p100">
+                                                <label>Nome</label>
+                                                <input  
+                                                    type="text" 
+                                                    value={endereco.name}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].name = e.target.value ; setEnderecos(newArray) }}
+                                                />
+                                            </fieldset>
+
                                             <fieldset className="p50">
-                                                <label htmlFor="cep">CEP</label>
+                                                <label>CEP</label>
                                                 <input 
-                                                    id="cep" 
                                                     type="text" 
                                                     value={endereco.cep}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].cep = e.target.value ; setEnderecos(newArray) }}
@@ -262,9 +271,8 @@ export function Signup() {
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="logradouro">Logradouro</label>
+                                                <label>Logradouro</label>
                                                 <input 
-                                                    id="logradouro" 
                                                     type="text"
                                                     value={endereco.place}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].place = e.target.value ; setEnderecos(newArray) }}
@@ -272,9 +280,8 @@ export function Signup() {
                                             </fieldset>
                                             
                                             <fieldset className="p50">
-                                                <label htmlFor="numero">Número</label>
+                                                <label>Número</label>
                                                 <input 
-                                                    id="numero" 
                                                     type="text" 
                                                     value={endereco.number}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].number = Number(e.target.value) ; setEnderecos(newArray) }}
@@ -282,9 +289,8 @@ export function Signup() {
                                             </fieldset>
                                             
                                             <fieldset className="p50">
-                                                <label htmlFor="complemento">Complemento</label>
+                                                <label>Complemento</label>
                                                 <input 
-                                                    id="complemento" 
                                                     type="text" 
                                                     value={endereco.complement}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].complement = e.target.value ; setEnderecos(newArray) }}
@@ -292,9 +298,8 @@ export function Signup() {
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="bairro">Bairro</label>
+                                                <label>Bairro</label>
                                                 <input 
-                                                    id="bairro" 
                                                     type="text" 
                                                     value={endereco.neighborhood}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].neighborhood = e.target.value ; setEnderecos(newArray) }}
@@ -302,21 +307,20 @@ export function Signup() {
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
+                                                <label>Tipo de endereço</label>
                                                 <select 
-                                                    id="tipo_de_endereco" value={endereco.address_type_id} 
+                                                    value={endereco.address_type_id} 
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].address_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
                                                 >
-                                                    <option value={1}>Endereço de cobrança</option>
-                                                    <option value={2}>Endereço de entrega</option>
+                                                    <option value={1}>Endereço de entrega</option>
+                                                    <option value={2}>Endereço de cobrança</option>
                                                     <option value={3}>Ambos</option>
                                                 </select>
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="tipo_de_logradouro">Tipo de Logradouro</label>
+                                                <label>Tipo de Logradouro</label>
                                                 <select 
-                                                    id="tipo_de_logradouro" 
                                                     value={endereco.place_type_id} 
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].place_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
                                                 >
@@ -334,9 +338,8 @@ export function Signup() {
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="cidade">Cidade</label>
+                                                <label>Cidade</label>
                                                 <input 
-                                                    id="cidade" 
                                                     type="text"
                                                     value={endereco.city}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].city = e.target.value ; setEnderecos(newArray) }}
@@ -344,9 +347,8 @@ export function Signup() {
                                             </fieldset>
 
                                             <fieldset className="p50">
-                                                <label htmlFor="estado">Estado</label>
+                                                <label>Estado</label>
                                                 <input 
-                                                    id="estado" 
                                                     type="text" 
                                                     value={endereco.state}
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].state = e.target.value ; setEnderecos(newArray) }}
@@ -369,21 +371,22 @@ export function Signup() {
                                 </div>
                             ))}
 
-                            <div style={{cursor: 'pointer', color: 'white'}}
+                            <div className="btn_add_addresses" style={{cursor: 'pointer', color: 'white'}}
                                 onClick={(e) => setEnderecos(
                                     [
                                         ...enderecos,
                                         {
-                                            cep: '',
-                                            place: '',
-                                            number: '',
-                                            complement: '',
-                                            neighborhood: '',
-                                            typeOfAddress: 1,
-                                            typeOfPlace: 1,
-                                            city: '',
-                                            state: '',
-                                            country: ''
+                                            "name": '',
+                                            "cep": '',
+                                            "place": '',
+                                            "number": '',
+                                            "complement": '',
+                                            "neighborhood": '',
+                                            "typeOfAddress": 1,
+                                            "typeOfPlace": 1,
+                                            "city": '',
+                                            "state": '',
+                                            "country": ''
                                         }
                                     ]
                                 )}

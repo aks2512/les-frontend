@@ -18,6 +18,7 @@ export function UpdateCard() {
     const id = searchParams.get('id');
 
     //inputs
+    const [name, setName] = useState();
     const [ownerName, setOwnerName] = useState();
     const [number, setNumber] = useState();
     const [brandId, setBrandId] = useState();
@@ -33,6 +34,7 @@ export function UpdateCard() {
 
             const card = cardData.data;
 
+            setName(card.name);
             setOwnerName(card.owner_name);
             setNumber(card.number);
             setBrandId(card.brand_id);
@@ -56,6 +58,7 @@ export function UpdateCard() {
         const response = await api.put('/cards', {
             id: id,
             card:{
+                name: name,
                 owner_name: ownerName,
                 number: number,
                 brand_id: brandId,
@@ -87,6 +90,16 @@ export function UpdateCard() {
 
                             <div className="row">
                                 
+                                <fieldset className="p100">
+                                    <label htmlFor="nome">Nome</label>
+                                    <input 
+                                        id="nome"
+                                        type="text"
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                    />
+                                </fieldset>
+
                                 <fieldset className="p50">
                                     <label htmlFor="nome_do_titular">Nome do Titular</label>
                                     <input 
