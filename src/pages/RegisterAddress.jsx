@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { CustomForm } from '../components/customForm/CustomForm';
@@ -13,10 +13,6 @@ import api from '../api';
 export function RegisterAddress() {
     const navigate = useNavigate();
 
-    //types
-    const [typesOfAddress, setTypesOfAddress] = useState();
-    const [typesOfPlace, setTypesOfPlace] = useState();
-
     //endereço
     const [CEP, setCEP] = useState();
     const [place, setPlace] = useState();
@@ -28,20 +24,6 @@ export function RegisterAddress() {
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [country, setCountry] = useState();
-
-    useEffect(() => {
-
-        async function typesLoadData() {
-            const typesOfAddressData = await api.get('/addresses-types');
-            const typesOfPlaceData = await api.get('/places-types');
-
-            setTypesOfAddress(typesOfAddressData.data.results);
-            setTypesOfPlace(typesOfPlaceData.data.results);
-        }
-
-        typesLoadData();
-
-    }, []);
 
     async function createAddress(e) {
         e.preventDefault();
@@ -149,11 +131,9 @@ export function RegisterAddress() {
                                         value={typeOfAddress}
                                         onChange={(e) => setTypeOfAddress(e.target.value)}
                                     >
-                                        {typesOfAddress && typesOfAddress.map((type) => 
-                                            (
-                                                <option key={type.id} value={type.id}>{type.name}</option>
-                                            )
-                                        )}
+                                        <option value={1}>Endereço de entrega</option>
+                                        <option value={2}>Endereço de cobrança</option>
+                                        <option value={3}>Ambos</option>
                                     </select>
                                 </fieldset>
 
@@ -165,11 +145,16 @@ export function RegisterAddress() {
                                         value={typeOfPlace}
                                         onChange={(e) => setTypeOfPlace(e.target.value)}
                                     >
-                                        {typesOfPlace && typesOfPlace.map((type) => 
-                                            (
-                                                <option key={type.id} value={type.id}>{type.name}</option>
-                                            )
-                                        )}
+                                        <option value={1}>Alameda</option>
+                                        <option value={2}>Avenida</option>
+                                        <option value={3}>Beco</option>
+                                        <option value={4}>Bloco</option>
+                                        <option value={5}>Condomínio</option>
+                                        <option value={6}>Distrito</option>
+                                        <option value={7}>Rua</option>
+                                        <option value={8}>Residencial</option>
+                                        <option value={9}>Sitio</option>
+                                        <option value={10}>Vila</option>
                                     </select>
                                 </fieldset>
 

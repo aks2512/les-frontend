@@ -186,11 +186,9 @@ export function UpdateAddress() {
                                         value={typeOfAddress}
                                         onChange={(e) => setTypeOfAddress(e.target.value)}
                                     >
-                                        {typesOfAddress && typesOfAddress.map((type) => 
-                                            (
-                                                <option key={type.id} value={type.id}>{type.name}</option>
-                                            )
-                                        )}
+                                        <option value={1}>Endereço de entrega</option>
+                                        <option value={2}>Endereço de cobrança</option>
+                                        <option value={3}>Ambos</option>
                                     </select>
                                 </fieldset>
 
@@ -202,11 +200,16 @@ export function UpdateAddress() {
                                         value={typeOfPlace}
                                         onChange={(e) => setTypeOfPlace(e.target.value)}
                                     >
-                                        {typesOfPlace && typesOfPlace.map((type) => 
-                                            (
-                                                <option key={type.id} value={type.id}>{type.name}</option>
-                                            )
-                                        )}
+                                        <option value={1}>Alameda</option>
+                                        <option value={2}>Avenida</option>
+                                        <option value={3}>Beco</option>
+                                        <option value={4}>Bloco</option>
+                                        <option value={5}>Condomínio</option>
+                                        <option value={6}>Distrito</option>
+                                        <option value={7}>Rua</option>
+                                        <option value={8}>Residencial</option>
+                                        <option value={9}>Sitio</option>
+                                        <option value={10}>Vila</option>
                                     </select>
                                 </fieldset>
 
