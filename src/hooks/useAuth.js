@@ -28,8 +28,10 @@ export default function useAuth() {
   }, []);
 
   async function userLoadData() {
-    const userData = await api.get('users');
-    setUser(userData.data);
+    const localUser = JSON.parse(localStorage.getItem('user'));
+    const user = await api.get(`users/${localUser.id}`);
+    localStorage.setItem('user', JSON.stringify(user.data));
+    setUser(user.data);
   }
   
   async function handleLogin(email, password) {
@@ -44,12 +46,14 @@ export default function useAuth() {
   
       console.log(auth)
       if (auth.data) {
+        localStorage.setItem('user', JSON.stringify(auth.data.userWithoutPassword));
         localStorage.setItem('access_token', auth.data.access_token);
-        localStorage.setItem('refresh_token', auth.data.refresh_token);
+        localStorage.setItem('refresh_token', '');
         console.log(auth.data.access_token)
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
+        setUser(auth.data.user);
         return 'Login efetuado com sucesso!';
       }
 

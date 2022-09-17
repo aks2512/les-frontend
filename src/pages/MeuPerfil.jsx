@@ -34,7 +34,6 @@ export function MeuPerfil() {
     const [addresses, setAddresses] = useState();
 
     useEffect(() => {
-
         if (!user) {
             userLoadData();
         } else {
@@ -43,7 +42,7 @@ export function MeuPerfil() {
             setCPF(user.person.cpf);
             setDDD(user.person.phone.ddd);
             setPhone(user.person.phone.number);
-            setBirthdate(moment(user.person.birth_date.slice(0, 9)).format('DD/MM/yyyy'));
+            setBirthdate(user.person.birth_date);
             
             setCards(user.person.cards)
             setAddresses(user.person.addresses)
@@ -100,7 +99,7 @@ export function MeuPerfil() {
                                                 </tr>
                                                 <tr>
                                                     <td>Data de Nascimento</td>
-                                                    <td>{moment(birthdate).format('DD/MM/yyyy')}</td>
+                                                    <td>{birthdate}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Email</td>

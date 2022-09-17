@@ -12,7 +12,7 @@ import dadosDaConta from '../assets/imgs/dados_da_conta.svg';
 import { Context } from '../contexts/AuthContext';
 
 export function UpdatePassword() {
-    const { handleLogout } = useContext(Context);
+    const { handleLogout, user } = useContext(Context);
 
     //senha
     const [password, setPassword] = useState('');
@@ -22,14 +22,17 @@ export function UpdatePassword() {
         e.preventDefault();
 
         try {
-            await api.put('users/password', {
-                user: {
-                    new_password: password,
-                    confirm_password: confirmPassword
-                }
-            })
-            toast.success('Senha atualizada com sucesso!');
-            handleLogout();
+            if(password === confirmPassword) {
+                await api.put(`users/${user.id}`, {
+                    user: {
+                        password: password,
+                    }
+                })
+                toast.success('Senha atualizada com sucesso!');
+                handleLogout();
+            } else {
+                toast.error('As senhas não conferem!');
+            }
         } catch (e) {
             toast.error(e.response.data.message);
         }
