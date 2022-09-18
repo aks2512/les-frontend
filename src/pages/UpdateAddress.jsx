@@ -44,7 +44,7 @@ export function UpdateAddress() {
         }
         
         async function addressLoadData() {
-            const addressData = await api.post('/addresses/show', {
+            const addressData = await api.get(`/addresses/${id}`, {
                 id: id
             });
 
@@ -86,7 +86,6 @@ export function UpdateAddress() {
                 neighborhood: neighborhood,
                 address_type_id: typeOfAddress,
                 place_type_id: typeOfPlace
-                
             });
     
             if(response.status === 201) {

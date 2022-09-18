@@ -30,20 +30,16 @@ export function RegisterAddress() {
 
         try {
             const response = await api.post('/addresses', {
-                addresses: [
-                    {
-                        cep: CEP,
-                        place: place,
-                        number: number,
-                        complement: complement,
-                        neighborhood: neighborhood,
-                        address_type_id: typeOfAddress,
-                        place_type_id: typeOfPlace,
-                        city: city,
-                        state: state,
-                        country: country
-                    }
-                ]
+                cep: CEP,
+                place: place,
+                number: number,
+                complement: complement,
+                neighborhood: neighborhood,
+                address_type_id: typeOfAddress,
+                place_type_id: typeOfPlace,
+                city: city,
+                state: state,
+                country: country
             });
     
             if (response.status === 201) {
