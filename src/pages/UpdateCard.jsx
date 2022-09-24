@@ -43,8 +43,8 @@ export function UpdateCard() {
 
         async function loadBrandsdata() {
             const brandsdata = await api.get('/brands/index');
-            setBrands(brandsdata.data.results);
-            setBrandId(brandsdata.data.results[0].id)
+            setBrands(brandsdata.data);
+            setBrandId(brandsdata.data[0].id)
         }
 
         loadBrandsdata();

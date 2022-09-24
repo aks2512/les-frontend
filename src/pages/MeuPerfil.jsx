@@ -40,15 +40,12 @@ export function MeuPerfil() {
             setEmail(user.email);
             setName(user.person.name);
             setCPF(user.person.cpf);
-            setDDD(user.person.phone.ddd);
-            setPhone(user.person.phone.number);
-            setBirthdate(user.person.birth_date);
-            
+            setPhone(user.person.phone);
+            setBirthdate(moment(user.person.birth_date).format('DD/MM/YYYY'));
             setCards(user.person.cards)
             setAddresses(user.person.addresses)
         }
-
-    }, [user, userLoadData]);
+    }, [userLoadData]);
 
     async function deleteCard(id) {
         try {
@@ -107,7 +104,7 @@ export function MeuPerfil() {
                                                 </tr>
                                                 <tr>
                                                     <td>Telefone</td>
-                                                    <td>({DDD}) {phone}</td>
+                                                    <td>({phone?.ddd}) {phone?.number}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -15,7 +15,7 @@ export function AdminProdutos() {
             const response = await api.get('/products');
             console.log(response);
             if(response.status === 200) {
-                setProducts(response.data.results);
+                setProducts(response.data);
                 setLoading(false);
             }
         }

@@ -15,7 +15,7 @@ export function AdminBandeiras() {
             const response = await api.get('/brands/index');
             console.log(response);
             if(response.status === 200) {
-                setBrands(response.data.results);
+                setBrands(response.data);
                 setLoading(false);
             }
         }

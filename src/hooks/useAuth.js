@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import api from '../api';
 
@@ -18,9 +19,7 @@ export default function useAuth() {
       setAuthenticated(true);
 
     } else {
-
       setAuthenticated(false);
-
     }
 
     setLoading(false);
@@ -28,10 +27,15 @@ export default function useAuth() {
   }, []);
 
   async function userLoadData() {
-    const localUser = JSON.parse(localStorage.getItem('user'));
-    const user = await api.get(`users/${localUser.id}`);
-    localStorage.setItem('user', JSON.stringify(user.data));
-    setUser(user.data);
+    try{
+      const response = await api.patch(`users/auth`);
+      localStorage.setItem('access_token', response.data.access_token);
+      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
+      setUser(response.data.user);
+    }catch(err){
+      handleLogout();
+      toast.error('Erro ao carregar dados do usuário');
+    }
   }
   
   async function handleLogin(email, password) {
@@ -43,20 +47,14 @@ export default function useAuth() {
           "password": password
         }
       ));
-  
-      console.log(auth)
       if (auth.data) {
-        localStorage.setItem('user', JSON.stringify(auth.data.userWithoutPassword));
         localStorage.setItem('access_token', auth.data.access_token);
-        localStorage.setItem('refresh_token', '');
-        console.log(auth.data.access_token)
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
         setUser(auth.data.user);
-        return 'Login efetuado com sucesso!';
+        return { status: auth.status, message: 'Login efetuado com sucesso!'};
       }
-
     } catch (e) {
       return e?.response?.data?.message || 'Error :(';
     } 

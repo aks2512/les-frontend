@@ -12,7 +12,7 @@ export function AdminClientes() {
             const response = await api.get('/users/index');
             console.log(response);
             if(response.status === 200) {
-                setClients(response.data.results);
+                setClients(response.data);
                 setLoading(false);
             }
         }

@@ -10,6 +10,7 @@ import { Titulo } from '../components/titulo/Titulo';
 import dadosDaConta from '../assets/imgs/dados_da_conta.svg';
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import localizacao from '../assets/imgs/localizacao.svg';
+import { toast } from 'react-toastify';
 
 export function Signup() {
 
@@ -76,12 +77,9 @@ export function Signup() {
                 "addresses": enderecos
             })
 
-            alert('Cadastro efetuado com sucesso');
-
+            toast.success('Cadastro realizado com sucesso!');
         } catch(e) {
-
-            alert('Houve algum erro no cadastro');
-
+            toast.error(e.response.data.message);
         }
     }
 

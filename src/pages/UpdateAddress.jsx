@@ -39,8 +39,8 @@ export function UpdateAddress() {
             const typesOfAddressData = await api.get('/addresses-types');
             const typesOfPlaceData = await api.get('/places-types');
 
-            setTypesOfAddress(typesOfAddressData.data.results);
-            setTypesOfPlace(typesOfPlaceData.data.results);
+            setTypesOfAddress(typesOfAddressData.data);
+            setTypesOfPlace(typesOfPlaceData.data);
         }
         
         async function addressLoadData() {

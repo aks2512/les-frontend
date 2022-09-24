@@ -25,9 +25,9 @@ export function RegisterCard() {
 
     useEffect(() => {
         async function loadBrandsdata() {
-            const brandsdata = await api.get('/brands/index');
-            setBrands(brandsdata.data.results);
-            setBrandId(brandsdata.data.results[0].id)
+            const brandsdata = await api.get('/brands');
+            setBrands(brandsdata.data);
+            setBrandId(brandsdata.data[0].id)
         }
 
         loadBrandsdata();
@@ -36,8 +36,6 @@ export function RegisterCard() {
 
     async function registerNewCard(e) {
         e.preventDefault();
-
-        console.log(ownerName, number, brandId, securityCode);
 
         try {
             const response = await api.post('/cards', {

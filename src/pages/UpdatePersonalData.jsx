@@ -1,5 +1,4 @@
-import { useContext, useState } from 'react';
-import moment from 'moment';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Context } from '../contexts/AuthContext';
@@ -12,20 +11,20 @@ import { Titulo } from '../components/titulo/Titulo';
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 
 export function UpdatePersonalData() {
     const navigate = useNavigate();
-    const { user } = useContext(Context);
+    const { user, userLoadData } = useContext(Context);
     
     //dados pessoais
-    const [name, setName] = useState(user.person.name);
-    const [CPF, setCPF] = useState(user.person.cpf);
-    const [cellphone, setCellphone] = useState(user.person.cellphone);
-    const [DDD, setDDD] = useState(user.person.phone.ddd);
-    const [phone, setPhone] = useState(user.person.phone.number);
-    const [gender, setGender] = useState(user.person.gender_id);
-    const [birthdate, setBirthdate] = useState(moment(user.person.birth_date.slice(0,9)).format('yyyy-MM-DD'));
+    const [name, setName] = useState();
+    const [CPF, setCPF] = useState();
+    const [cellphone, setCellphone] = useState();
+    const [phone, setPhone] = useState();
+    const [gender, setGender] = useState();
+    const [birthdate, setBirthdate] = useState();
 
     async function updatePersonalData(e) {
         e.preventDefault();
@@ -36,11 +35,8 @@ export function UpdatePersonalData() {
                 "cpf": CPF,
                 "cellphone": cellphone,
                 "gender_id": gender,
-                "birth_date": moment(birthdate).format('DD/MM/yyyy'),
-                "phone": {
-                    "ddd": DDD,
-                    "number": phone
-                }
+                "birth_date": moment(birthdate).toDate(),
+                "phone": phone,
             });
     
             if(response.status === 201) {
@@ -49,10 +45,20 @@ export function UpdatePersonalData() {
             }
         } catch (e) {
             toast.error(e?.response?.data?.message);
-        }
-
-        
+        }        
     }
+    
+    useEffect(() => {
+        if (!user) {
+            userLoadData();
+        } else {
+            setName(user.person.name);
+            setCPF(user.person.cpf);
+            setCellphone(user.person.cellphone);
+            setPhone(user.person.phone);
+            setBirthdate(moment(user.person.birth_date).format('DD/MM/YYYY'));
+        }
+    }, [userLoadData]);
 
     return (
         <>
@@ -109,8 +115,10 @@ export function UpdatePersonalData() {
                                     <input 
                                         id="ddd" 
                                         type="text"
-                                        value={DDD}
-                                        onChange={(e) => setDDD(e.target.value)} 
+                                        value={phone?.ddd}
+                                        onChange={(e) => setPhone({ 
+                                            ...phone, ddd: e.target.value 
+                                        })} 
                                     />
                                 </fieldset>
 
@@ -119,8 +127,10 @@ export function UpdatePersonalData() {
                                     <input 
                                         id="telefone" 
                                         type="text" 
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        value={phone?.number}
+                                        onChange={(e) => setPhone({ 
+                                            ...phone, number: e.target.value
+                                        })}
                                     />
                                 </fieldset>
 
@@ -140,7 +150,7 @@ export function UpdatePersonalData() {
                                         type="date" 
                                         value={birthdate}
                                         onChange={(e) => setBirthdate(e.target.value)}
-                                        disabled={true}
+                                        disabled={false}
                                     />
                                 </fieldset>
 

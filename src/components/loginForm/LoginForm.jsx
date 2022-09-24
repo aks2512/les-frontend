@@ -13,7 +13,15 @@ export function LoginForm() {
 
     async function login(e) {
         e.preventDefault();
-        toast(await handleLogin(email, password));
+        try{
+            const response = await handleLogin(email, password)
+            toast(response.message);
+            if (response.status === 200) {
+                navigate('/meu-perfil');
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
 
     return (
