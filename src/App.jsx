@@ -229,49 +229,49 @@ function App() {
             path="/admin-login" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminLogin/></UserRoute>
+              <UserRoute redirectTo="/admin-login"><AdminLogin/></UserRoute>
             } />
           <Route  
             path="/admin-dashboard" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminDashboard/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminDashboard/></UserRoute>
             } />
           <Route  
             path="/admin-produtos" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminProdutos/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminProdutos/></UserRoute>
             } />
           <Route  
             path="/admin-bandeiras" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminBandeiras/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminBandeiras/></UserRoute>
             } />
           <Route  
             path="/admin-trocas" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminTrocas/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminTrocas/></UserRoute>
             } />
           <Route  
             path="/admin-vendas" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminVendas/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminVendas/></UserRoute>
             } />
           <Route  
             path="/admin-estoque" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminEstoque/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminEstoque/></UserRoute>
             } />
           <Route  
             path="/admin-clientes" 
             exact 
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><AdminClientes/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminClientes/></UserRoute>
             } />
           <Route  
             path="/register-bandeira" 

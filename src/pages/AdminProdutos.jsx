@@ -19,9 +19,7 @@ export function AdminProdutos() {
                 setLoading(false);
             }
         }
-
         loadProducts();
-
     }, [])
 
     async function deleteProduct(e, id) {

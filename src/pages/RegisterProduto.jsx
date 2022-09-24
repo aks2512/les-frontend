@@ -36,8 +36,6 @@ export function RegisterProduto() {
         fd.append('subtitle', legenda);
         fd.append('release_date', dataDeLancamento);
 
-        console.log(fd)
-
         try {
             await api.post('products', fd,
                 {
@@ -85,6 +83,7 @@ export function RegisterProduto() {
                                 <fieldset>
                                     <label htmlFor="imagem">Imagem</label>
                                     <input type="file" id="imagem"
+                    
                                     onChange={(e) => setImagem(e.target.files[0])}/>
                                 </fieldset>
 
