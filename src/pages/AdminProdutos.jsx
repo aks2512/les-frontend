@@ -11,21 +11,22 @@ export function AdminProdutos() {
     const [products, setProducts] = useState();
 
     useEffect(() => {
-        async function loadProducts() {
-            const response = await api.get('/products');
-            if(response.status === 200) {
-                setProducts(response.data);
-                setLoading(false);
-            }
-        }
         loadProducts();
     }, [])
+
+    async function loadProducts() {
+        const response = await api.get('/products');
+        if(response.status === 200) {
+            setProducts(response.data);
+            setLoading(false);
+        }
+    }
 
     async function deleteProduct(e, id) {
         e.preventDefault();
         const response = await api.delete(`/products/${id}`);
-        if(response.status === 200) {
-            setProducts(products.filter(product => product.id !== id));
+        if(response.status === 201) {
+            loadProducts()
         }
     }
 
@@ -55,7 +56,7 @@ export function AdminProdutos() {
                             {loading === false && products.map((product) => 
                                 (
                                     <tr key={product.id}>
-                                        <td><img width="100" src={product.image_url} alt="" /></td>
+                                        <td><img width="100" height="80" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
                                         <td>{product.name}</td>
                                         <td className="btn"><Link to={'/update-produto?id='+product.id}>Editar</Link></td>
                                         <td className="btn"><button onClick={(e) => deleteProduct(e, product.id)}>Excluir</button></td>

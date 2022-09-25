@@ -64,7 +64,7 @@ export function AdminEstoque() {
                             {loading === false && products.map((product, index) => 
                                 (
                                     <tr key={product.id}>
-                                        <td><img width="100" src={product.image} alt="" /></td>
+                                        <td><img width="100" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
                                         <td>{product.name}</td>
                                         <td>{product.stock}</td>
                                         <td>
