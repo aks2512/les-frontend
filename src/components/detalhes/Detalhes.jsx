@@ -24,10 +24,9 @@ export function Detalhes() {
         async function loadData() {
             if(id) {
                 const response = await api.get(`/products/${id}`);
-                console.log(response.status)
                 if(response.status === 200) {
                     setNome(response.data.name);
-                    setImage(response.data.image_url);
+                    setImage(response.data.image);
                     setPreco(response.data.price);
                     setDescricao(response.data.description);
                     setRequisitos(response.data.requirements);
@@ -39,8 +38,6 @@ export function Detalhes() {
                 }
             }
         }
-
-        console.log('teste master')
         loadData();
     }, [id]);
 
@@ -49,7 +46,7 @@ export function Detalhes() {
             <div className="col-12 col-md-4">
 
                 <div className="produto-img">
-                    <img src={image} alt="" />
+                    <img src={'http://localhost:3333/files' + '/' + image} alt="" />
                 </div>
 
                 <div className="information">

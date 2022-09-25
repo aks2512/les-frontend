@@ -8,7 +8,7 @@ export function Produto({name, price, id, imageURL}) {
         <div className="col-12 col-md-6 col-lg-4 col-xl-3">
             <div className="produto">
                 <div className="image">
-                    <img src={imageURL} alt="" />
+                    <img src={imageURL} width={250} height={250} alt="" />
                 </div>
                 <div className="content">
                     <p>{name}</p>

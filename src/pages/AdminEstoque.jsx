@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import api from "../api";
 
@@ -10,18 +11,33 @@ export function AdminEstoque() {
     const [products, setProducts] = useState();
 
     useEffect(() => {
-        async function loadProducts() {
-            const response = await api.get('/products');
-            console.log(response);
-            if(response.status === 200) {
-                setProducts(response.data);
-                setLoading(false);
-            }
-        }
-
         loadProducts();
-
     }, [])
+
+    async function loadProducts() {
+        const response = await api.get('/products');
+        if(response.status === 200) {
+            setProducts(response.data);
+            setLoading(false);
+        }
+    }
+
+    const onNumericChange = (product, e) => {
+        const { name, value } = e.target;
+        product[name] = value.replace(/\D/g,'');
+        e.target.value = product[name]
+    };
+
+    async function handleUpdateProduct(product){
+        const { id } = product;
+        try{
+            const response = await api.put(`products/${id}`, product)
+            toast('Atualizado com sucesso')
+            loadProducts();
+        }catch(error){
+            toast.error(error?.message)
+        }
+    }
 
     return (
         <main className="admin">
@@ -45,17 +61,29 @@ export function AdminEstoque() {
                         </thead>
                         <tbody>
 
-                            {loading === false && products.map((product) => 
+                            {loading === false && products.map((product, index) => 
                                 (
                                     <tr key={product.id}>
                                         <td><img width="100" src={product.image} alt="" /></td>
                                         <td>{product.name}</td>
                                         <td>{product.stock}</td>
                                         <td>
-                                            <input type="text" placeholder="adicionar ao estoque" />
+                                            <input type="text" name="stock" onChange={(e)=>{onNumericChange(product, e)}} placeholder="adicionar ao estoque" />
                                             <div className="d-flex">
-                                                <button>Adicionar</button>
-                                                <button >Inativar</button>
+                                                <button onClick={(e)=>{handleUpdateProduct(product)}}>Atualizar</button>
+                                                {
+                                                    product.isActive ? 
+
+                                                    <button onClick={(e)=>{
+                                                        product.isActive = false;
+                                                        handleUpdateProduct(product)
+                                                    }}>Inativar</button> :
+
+                                                    <button onClick={(e)=>{
+                                                        product.isActive = true;
+                                                        handleUpdateProduct(product)
+                                                    }}>Ativar</button>
+                                                }
                                             </div>
                                         </td>
                                     </tr>

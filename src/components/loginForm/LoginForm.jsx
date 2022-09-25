@@ -7,7 +7,7 @@ import "./style.scss";
 export function LoginForm() {
     const navigate = useNavigate();
 
-    const { handleLogin } = useContext(Context);
+    const { handleLogin, handleLogout } = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,9 +15,16 @@ export function LoginForm() {
         e.preventDefault();
         try{
             const response = await handleLogin(email, password)
-            toast(response.message);
+
+            toast(response);
             if (response.status === 200) {
+                if(response.user.role != "usuario"){
+                    toast.error('Apenas cliente pode utilizar essa função')
+                    handleLogout();
+                    return
+                }
                 navigate('/meu-perfil');
+                return
             }
         } catch (error) {
             toast.error(error.message);

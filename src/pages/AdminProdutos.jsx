@@ -13,7 +13,6 @@ export function AdminProdutos() {
     useEffect(() => {
         async function loadProducts() {
             const response = await api.get('/products');
-            console.log(response);
             if(response.status === 200) {
                 setProducts(response.data);
                 setLoading(false);
@@ -25,9 +24,6 @@ export function AdminProdutos() {
     async function deleteProduct(e, id) {
         e.preventDefault();
         const response = await api.delete(`/products/${id}`);
-
-        console.log(response);
-
         if(response.status === 200) {
             setProducts(products.filter(product => product.id !== id));
         }

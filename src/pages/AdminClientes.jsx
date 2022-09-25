@@ -9,7 +9,7 @@ export function AdminClientes() {
 
     useEffect(() => {
         async function loadClients() {
-            const response = await api.get('/users/index');
+            const response = await api.get('/users');
             console.log(response);
             if(response.status === 200) {
                 setClients(response.data);

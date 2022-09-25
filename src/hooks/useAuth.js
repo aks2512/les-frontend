@@ -53,8 +53,9 @@ export default function useAuth() {
         userLoadData();
         setAuthenticated(true);
         setUser(auth.data.user);
-        return { status: auth.status, message: 'Login efetuado com sucesso!'};
+        return { status: auth.status, user: auth.data.user};
       }
+      
     } catch (e) {
       return e?.response?.data?.message || 'Error :(';
     } 

@@ -41,15 +41,19 @@ import './styles/plugins/bootstrap.scss';
 import './styles/global/reboot.scss';
 import { UpdateProduto } from './pages/UpdateProduto';
 
-function UserRoute({ isPrivate = false, children, redirectTo }) {
-  const { loading, authenticated } = useContext(Context);
+function UserRoute({ isPrivate = false, children, redirectTo, roles }) {
+  const { loading, authenticated, user } = useContext(Context);
 
   if (loading) {
       return <h1>Loading...</h1>;
   }
 
   if (isPrivate && !authenticated) {
-      return <Navigate to={redirectTo} />
+    return <Navigate to={redirectTo} />
+  }
+
+  if(roles && !roles.includes(user.role)){
+    return <Navigate to={redirectTo} />
   }
 
   return children;
