@@ -12,7 +12,7 @@ export function AdminBandeiras() {
 
     useEffect(() => {
         async function loadBrands() {
-            const response = await api.get('/brands/index');
+            const response = await api.get('/brands');
             console.log(response);
             if(response.status === 200) {
                 setBrands(response.data);

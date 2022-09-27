@@ -9,7 +9,9 @@ export function AdminClientes() {
 
     useEffect(() => {
         async function loadClients() {
-            const response = await api.get('/users');
+            const response = await api.get('/users', {
+                role: "usuario"
+            });
             console.log(response);
             if(response.status === 200) {
                 setClients(response.data);

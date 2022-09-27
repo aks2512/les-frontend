@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import api from '../api';
 
 import { AdminCustomForm } from "../components/adminCustomForm/AdminCustomForm";
@@ -11,23 +12,27 @@ export function RegisterBandeira() {
 
     async function createBrand(e) {
         e.preventDefault();
-        const fd = new FormData();
-        fd.append('image', linkDaBandeira, linkDaBandeira.name);
-        fd.append('name', nomeDaBandeira);
-        console.log(linkDaBandeira)
-        const response = await api.post('brands', fd,
-            {
-                onUploadProgress: progressEvent => {
-                    console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
+        try{
+            const fd = new FormData();
+            fd.append('image', linkDaBandeira, linkDaBandeira.name);
+            fd.append('name', nomeDaBandeira);
+            const response = await api.post('brands', fd,
+                {
+                    onUploadProgress: progressEvent => {
+                        console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
+                    }
                 }
+            ).then(res => {
+                console.log(res);
+            })
+    
+            if(response.status === 201) {
+                alert('Bandeira cadastrada com sucesso!')
             }
-        ).then(res => {
-            console.log(res);
-        })
-
-        if(response.status === 201) {
-            alert('Bandeira cadastrada com sucesso!')
+        }catch(error){
+            toast.error(error.message)
         }
+
     }
 
     return (
