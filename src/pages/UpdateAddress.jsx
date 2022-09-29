@@ -73,8 +73,7 @@ export function UpdateAddress() {
         e.preventDefault();
 
         try {
-            const response = await api.put('/addresses', {
-                id: address_id,
+            const response = await api.put(`/addresses/${id}`, {
                 name: name,
                 cep: CEP,
                 place: place,
