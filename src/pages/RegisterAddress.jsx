@@ -14,6 +14,7 @@ export function RegisterAddress() {
     const navigate = useNavigate();
 
     //endereço
+    const [name, setName] = useState();
     const [CEP, setCEP] = useState();
     const [place, setPlace] = useState();
     const [number, setNumber] = useState();
@@ -69,6 +70,16 @@ export function RegisterAddress() {
                             </div>
 
                             <div className="row">
+
+                                <fieldset className="p100">
+                                    <label htmlFor="nome">Nome</label>
+                                    <input 
+                                        id="nome" 
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)} 
+                                    />
+                                </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="cep">CEP</label>
