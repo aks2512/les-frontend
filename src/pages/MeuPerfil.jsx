@@ -50,6 +50,7 @@ export function MeuPerfil() {
     async function deleteCard(id) {
         try {
             await api.delete(`/cards/${id}`);
+            setCards(cards.filter(card => card.id !== id));
             toast.success('Cartão removido com sucesso!');
         } catch(e) {
             toast.error(e.response.data.message);
@@ -59,6 +60,7 @@ export function MeuPerfil() {
     async function deleteAddress(id) {
         try {
             await api.delete(`/addresses/${id}`);
+            setAddresses(addresses.filter(address => address.id !== id));
             toast.success('Endereço removido com sucesso!');
         } catch(e) {
             toast.error(e.response.data.message);
