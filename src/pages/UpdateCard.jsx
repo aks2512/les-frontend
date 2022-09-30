@@ -28,9 +28,7 @@ export function UpdateCard() {
     useEffect(() => {
 
         async function cardLoadData() {
-            const cardData = await api.post('/cards/show', {
-                id: id
-            } );
+            const cardData = await api.get(`/cards/${id}`);
 
             const card = cardData.data;
 
@@ -42,7 +40,7 @@ export function UpdateCard() {
         }
 
         async function loadBrandsdata() {
-            const brandsdata = await api.get('/brands/index');
+            const brandsdata = await api.get('/brands');
             setBrands(brandsdata.data);
             setBrandId(brandsdata.data[0].id)
         }
