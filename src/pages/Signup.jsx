@@ -11,6 +11,7 @@ import dadosDaConta from '../assets/imgs/dados_da_conta.svg';
 import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import localizacao from '../assets/imgs/localizacao.svg';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 export function Signup() {
 
@@ -29,22 +30,28 @@ export function Signup() {
     const [gender, setGender] = useState(1);
     const [birthdate, setBirthdate] = useState('');
 
+    //opções
+    const [placeTypes, setPlaceTypes] = useState([]);
+    const [addressTypes, setAddressTypes] = useState([]);
+    const [genders, setGenders] = useState([]);
+
+    async function getPlaceTypes() {
+        const response = await api.get('/places-types');
+        setPlaceTypes(response.data);
+    }
+
+    async function getAddressTypes() {
+        const response = await api.get('/addresses-types');
+        setAddressTypes(response.data);
+    }
+
+    async function getGenders() {
+        const response = await api.get('/genders');
+        setGenders(response.data);
+    }
+
     // endereços
-    const [enderecos, setEnderecos] = useState([
-        {
-            "name": '',
-            "cep": '',
-            "place": '',
-            "number": '',
-            "city": '',
-            "state": '',
-            "country": '',
-            "complement": '',
-            "neighborhood": '',
-            "address_type_id": 1,
-            "place_type_id": 1
-        }
-    ]);
+    const [enderecos, setEnderecos] = useState([]);
 
     async function registerClient(e) {
         e.preventDefault();
@@ -83,6 +90,11 @@ export function Signup() {
         }
     }
 
+    useEffect(() => {
+        getPlaceTypes();
+        getAddressTypes();
+        getGenders();
+    }, []);
 
     return (
         <>
@@ -208,9 +220,11 @@ export function Signup() {
                                 <fieldset className="p50">
                                     <label htmlFor="sexo">Sexo</label>
                                     <select id="sexo" value={gender} onChange={(e) => setGender(e.target.value)}>
-                                        <option value={1}>Masculino</option>
-                                        <option value={2}>Feminino</option>
-                                        <option value={3}>Outro</option>
+                                        {genders.map((gender)=>{
+                                            return (
+                                                <option value={gender.id}>{gender.name}</option>
+                                            )
+                                        })}
                                     </select>
                                 </fieldset>
 
@@ -307,31 +321,30 @@ export function Signup() {
                                             <fieldset className="p50">
                                                 <label>Tipo de endereço</label>
                                                 <select 
+                                                    className='select-addresstype'
                                                     value={endereco.address_type_id} 
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].address_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
                                                 >
-                                                    <option value={1}>Endereço de entrega</option>
-                                                    <option value={2}>Endereço de cobrança</option>
-                                                    <option value={3}>Ambos</option>
+                                                    {addressTypes.map((addressType)=>{
+                                                        return (
+                                                            <option value={addressType.id}>{addressType.name}</option>
+                                                        )
+                                                    })}
                                                 </select>
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>Tipo de Logradouro</label>
                                                 <select 
+                                                    className='select-placestype'
                                                     value={endereco.place_type_id} 
                                                     onChange={(e) => { let newArray = [...enderecos]; newArray[index].place_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
                                                 >
-                                                    <option value={1}>Alameda</option>
-                                                    <option value={2}>Avenida</option>
-                                                    <option value={3}>Beco</option>
-                                                    <option value={4}>Bloco</option>
-                                                    <option value={5}>Condomínio</option>
-                                                    <option value={6}>Distrito</option>
-                                                    <option value={7}>Rua</option>
-                                                    <option value={8}>Residencial</option>
-                                                    <option value={9}>Sitio</option>
-                                                    <option value={10}>Vila</option>
+                                                    {placeTypes.map((placeType)=>{
+                                                        return (
+                                                            <option value={placeType.id}>{placeType.name}</option>
+                                                        )
+                                                    })}
                                                 </select>
                                             </fieldset>
 
@@ -380,8 +393,8 @@ export function Signup() {
                                             "number": '',
                                             "complement": '',
                                             "neighborhood": '',
-                                            "typeOfAddress": 1,
-                                            "typeOfPlace": 1,
+                                            "address_type_id": 1,
+                                            "place_type_id": 1,
                                             "city": '',
                                             "state": '',
                                             "country": ''
