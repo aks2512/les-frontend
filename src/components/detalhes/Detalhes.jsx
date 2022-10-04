@@ -24,7 +24,7 @@ export function Detalhes() {
         async function loadData() {
             if(id) {
                 const response = await api.get(`/products/${id}`);
-                if(response.status === 200) {
+                if(response.status === 201) {
                     setNome(response.data.name);
                     setImage(response.data.image);
                     setPreco(response.data.price);

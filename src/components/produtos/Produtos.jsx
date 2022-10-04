@@ -10,7 +10,8 @@ export function Produtos() {
     useEffect(() => {
         async function loadProducts() {
             const response = await api.get('/products');
-            if(response.status === 200) {
+            if(response.status === 201) {
+                console.log(response)
                 setProducts(response.data);
                 setLoading(false);
             }
@@ -27,7 +28,7 @@ export function Produtos() {
                     <Produto 
                         key={product.id} 
                         id={product.id} 
-                        imageURL={'http://localhost:3333/files' + '/' + product.image} 
+                        imageURL={'http://localhost:3333/files/' + product.image} 
                         name={product.name} 
                         price={product.price} 
                     />

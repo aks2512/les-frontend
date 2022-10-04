@@ -106,6 +106,8 @@ export function RegisterCard() {
                                         type="text"
                                         value={number}
                                         onChange={e => setNumber(e.target.value)} 
+                                        minlength="16"
+                                        maxlength="16"
                                     />
                                 </fieldset>
                                 

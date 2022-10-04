@@ -10,15 +10,14 @@ export function Cart() {
         if (authenticated) {
             return (
                 <div className="content">
-                    <p> Meu carrinho<br/><strong>0 itens</strong>
-                    </p>
+                    <p> Meu carrinho<br/><strong>0 itens</strong></p>
                 </div>
             )
         }
 
         return (
             <div className="content">
-                <Link to="/signin">Faça login</Link>
+                <p>Faça login</p>
             </div>
         )
     }
