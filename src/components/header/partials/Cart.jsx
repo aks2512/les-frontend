@@ -1,23 +1,30 @@
+import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import cart from '../../../assets/imgs/cart.svg';
+import cartImg from '../../../assets/imgs/cart.svg';
 import { Context } from '../../../contexts/AuthContext';
 
 export function Cart() {
-    const { authenticated } = useContext(Context)
+    const { authenticated, cart, cartLoadData  } = useContext(Context)
     
     function checkAuthentication() {
         if (authenticated) {
+            if(!cart) {
+                cartLoadData()
+            }
             return (
                 <div className="content">
-                    <p> Meu carrinho<br/><strong>0 itens</strong></p>
+                    <p> Meu carrinho<br/><strong>
+                        {cart?.items?.length || 0} itens
+                    </strong></p>
                 </div>
             )
         }
+        
 
         return (
             <div className="content">
-                <p>Faça login</p>
+                <Link to="/signin">Faça login</Link>
             </div>
         )
     }
@@ -26,7 +33,7 @@ export function Cart() {
         <Link to="/carrinho" className="cart">
             {checkAuthentication()}
             <div className="image">
-                <img src={cart} alt="cart access" />
+                <img src={cartImg} alt="cart access" />
             </div>
         </Link>
     );

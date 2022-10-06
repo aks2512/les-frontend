@@ -42,13 +42,12 @@ export default function useAuth() {
   async function cartLoadData() {
     try{
       if(authenticated){
-        const response = await api.patch(`carts`, {
-          isActive: true
+        const response = await api.get(`carts`, {
+          isOpen: true
         });
         setCart(response.data.user);
       } 
     }catch(err){
-      handleLogout();
       toast.error('Erro ao carregar dados do carrinho');
     }
   }
@@ -82,5 +81,5 @@ export default function useAuth() {
     localStorage.removeItem('refresh_token');
   }
   
-  return { user, setUser, userLoadData, cartLoadData,  authenticated, setAuthenticated, loading, handleLogin, handleLogout };
+  return { user, setUser, userLoadData, cart, setCart, cartLoadData,  authenticated, setAuthenticated, loading, handleLogin, handleLogout };
 }
