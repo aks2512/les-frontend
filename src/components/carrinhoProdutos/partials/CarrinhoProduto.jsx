@@ -28,13 +28,22 @@ export function CarrinhoProduto(itemPass) {
         }
     }
 
+    async function deleteItem() {
+        try {
+            const response = await api.delete(`/cart-items/${item.id}`);
+            toast.success(response.data.message);
+        } catch (e) {
+            toast.error(e.response.data.message);
+        }
+    }
+
     useEffect(() => {
         updateItem();
     }, [item]);
 
     return (
         <div className="carrinho-produto">
-            <button className="remove-produto">x</button>
+            <button className="remove-produto" onClick={(e) => deleteItem()}>x</button>
             <div className="body">
                 <div className="image">
                     <img src={'http://localhost:3333/files/' + (item?.product?.image || 'default.png')} alt="" />
