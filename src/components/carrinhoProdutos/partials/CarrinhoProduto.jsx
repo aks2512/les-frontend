@@ -4,7 +4,7 @@ import api from '../../../api';import { Context } from '../../../contexts/AuthCo
 ;
 
 export function CarrinhoProduto({ item: itemPass}) {
-    const { cartLoadData } = useContext(Context);
+    const { cart, cartLoadData } = useContext(Context);
     const [item, setItem] = useState({...itemPass});
 
     function addAmount() {
@@ -43,7 +43,11 @@ export function CarrinhoProduto({ item: itemPass}) {
 
     useEffect(() => {
         updateItem();
-    }, [item]);
+    }, [item.quantity]);
+
+    useEffect(() => {
+        setItem({...itemPass});
+    }, [cart]);
 
     return (
         <div className="carrinho-produto">
