@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import api from '../../../api';;
+import api from '../../../api';import { Context } from '../../../contexts/AuthContext';
+;
 
 export function CarrinhoProduto(itemPass) {
+    const { cartLoadData } = useContext(Context);
     const [item, setItem] = useState({...itemPass.item});
 
     function addAmount() {
@@ -23,6 +25,7 @@ export function CarrinhoProduto(itemPass) {
         try {
             const response = await api.put(`/cart-items/${item.id}`, item);
             toast.success(response.data.message);
+            cartLoadData();
         } catch (e) {
             toast.error(e.response.data.message);
         }
@@ -32,6 +35,7 @@ export function CarrinhoProduto(itemPass) {
         try {
             const response = await api.delete(`/cart-items/${item.id}`);
             toast.success(response.data.message);
+            cartLoadData();
         } catch (e) {
             toast.error(e.response.data.message);
         }

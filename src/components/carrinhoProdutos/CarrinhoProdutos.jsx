@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import api from "../../api";
+import { useContext } from "react";
+import { Context } from "../../contexts/AuthContext";
 import { CarrinhoProduto } from "./partials/CarrinhoProduto";
 
 import './style.scss';
 
 export function CarrinhoProdutos() {
-    const [cart, setCart] = useState([]);
-
-    async function getCart() {
-        try {
-            const response = await api.get('/carts', {
-                isOpen: true
-            });
-            setCart(response.data[0]);
-        } catch (error) {
-            toast.error(error);
-        }
-    }
-
-    useEffect(() => {
-        getCart()
-    }, [cart]);
+    const { cart } = useContext(Context);
 
     return (
         <div className="carrinho-produtos">

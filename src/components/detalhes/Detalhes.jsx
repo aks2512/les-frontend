@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../api';
 import star from '../../assets/imgs/star.svg';
@@ -54,13 +54,14 @@ export function Detalhes() {
             const response = await api.post('/carts', {
                 items: [
                     {
-                        product_id: id,
+                        product: { id },
                     }
                 ]
             });
             if(response.status === 201) {
                 toast.success('Produto adicionado ao carrinho com sucesso');
             }
+            Navigate('/carrinho');
         }   catch (error) {
             toast.error(error.response.data.message);
         }
