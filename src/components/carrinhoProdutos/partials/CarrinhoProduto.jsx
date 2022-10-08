@@ -25,10 +25,10 @@ export function CarrinhoProduto({ item: itemPass}) {
         try {
             const response = await api.put(`/cart-items/${item.id}`, item);
             toast.success(response.data.message);
-            cartLoadData();
         } catch (e) {
             toast.error(e.response.data.message);
         }
+        cartLoadData();
     }
 
     async function deleteItem() {
