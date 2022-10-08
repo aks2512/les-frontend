@@ -3,25 +3,24 @@ import { toast } from 'react-toastify';
 import api from '../../../api';;
 
 export function CarrinhoProduto(itemPass) {
-    const [item, setItem] = useState({});
+    const [item, setItem] = useState({...itemPass.item});
 
     function addAmount() {
         if (item.quantity < 100) setItem({
             ...item, 
             quantity: item.quantity + 1
-        }, updateItem());
+        });
     }
 
     function rmvAmount() {
         if (item.quantity > 1) setItem({
             ...item, 
             quantity: item.quantity - 1
-        }, updateItem());
+        });
     }
     
     async function updateItem() {
         try {
-            console.log(item);
             const response = await api.put(`/cart-items/${item.id}`, item);
             toast.success(response.data.message);
         } catch (e) {
@@ -30,8 +29,8 @@ export function CarrinhoProduto(itemPass) {
     }
 
     useEffect(() => {
-        setItem(itemPass.item);
-    }, []);
+        updateItem();
+    }, [item]);
 
     return (
         <div className="carrinho-produto">
