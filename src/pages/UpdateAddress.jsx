@@ -33,40 +33,45 @@ export function UpdateAddress() {
     const [state, setState] = useState();
     const [country, setCountry] = useState();
 
-    useEffect(() => {
+    //opções
+    const [placeTypes, setPlaceTypes] = useState([]);
+    const [addressTypes, setAddressTypes] = useState([]);
 
-        async function typesLoadData() {
-            const typesOfAddressData = await api.get('/addresses-types');
-            const typesOfPlaceData = await api.get('/places-types');
+    async function getPlaceTypes() {
+        const response = await api.get('/places-types');
+        setPlaceTypes(response.data);
+    }
 
-            setTypesOfAddress(typesOfAddressData.data);
-            setTypesOfPlace(typesOfPlaceData.data);
-        }
-        
-        async function addressLoadData() {
-            const addressData = await api.get(`/addresses/${id}`, {
-                id: id
-            });
+    async function getAddressTypes() {
+        const response = await api.get('/addresses-types');
+        setAddressTypes(response.data);
+    }
 
-            const address = addressData.data;
+    async function addressLoadData() {
+        const addressData = await api.get(`/addresses/${id}`, {
+            id: id
+        });
 
-            setName(address.name);
-            setAddress_id(address.id);
-            setCEP(address.cep);
-            setPlace(address.place);
-            setNumber(address.number);
-            setComplement((address.complement !== null) ? address.complement : '');
-            setNeighborhood(address.neighborhood);
-            setTypeOfAddress(address.address_type_id);
-            setTypeOfPlace(address.place_type_id);
-            setCity(address.city);
-            setState(address.state);
-            setCountry(address.country);
-        }
+        const address = addressData.data;
 
-        typesLoadData();
-        addressLoadData();
-
+        setName(address.name);
+        setAddress_id(address.id);
+        setCEP(address.cep);
+        setPlace(address.place);
+        setNumber(address.number);
+        setComplement((address.complement !== null) ? address.complement : '');
+        setNeighborhood(address.neighborhood);
+        setTypeOfAddress(address.address_type.id);
+        setTypeOfPlace(address.place_type.id);
+        setCity(address.city);
+        setState(address.state);
+        setCountry(address.country);
+    }
+    
+    useEffect(async () => {
+        await getPlaceTypes();
+        await getAddressTypes();
+        await addressLoadData();
     }, [id]);
 
     async function updateAddress(e) {
@@ -89,7 +94,7 @@ export function UpdateAddress() {
     
             if(response.status === 201) {
                 toast.success('Endereço atualizado com sucesso!');
-                navigate('/meu-perfil');
+                navigate(-1);
             }
 
         } catch (e) {
@@ -177,16 +182,18 @@ export function UpdateAddress() {
                                     />
                                 </fieldset>
 
-                                <fieldset className="p50">
+                                                            <fieldset className="p50">
                                     <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
                                     <select 
                                         id="tipo_de_endereco" 
                                         value={typeOfAddress}
                                         onChange={(e) => setTypeOfAddress(e.target.value)}
                                     >
-                                        <option value={1}>Endereço de entrega</option>
-                                        <option value={2}>Endereço de cobrança</option>
-                                        <option value={3}>Ambos</option>
+                                        {addressTypes.map((addressType)=>{
+                                            return (
+                                                <option value={addressType.id}>{addressType.name}</option>
+                                            )
+                                        })}
                                     </select>
                                 </fieldset>
 
@@ -198,16 +205,11 @@ export function UpdateAddress() {
                                         value={typeOfPlace}
                                         onChange={(e) => setTypeOfPlace(e.target.value)}
                                     >
-                                        <option value={1}>Alameda</option>
-                                        <option value={2}>Avenida</option>
-                                        <option value={3}>Beco</option>
-                                        <option value={4}>Bloco</option>
-                                        <option value={5}>Condomínio</option>
-                                        <option value={6}>Distrito</option>
-                                        <option value={7}>Rua</option>
-                                        <option value={8}>Residencial</option>
-                                        <option value={9}>Sitio</option>
-                                        <option value={10}>Vila</option>
+                                       {placeTypes.map((placeType)=>{
+                                            return (
+                                                <option value={placeType.id}>{placeType.name}</option>
+                                            )
+                                        })}
                                     </select>
                                 </fieldset>
 

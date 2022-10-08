@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { CustomForm } from '../components/customForm/CustomForm';
@@ -7,12 +7,11 @@ import { Header } from '../components/header/Header';
 import { Titulo } from '../components/titulo/Titulo';
 
 import localizacao from '../assets/imgs/localizacao.svg';
-import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 export function RegisterAddress() {
     const navigate = useNavigate();
-
     //endereço
     const [name, setName] = useState();
     const [CEP, setCEP] = useState();
@@ -20,11 +19,26 @@ export function RegisterAddress() {
     const [number, setNumber] = useState();
     const [complement, setComplement] = useState();
     const [neighborhood, setNeighborhood] = useState();
-    const [typeOfAddress, setTypeOfAddress] = useState(1);
-    const [typeOfPlace, setTypeOfPlace] = useState(1);
+    const [typeOfAddress, setTypeOfAddress] = useState();
+    const [typeOfPlace, setTypeOfPlace] = useState();
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [country, setCountry] = useState();
+
+    //opções
+    const [placeTypes, setPlaceTypes] = useState([]);
+    const [addressTypes, setAddressTypes] = useState([]);
+
+    
+    async function getPlaceTypes() {
+        const response = await api.get('/places-types');
+        setPlaceTypes(response.data);
+    }
+
+    async function getAddressTypes() {
+        const response = await api.get('/addresses-types');
+        setAddressTypes(response.data);
+    }
 
     async function createAddress(e) {
         e.preventDefault();
@@ -44,13 +58,21 @@ export function RegisterAddress() {
             });
     
             if (response.status === 201) {
-                toast.success('Endereço cadastrado com sucesso!');	
-                History.back();
+                toast.success('Endereço cadastrado com sucesso!');
+                navigate(-1);
             }
         } catch (e) {
             toast.error(e?.response?.data?.message);
         }
     }
+    
+    useEffect(() => {
+        getPlaceTypes();
+        getAddressTypes();
+
+        setTypeOfAddress(1);
+        setTypeOfPlace(1);
+    }, []);
 
     return (
         <>
@@ -138,9 +160,11 @@ export function RegisterAddress() {
                                         value={typeOfAddress}
                                         onChange={(e) => setTypeOfAddress(e.target.value)}
                                     >
-                                        <option value={1}>Endereço de entrega</option>
-                                        <option value={2}>Endereço de cobrança</option>
-                                        <option value={3}>Ambos</option>
+                                        {addressTypes.map((addressType)=>{
+                                            return (
+                                                <option value={addressType.id}>{addressType.name}</option>
+                                            )
+                                        })}
                                     </select>
                                 </fieldset>
 
@@ -152,16 +176,11 @@ export function RegisterAddress() {
                                         value={typeOfPlace}
                                         onChange={(e) => setTypeOfPlace(e.target.value)}
                                     >
-                                        <option value={1}>Alameda</option>
-                                        <option value={2}>Avenida</option>
-                                        <option value={3}>Beco</option>
-                                        <option value={4}>Bloco</option>
-                                        <option value={5}>Condomínio</option>
-                                        <option value={6}>Distrito</option>
-                                        <option value={7}>Rua</option>
-                                        <option value={8}>Residencial</option>
-                                        <option value={9}>Sitio</option>
-                                        <option value={10}>Vila</option>
+                                       {placeTypes.map((placeType)=>{
+                                            return (
+                                                <option value={placeType.id}>{placeType.name}</option>
+                                            )
+                                        })}
                                     </select>
                                 </fieldset>
 
