@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../../api';
 import star from '../../assets/imgs/star.svg';
+import { Context } from '../../contexts/AuthContext';
 
 import './style.scss';
 
 export function Detalhes() {
+    const { authenticated } = useContext(Context);
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
 
@@ -41,6 +44,28 @@ export function Detalhes() {
         loadData();
     }, [id]);
 
+    async function addProductToCart(){
+        if(!authenticated) {
+            toast.error('Você precisa entrar ou cadastrar uma conta para adicionar um produto ao carrinho');
+            History.push('/login');
+        }
+
+        try {
+            const response = await api.post('/carts', {
+                items: [
+                    {
+                        product_id: id,
+                    }
+                ]
+            });
+            if(response.status === 201) {
+                toast.success('Produto adicionado ao carrinho com sucesso');
+            }
+        }   catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+
     return (
         <div className="produto-detalhes row">
             <div className="col-12 col-md-4">
@@ -75,8 +100,7 @@ export function Detalhes() {
                 </ul>
 
                 <h4 className="preco">R$ {preco}</h4>
-
-                <button className="buy">Comprar</button>
+                <button className="buy" onClick={(e) => {addProductToCart()}}>Adicionar ao Carrinho</button>
                 
                 <div className="descricao">
                     <h4>Descrição</h4>

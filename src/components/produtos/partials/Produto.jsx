@@ -20,7 +20,7 @@ export function Produto({name, price, id, imageURL}) {
                         <li className="star"><img src={starFull} alt="" /></li>
                     </ul>
                     <h4>R$ {price}</h4>
-                    <Link className="buy" to={`/produto-detalhes?id=${id}`}>Comprar</Link>
+                    <Link className="buy" to={`/produto-detalhes?id=${id}`}>Detalhes</Link>
                 </div>
             </div>
         </div>
