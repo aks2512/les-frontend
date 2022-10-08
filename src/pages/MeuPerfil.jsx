@@ -67,6 +67,10 @@ export function MeuPerfil() {
         }
     }
 
+    useEffect(() => {
+        userLoadData();
+    }, []);
+
     return (
         <>
             <Header/>
@@ -132,7 +136,7 @@ export function MeuPerfil() {
                                                 {addresses && addresses.map((address, index) => 
                                                     (
                                                         <tr key={address.id}>
-                                                            <td className="ellipsis">Endereco{index+1}</td>
+                                                            <td className="ellipsis">{address.name || "Endereco " + (index+1)}</td>
                                                             <td><Link to={`/update-address?id=${address.id}`}>editar</Link></td>
                                                             <td><button onClick={() => deleteAddress(address.id)}>remover</button></td>
                                                         </tr>
