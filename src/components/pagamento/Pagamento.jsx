@@ -15,11 +15,10 @@ export function Pagamento() {
     const [cards, setCards] = useState();
 
     useEffect(() => {
-
         if (user) {
             setCards(user.cards);
         }
-
+        console.log(cards);
     }, [user]);
 
     return (
