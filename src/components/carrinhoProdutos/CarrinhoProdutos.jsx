@@ -20,7 +20,7 @@ export function CarrinhoProdutos() {
             </div>
             <div className="total">
                 <p>Total</p>
-                <p><strong>R$ {cart.total_price}</strong></p>
+                <p><strong>R$ {cart?.total_price}</strong></p>
             </div>
         </div>
     );

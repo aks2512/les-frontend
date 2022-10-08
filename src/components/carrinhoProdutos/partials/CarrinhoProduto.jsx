@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import api from '../../../api';import { Context } from '../../../contexts/AuthContext';
 ;
 
-export function CarrinhoProduto(itemPass) {
+export function CarrinhoProduto({ item: itemPass}) {
     const { cartLoadData } = useContext(Context);
-    const [item, setItem] = useState({...itemPass.item});
+    const [item, setItem] = useState({...itemPass});
 
     function addAmount() {
         if (item.quantity < 100) setItem({
