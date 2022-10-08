@@ -45,7 +45,7 @@ export function RegisterAddress() {
     
             if (response.status === 201) {
                 toast.success('Endereço cadastrado com sucesso!');	
-                navigate('/meu-perfil');
+                History.back();
             }
         } catch (e) {
             toast.error(e?.response?.data?.message);

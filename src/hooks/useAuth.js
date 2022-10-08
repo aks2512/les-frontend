@@ -45,7 +45,7 @@ export default function useAuth() {
         const response = await api.get(`carts`, {
           isOpen: true
         });
-        setCart(response.data.user);
+        setCart(response.data[0]);
       } 
     }catch(err){
       toast.error('Erro ao carregar dados do carrinho');

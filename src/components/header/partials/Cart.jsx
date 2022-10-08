@@ -9,9 +9,6 @@ export function Cart() {
     
     function checkAuthentication() {
         if (authenticated) {
-            if(!cart) {
-                cartLoadData()
-            }
             return (
                 <div className="content">
                     <p> Meu carrinho<br/><strong>
@@ -28,6 +25,12 @@ export function Cart() {
             </div>
         )
     }
+
+    useEffect(() => {
+        if(authenticated) {
+            cartLoadData();
+        }
+    }, [])
 
     return (
         <Link to="/carrinho" className="cart">
