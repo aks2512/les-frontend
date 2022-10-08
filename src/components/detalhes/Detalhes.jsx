@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../api';
 import star from '../../assets/imgs/star.svg';
@@ -8,6 +8,8 @@ import { Context } from '../../contexts/AuthContext';
 import './style.scss';
 
 export function Detalhes() {
+    const navigate = useNavigate();
+    
     const { authenticated } = useContext(Context);
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
@@ -61,7 +63,7 @@ export function Detalhes() {
             if(response.status === 201) {
                 toast.success('Produto adicionado ao carrinho com sucesso');
             }
-            Navigate('/carrinho');
+            navigate('/carrinho');
         }   catch (error) {
             toast.error(error.response.data.message);
         }
