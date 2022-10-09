@@ -8,6 +8,7 @@ export default function useAuth() {
   const [cart, setCart] = useState();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userType , setUserType] = useState();
 
   useEffect(() => {
 
@@ -30,9 +31,12 @@ export default function useAuth() {
   async function userLoadData() {
     try{
       const response = await api.patch(`users/auth`);
-      localStorage.setItem('access_token', response.data.access_token);
-      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
+
       setUser(response.data.user);
+      setUserType(user.person ? '@person' : '@master');
+
+      localStorage.setItem(`${userType} access_token`, response.data.access_token);
+      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
     }catch(err){
       handleLogout();
       toast.error('Erro ao carregar dados do usuário');
@@ -62,7 +66,7 @@ export default function useAuth() {
         }
       ));
       if (auth.data) {
-        localStorage.setItem('access_token', auth.data.access_token);
+        localStorage.setItem(`${userType} access_token`, auth.data.access_token);
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
@@ -77,8 +81,8 @@ export default function useAuth() {
 
   async function handleLogout() {
     setAuthenticated(false);
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    localStorage.removeItem(`${userType} access_token`);
+    localStorage.removeItem(`${userType} refresh_token`);
   }
   
   return { user, setUser, userLoadData, cart, setCart, cartLoadData,  authenticated, setAuthenticated, loading, handleLogin, handleLogout };
