@@ -24,7 +24,7 @@ export function CarrinhoEnderecos() {
         if(showModal.open){
             return (
                 <div className="d-block d-md-flex">
-                    <div className="enderecos col-12 col-md-6">
+                    <div className="enderecos col-12 col-md-12">
                     <button className="select-endereco-fechar" onClick={(e) => setShowModal({ open: false })}>x</button>
                         <div className="select-address">
                             <h3>Cobrança</h3>
