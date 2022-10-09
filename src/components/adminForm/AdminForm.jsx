@@ -16,7 +16,7 @@ export function AdminForm() {
         try{
             const response = await handleLogin(email, password)
             toast(response.message);
-            if (response.status === 200) {
+            if (response.status === 201) {
                 navigate('/admin-dashboard');
             }
         } catch (error) {

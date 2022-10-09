@@ -29,7 +29,7 @@ export function UpdateProduto() {
             if(id) {
                 const response = await api.get(`/products/${id}`);
                 console.log(response.status)
-                if(response.status === 200) {
+                if(response.status === 201) {
                     setNome(response.data.name);
                     setPreco(response.data.price);
                     setDescricao(response.data.description);

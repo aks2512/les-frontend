@@ -14,7 +14,7 @@ export function AdminBandeiras() {
         async function loadBrands() {
             const response = await api.get('/brands');
             console.log(response);
-            if(response.status === 200) {
+            if(response.status === 201) {
                 setBrands(response.data);
                 setLoading(false);
             }
@@ -30,7 +30,7 @@ export function AdminBandeiras() {
 
         console.log(response);
 
-        if(response.status === 200) {
+        if(response.status === 201) {
             setBrands(brands.filter(brand => brand.id !== id));
         }
     }

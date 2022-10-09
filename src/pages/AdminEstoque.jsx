@@ -16,7 +16,7 @@ export function AdminEstoque() {
 
     async function loadProducts() {
         const response = await api.get('/products');
-        if(response.status === 200) {
+        if(response.status === 201) {
             setProducts(response.data);
             setLoading(false);
         }

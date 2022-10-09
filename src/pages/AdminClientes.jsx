@@ -13,7 +13,7 @@ export function AdminClientes() {
                 role: "usuario"
             });
             console.log(response);
-            if(response.status === 200) {
+            if(response.status === 201) {
                 setClients(response.data);
                 setLoading(false);
             }
