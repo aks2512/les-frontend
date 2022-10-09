@@ -32,7 +32,7 @@ export function CarrinhoEnderecos() {
                                 if([3,showModal.type].includes(address.address_type.id)){
                                         return (
                                         <div className="d-block d-md-flex">
-                                            <div className="col-12 col-md-6">
+                                            <div className="col-12 col-md-8">
                                                 <CarrinhoEndereco
                                                     name={address?.name}
                                                     place={address?.place}
@@ -41,8 +41,10 @@ export function CarrinhoEnderecos() {
                                                     cep={address?.cep}
                                                 />
                                             </div>
-                                            <div className="col-12 col-md-6">
+                                            
+                                            <div className="col-12 col-md-4">
                                                 <button 
+                                                    className="enderecos-select-tipo" 
                                                     onClick={(e) => {
                                                         if(showModal.type === 1){
                                                             setPaymentAddress(address);
@@ -64,7 +66,7 @@ export function CarrinhoEnderecos() {
         } else {
             return (
                 <div className="d-block d-md-flex">
-                    <div className="enderecos col-12 col-md-6">
+                    <div className="enderecos col-12 col-md-12">
                         <h4>Endereços</h4>
                         <div className="enderecos-tipo d-block d-md-flex">
                             <h5 className="col-md-6">Cobrança</h5>
@@ -96,9 +98,6 @@ export function CarrinhoEnderecos() {
                             state={deliveryAddress?.state}
                             cep={deliveryAddress?.cep}
                         /> : <p className="text-center">Nenhum endereço cadastrado</p> }
-                    </div>
-                    <div className="novo-endereco col-12 col-md-6">
-                        <Link to="/register-address">Informar Outro Endereço</Link>
                     </div>
                 </div>
             )
