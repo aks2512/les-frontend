@@ -6,7 +6,7 @@ import api from '../../../api';import { Context } from '../../../contexts/AuthCo
 export function CarrinhoProduto({ item: itemPass}) {
     const { cart, cartLoadData } = useContext(Context);
     const [item, setItem] = useState({...itemPass});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     function addAmount() {
         if (item.quantity < 100) setItem({
