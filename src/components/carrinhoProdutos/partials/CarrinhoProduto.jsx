@@ -6,6 +6,7 @@ import api from '../../../api';import { Context } from '../../../contexts/AuthCo
 export function CarrinhoProduto({ item: itemPass}) {
     const { cart, cartLoadData } = useContext(Context);
     const [item, setItem] = useState({...itemPass});
+    const [loading, setLoading] = useState(false);
 
     function addAmount() {
         if (item.quantity < 100) setItem({
@@ -42,12 +43,22 @@ export function CarrinhoProduto({ item: itemPass}) {
     }
 
     useEffect(() => {
-        updateItem();
-    }, [item.quantity]);
-
-    useEffect(() => {
-        setItem({...itemPass});
+        const quantity = item.quantity;
+        setItem({...itemPass, quantity});
     }, [cart]);
+
+    useEffect(() => {    
+        const tmt = setTimeout(() => {
+            if(!loading){
+                setLoading(true);
+                updateItem();
+            }
+
+            setLoading(false);
+        }, 1000);
+
+        return () => clearTimeout(tmt);
+    }, [item.quantity]);
 
     return (
         <div className="carrinho-produto">
@@ -59,14 +70,15 @@ export function CarrinhoProduto({ item: itemPass}) {
                 <div className="content">
                     <div className="title">{item?.product?.name}</div>
                     <fieldset className="amount">
-                        <button onClick={rmvAmount} className="remove">-</button>
+                        <button onClick={rmvAmount} className="remove" disabled={loading}>-</button>
                         <input 
                             type="text"
                             value={item?.quantity}
+                            onChange={(e) => setItem({...item, quantity: e.target.value})}
                             maxLength="2"
-                            disabled={true}
+                            disabled={loading}
                         />
-                        <button onClick={addAmount} className="add">+</button>
+                        <button onClick={(e)=>{addAmount()}} className="add" disabled={loading}>+</button>
                     </fieldset>
                 </div>
                 <div className="price"><p>R$ {item?.price}</p></div>
