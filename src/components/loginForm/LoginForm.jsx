@@ -17,7 +17,7 @@ export function LoginForm() {
             const response = await handleLogin(email, password)
 
             toast(response);
-            if (response.status === 200) {
+            if (response.status === 201) {
                 if(response.user.role != "usuario"){
                     toast.error('Apenas cliente pode utilizar essa função')
                     handleLogout();
