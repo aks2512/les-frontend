@@ -14,9 +14,8 @@ export function CarrinhoEnderecos() {
 
     useEffect(() => {
         if (user) {
-            console.log(user);
-            setPaymentAddress(user?.person?.addresses?.find(address => address.address_type.id === 1));
-            setDeliveryAddress(user?.person?.addresses?.find(address => address.address_type.id === 2));
+            setPaymentAddress(user?.person?.addresses?.find(address => [1,3].includes(address.address_type.id)));
+            setDeliveryAddress(user?.person?.addresses?.find(address => [2,3].includes(address.address_type.id)));
         }
     }, [user]);
 
@@ -27,7 +26,6 @@ export function CarrinhoEnderecos() {
                     <h4>Endereços</h4>
                     <h5>Cobrança</h5>
                     { paymentAddress ? <CarrinhoEndereco
-                        type={paymentAddress?.address_type}
                         name={paymentAddress?.name}
                         place={paymentAddress?.place}
                         city={paymentAddress?.city}
