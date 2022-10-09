@@ -1,7 +1,13 @@
 @import '../../styles/global/variables.scss';
 
 .carrinho-enderecos {
-    
+    .select-endereco{
+        background-color: #e9e9e9;
+        padding: 15px;
+        border-radius: 20px;
+        margin-right: 10%;
+    }
+
     .enderecos {
         height: 140px;
         overflow-y: auto;
@@ -31,7 +37,7 @@
             all: unset;
             cursor: pointer;
             position: absolute;
-            left: 52.5%;
+            left: 53%;
             padding: 0 10px;
             background-color: red;
             color: $backgroundColor4;

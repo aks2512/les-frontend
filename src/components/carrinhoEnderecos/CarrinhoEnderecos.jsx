@@ -23,20 +23,38 @@ export function CarrinhoEnderecos() {
     function selectAddress() {
         if(showModal.open){
             return (
-                <div className="d-block d-md-flex">
+                <div className="select-endereco d-block d-md-flex">
                     <div className="enderecos col-12 col-md-12">
                     <button className="select-endereco-fechar" onClick={(e) => setShowModal({ open: false })}>x</button>
                         <div className="select-address">
                             <h3>Cobrança</h3>
                             {user?.person?.addresses?.map(address => {
                                 if([3,showModal.type].includes(address.address_type.id)){
-                                    return (<CarrinhoEndereco
-                                        name={address?.name}
-                                        place={address?.place}
-                                        city={address?.city}
-                                        state={address?.state}
-                                        cep={address?.cep}
-                                    />)
+                                        return (
+                                        <div className="d-block d-md-flex">
+                                            <div className="col-12 col-md-6">
+                                                <CarrinhoEndereco
+                                                    name={address?.name}
+                                                    place={address?.place}
+                                                    city={address?.city}
+                                                    state={address?.state}
+                                                    cep={address?.cep}
+                                                />
+                                            </div>
+                                            <div className="col-12 col-md-6">
+                                                <button 
+                                                    onClick={(e) => {
+                                                        if(showModal.type === 1){
+                                                            setPaymentAddress(address);
+                                                        } else {
+                                                            setDeliveryAddress(address);
+                                                        }
+                                                        setShowModal({ open: false });
+                                                    }}
+                                                > Selecionar </button>
+                                            </div>
+                                        </div>
+                                    )
                                 }
                             })}
                         </div>
