@@ -45,6 +45,7 @@ export function RegisterAddress() {
 
         try {
             const response = await api.post('/addresses', {
+                name,
                 cep: CEP,
                 place: place,
                 number: number,
