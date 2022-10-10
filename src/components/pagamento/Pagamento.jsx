@@ -16,14 +16,13 @@ export function Pagamento() {
 
     useEffect(() => {
         if (user) {
-            setCards(user.cards);
+            setCards(user.person?.cards);
         }
-        console.log(cards);
     }, [user]);
 
     return (
         <div className="pagamento">
-            <p>Selecione um cartão</p>
+            <p>Selecione pelo menos um cartão</p>
 
             <div className="cartoes">
                 {cards && cards.map((card, index) => (
