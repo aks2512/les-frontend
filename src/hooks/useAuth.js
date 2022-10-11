@@ -30,13 +30,15 @@ export default function useAuth() {
 
   async function userLoadData() {
     try{
-      const response = await api.patch(`users/auth`);
+      if(authenticated){
+        const response = await api.patch(`users/auth`);
 
-      setUser(response.data.user);
-      setUserType(user.person ? '@person' : '@master');
-
-      localStorage.setItem(`${userType} access_token`, response.data.access_token);
-      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
+        setUser(response.data.user);
+        setUserType(user.person ? '@person' : '@master');
+  
+        localStorage.setItem(`${userType} access_token`, response.data.access_token);
+        api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
+      }
     }catch(err){
       handleLogout();
       toast.error('Erro ao carregar dados do usuário');
