@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../contexts/AuthContext";
 import { RegisterAddress } from "../../pages/RegisterAddress";
-import { Modal } from "../Modal/Modal";
+import { Modal } from "../modal/Modal";
 
 import { CarrinhoEndereco } from "./partials/CarrinhoEndereco";
 import { CarrinhoEnderecoSelect } from "./partials/CarrinhoEnderecoSelect";
@@ -23,7 +23,8 @@ export function CarrinhoEnderecos() {
             setPaymentAddress(user?.person?.addresses?.find(address => [1,3].includes(address.address_type.id)));
             setDeliveryAddress(user?.person?.addresses?.find(address => [2,3].includes(address.address_type.id)));
         }
-    }, [user]);
+        console.log(showModalCreate)
+    }, [user, showModalCreate]);
 
     function selectAddress() {
         if(showModalSelect.open){
@@ -95,11 +96,15 @@ export function CarrinhoEnderecos() {
     return (
         <div className="carrinho-enderecos">
             {selectAddress()}
-            <Modal isOpen={false} onClose={(e)=>{setShowModalCreate(false)}}>
-                <div className="modal-endereco">
-                    <RegisterAddress/>
-                </div>
-            </Modal>
+            {
+                showModalCreate && (
+                    <Modal isOpen={showModalCreate} setIsOpen={setShowModalCreate}>
+                        <div className="modal-endereco">
+                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                        </div>
+                    </Modal>
+                )         
+            }
         </div>
     );
 }

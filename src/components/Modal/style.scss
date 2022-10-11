@@ -1,7 +1,14 @@
 @import '../../styles/global/variables.scss';
 
 .modal {
-    position: absolute;
+    width: 250px;
+    height: 170px;
+    background: white;
+    color: white;
+    z-index: 10;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
