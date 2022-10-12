@@ -1,0 +1,16 @@
+@import '../../styles/global/variables.scss';
+
+.create-purchase{
+    margin-top: 25px;
+}
+
+.btn-finalizar {
+    all: unset;
+    background-color: $backgroundColor;
+    padding: 16px 30px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 12px;
+    color: $textColor2;
+}

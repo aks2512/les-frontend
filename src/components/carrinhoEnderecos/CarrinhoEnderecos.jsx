@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import api from "../../api";
 import { Context } from "../../contexts/AuthContext";
 import { RegisterAddress } from "../../pages/RegisterAddress";
 import { AddressForm } from "../addressForm/AddressForm";
@@ -12,12 +14,15 @@ import { CarrinhoEnderecoSelect } from "./partials/CarrinhoEnderecoSelect";
 
 import './style.scss';
 
-export function CarrinhoEnderecos() {
+export function CarrinhoEnderecos({ 
+    paymentAddress,
+    deliveryAddress,
+    setPaymentAddress,
+    setDeliveryAddress,
+ }) {
     const { user } = useContext(Context);
-    const [paymentAddress, setPaymentAddress] = useState();
-    const [deliveryAddress, setDeliveryAddress] = useState();
     const [showModalSelect, setShowModalSelect] = useState({open: false, type: 3});
-    const [showModalCreate, setShowModalCreate] = useState({open: false, type: 1});
+    const [showModalCreate, setShowModalCreate] = useState({open: false, type: 1, edit: false});
     const [createAddress, setCreateAddress] = useState(false);
 
     useEffect(() => {
@@ -107,9 +112,8 @@ export function CarrinhoEnderecos() {
             {selectAddress()}
             <ModalTest onClose={()=>{setShowModalCreate({...showModalCreate, open: false})}} isOpen={showModalCreate.open}>
                 <div className="container">
-                    <AddressForm onSubmit={(e,{...params}) => {
+                    <AddressForm onSubmit={async (e,{...params}) => {
                         e.preventDefault();
-                        console.log(params)
                         if([1, 3].includes(Number(params.address_type_id))){
                             setDeliveryAddress({...params, save: createAddress.save})
                         } 
@@ -118,6 +122,18 @@ export function CarrinhoEnderecos() {
                             setPaymentAddress({...params, save: createAddress.save})
                         }
 
+                        if(createAddress){
+                            try{
+                                const response = await api.post(`addresses`, {
+                                    ...params
+                                })
+                                toast.message(response.data.message);
+                            } catch(err) {
+                                toast.error(err.response.data.message || 'Falha ao cadastrar endereço')
+                                return;
+                            }
+                        }
+                        
                         setCreateAddress(false)
                         setShowModalCreate(false)
                     }}>
@@ -126,7 +142,10 @@ export function CarrinhoEnderecos() {
                             <button 
                                 className={createAddress ? 'button-true' : 'button-false'} 
                                 onClick={
-                                    () => setCreateAddress(!createAddress)
+                                    (e) => {
+                                        e.preventDefault()
+                                        setCreateAddress(!createAddress)
+                                    }
                                 }
                             >
                                 {createAddress ? 'Sim' : 'Não'}
@@ -134,7 +153,6 @@ export function CarrinhoEnderecos() {
                         </div>
                     </AddressForm>
                 </div>
-
             </ModalTest>  
         </div>
     );
