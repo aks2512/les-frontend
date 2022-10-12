@@ -5,20 +5,10 @@ import api from '../../api';
 import { Titulo } from '../titulo/Titulo';
 import { CustomForm } from '../customForm/CustomForm';
 import localizacao from '../../assets/imgs/localizacao.svg';
-export function AddressForm({ onSubmit, children }) {
+export function AddressForm({ onSubmit, children, addressPass }) {
     const navigate = useNavigate();
     //endereço
-    const [name, setName] = useState();
-    const [CEP, setCEP] = useState();
-    const [place, setPlace] = useState();
-    const [number, setNumber] = useState();
-    const [complement, setComplement] = useState();
-    const [neighborhood, setNeighborhood] = useState();
-    const [typeOfAddress, setTypeOfAddress] = useState();
-    const [typeOfPlace, setTypeOfPlace] = useState();
-    const [city, setCity] = useState();
-    const [state, setState] = useState();
-    const [country, setCountry] = useState();
+    const [address, setAddress] = useState(addressPass || {})
 
     //opções
     const [placeTypes, setPlaceTypes] = useState([]);
@@ -40,17 +30,7 @@ export function AddressForm({ onSubmit, children }) {
 
         try {
             const response = await api.post('/addresses', {
-                name,
-                cep: CEP,
-                place: place,
-                number: number,
-                complement: complement,
-                neighborhood: neighborhood,
-                address_type_id: typeOfAddress,
-                place_type_id: typeOfPlace,
-                city: city,
-                state: state,
-                country: country
+                ...address
             });
     
             if (response.status === 201) {
@@ -66,25 +46,19 @@ export function AddressForm({ onSubmit, children }) {
         getPlaceTypes();
         getAddressTypes();
 
-        setTypeOfAddress(1);
-        setTypeOfPlace(1);
+        if(!addressPass){
+            setAddress({ 
+                address_type_id: 1,
+                place_type_id: 1
+            });
+        }
     }, []);
 
     return (
         <>
                 <CustomForm onSubmit={onSubmit ? (e) => {
                             onSubmit(e, {
-                                name,
-                                cep: CEP,
-                                place: place,
-                                number: number,
-                                complement: complement,
-                                neighborhood: neighborhood,
-                                address_type_id: typeOfAddress,
-                                place_type_id: typeOfPlace,
-                                city: city,
-                                state: state,
-                                country: country
+                                ...address
                             }) 
                         }: (e) => {
                             createAddress(e)
@@ -103,8 +77,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="nome" 
                                         type="text"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)} 
+                                        value={address.name}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            name: e.target.value
+                                        })} 
                                     />
                                 </fieldset>
 
@@ -113,8 +90,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="cep" 
                                         type="text" 
-                                        value={CEP}
-                                        onChange={(e) => setCEP(e.target.value)}
+                                        value={address.cep}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            cep: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -123,8 +103,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="logradouro" 
                                         type="text"
-                                        value={place}
-                                        onChange={(e) => setPlace(e.target.value)} 
+                                        value={address.place}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            place: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -133,8 +116,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="numero" 
                                         type="text" 
-                                        value={number}
-                                        onChange={(e) => setNumber(e.target.value)}
+                                        value={address.number}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            number: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -143,8 +129,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="complemento" 
                                         type="text" 
-                                        value={complement}
-                                        onChange={(e) => setComplement(e.target.value)}
+                                        value={address.complement}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            complement: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -153,8 +142,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="bairro" 
                                         type="text" 
-                                        value={neighborhood}
-                                        onChange={(e) => setNeighborhood(e.target.value)}
+                                        value={address.neighborhood}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            neighborhood: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -162,8 +154,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <label htmlFor="tipo_de_endereco">Tipo de endereço</label>
                                     <select 
                                         id="tipo_de_endereco" 
-                                        value={typeOfAddress}
-                                        onChange={(e) => setTypeOfAddress(e.target.value)}
+                                        value={address.address_type_id}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            address_type_id: e.target.value 
+                                        })}
                                     >
                                         {addressTypes.map((addressType)=>{
                                             return (
@@ -178,8 +173,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <select 
                                         id="tipo_de_logradouro" 
                                         type="text" 
-                                        value={typeOfPlace}
-                                        onChange={(e) => setTypeOfPlace(e.target.value)}
+                                        value={address.place_type_id}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            place_type_id: e.target.value 
+                                        })}
                                     >
                                        {placeTypes.map((placeType)=>{
                                             return (
@@ -194,8 +192,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="cidade" 
                                         type="text"
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)} 
+                                        value={address.city}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            city: e.target.value 
+                                        })} 
                                     />
                                 </fieldset>
 
@@ -204,8 +205,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="estado" 
                                         type="text" 
-                                        value={state}
-                                        onChange={(e) => setState(e.target.value)}
+                                        value={address.state}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            state: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
@@ -214,8 +218,11 @@ export function AddressForm({ onSubmit, children }) {
                                     <input 
                                         id="pais" 
                                         type="text" 
-                                        value={country}
-                                        onChange={(e) => setCountry(e.target.value)}
+                                        value={address.country}
+                                        onChange={(e) => setAddress({ 
+                                            ...address, 
+                                            country: e.target.value 
+                                        })}
                                     />
                                 </fieldset>
 
