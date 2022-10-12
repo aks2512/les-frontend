@@ -17,16 +17,15 @@ export function CarrinhoEnderecos() {
     const [paymentAddress, setPaymentAddress] = useState();
     const [deliveryAddress, setDeliveryAddress] = useState();
     const [showModalSelect, setShowModalSelect] = useState({open: false, type: 3});
-    const [showModalCreate, setShowModalCreate] = useState(false);
-    const [newAddress, setNewAddress] = useState({ save: false });
+    const [showModalCreate, setShowModalCreate] = useState({open: false, type: 1});
+    const [createAddress, setCreateAddress] = useState(false);
 
     useEffect(() => {
         if (user) {
             setPaymentAddress(user?.person?.addresses?.find(address => [1,3].includes(address.address_type.id)));
             setDeliveryAddress(user?.person?.addresses?.find(address => [2,3].includes(address.address_type.id)));
         }
-        console.log(showModalCreate)
-    }, [user, showModalCreate]);
+    }, [user]);
 
     function selectAddress() {
         if(showModalSelect.open){
@@ -54,13 +53,15 @@ export function CarrinhoEnderecos() {
                             <div className="col-12 col-md-6">
                                 <h4>Endereços</h4>
                             </div>
-                            <button 
-                                className="enderecos-create col-12 col-md-6" 
-                                onClick={(e) => setShowModalCreate(true)}
-                            >Cadastrar</button>
                         </div>
                         <div className="enderecos-tipo d-block d-md-flex">
                             <h5 className="col-md-6">Cobrança</h5>
+                            <button 
+                                className="enderecos-create col-md-3" 
+                                onClick={(e) => {
+                                    setShowModalCreate({open: true, type: 2})
+                                }}
+                            >Cadastrar</button>
                             <button 
                                 className="enderecos-select-tipo col-md-3" 
                                 onClick={(e) => setShowModalSelect({ open: true, type: 2 })}
@@ -76,6 +77,12 @@ export function CarrinhoEnderecos() {
                         <hr></hr>
                         <div className="enderecos-tipo d-block d-md-flex">
                             <h5 className="col-md-6">Entrega</h5>
+                            <button 
+                                className="enderecos-create col-md-3" 
+                                onClick={(e) => {
+                                    setShowModalCreate({open: true, type: 1})
+                                }}
+                            >Cadastrar</button>
                             <button 
                                 className="enderecos-select-tipo col-md-6" 
                                 onClick={(e) => setShowModalSelect({ open: true, type: 1 })}
@@ -98,24 +105,36 @@ export function CarrinhoEnderecos() {
     return (
         <div className="carrinho-enderecos">
             {selectAddress()}
-            <ModalTest setIsOpen={setShowModalCreate} isOpen={showModalCreate}>
-                <div className="cadastrar-endereco custom-form">
-                    <Titulo title={'Deseja Salvar o Endereço na Sua Conta?'} />
-                    <button 
-                        className={newAddress.save ? 'button-true' : 'button-false'} 
-                        onClick={
-                            () => setNewAddress({...newAddress, save: !newAddress.save})
+            <ModalTest onClose={()=>{setShowModalCreate({...showModalCreate, open: false})}} isOpen={showModalCreate.open}>
+                <div className="container">
+                    <AddressForm onSubmit={(e,{...params}) => {
+                        e.preventDefault();
+                        console.log(params)
+                        if([1, 3].includes(Number(params.address_type_id))){
+                            setDeliveryAddress({...params, save: createAddress.save})
+                        } 
+                        
+                        if([2, 3].includes(Number(params.address_type_id))){
+                            setPaymentAddress({...params, save: createAddress.save})
                         }
-                    >
-                        {newAddress.save ? 'Sim' : 'Não'}
-                    </button>
+
+                        setCreateAddress(false)
+                        setShowModalCreate(false)
+                    }}>
+                        <div className="cadastrar-endereco custom-form">
+                            <Titulo title={'Deseja Salvar o Endereço na Sua Conta?'} />
+                            <button 
+                                className={createAddress ? 'button-true' : 'button-false'} 
+                                onClick={
+                                    () => setCreateAddress(!createAddress)
+                                }
+                            >
+                                {createAddress ? 'Sim' : 'Não'}
+                            </button>
+                        </div>
+                    </AddressForm>
                 </div>
-                <AddressForm onSubmit={(e,{...params}) => {
-                    e.preventDefault();
-                    console.log(params);
-                    setNewAddress(params);
-                    setShowModalCreate(false);
-                }}/>
+
             </ModalTest>  
         </div>
     );

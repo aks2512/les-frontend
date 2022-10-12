@@ -246,9 +246,7 @@ export function UpdateAddress() {
 
                             </div>
                         </div>
-
                         <button>Atualizar</button>
-
                     </CustomForm>
                 </div>
             </main>

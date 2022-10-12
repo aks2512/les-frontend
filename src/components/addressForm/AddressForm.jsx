@@ -5,7 +5,7 @@ import api from '../../api';
 import { Titulo } from '../titulo/Titulo';
 import { CustomForm } from '../customForm/CustomForm';
 import localizacao from '../../assets/imgs/localizacao.svg';
-export function AddressForm({ onSubmit }) {
+export function AddressForm({ onSubmit, children }) {
     const navigate = useNavigate();
     //endereço
     const [name, setName] = useState();
@@ -72,8 +72,7 @@ export function AddressForm({ onSubmit }) {
 
     return (
         <>
-                <div className="container py-5">
-                    <CustomForm onSubmit={onSubmit ? (e) => {
+                <CustomForm onSubmit={onSubmit ? (e) => {
                             onSubmit(e, {
                                 name,
                                 cep: CEP,
@@ -223,10 +222,12 @@ export function AddressForm({ onSubmit }) {
                             </div>
                         </div>
 
+                        {children}
+
                         <button>Cadastrar</button>
 
+
                     </CustomForm>
-                </div>
         </>
     );
 }

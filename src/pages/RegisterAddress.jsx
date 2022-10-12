@@ -7,7 +7,9 @@ export function RegisterAddress() {
         <>
             <Header/>
             <main>
-                <AddressForm />
+                <div className='container py-7'>
+                    <AddressForm />
+                </div>
             </main>
             <Footer/>
         </>
