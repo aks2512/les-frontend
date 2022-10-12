@@ -10,9 +10,8 @@ import './style.scss';
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../contexts/AuthContext";
 
-export function Pagamento() {
+export function Pagamento({ cards, setCards }) {
     const { user } = useContext(Context);
-    const [cards, setCards] = useState();
 
     useEffect(() => {
         if (user) {
@@ -26,10 +25,20 @@ export function Pagamento() {
 
             <div className="cartoes">
                 {cards && cards.map((card, index) => (
-                    <Cartao
-                        name={card.number}
-                        image=""
-                    />
+                    <div className={`card-selector ${card.active ? 'active-card' : ''}`}>
+                        <Cartao
+                            name={card.number}
+                            image=""
+                        >
+                        <input className="checkbox-card" type='checkbox' value={card.active} onChange={(e) => {
+                            const cardExists = cards.findIndex(c => c.id == card.id)
+                            const newCards = cards.slice();
+
+                            newCards[cardExists].active = e.target.checked
+                            setCards(newCards)
+                        }} />
+                        </Cartao>
+                    </div>
                 ))}
             </div>
 
@@ -42,11 +51,6 @@ export function Pagamento() {
                 <img src={cupom} alt="" />
                 <input type="text" placeholder="Cupom de Desconto ou Troca" />
             </div>
-
-            <div className="d-flex justify-content-center">
-                <button className="btn-finalizar">Finalizar compra</button>
-            </div>
-
             <div className="protegido">
                 <img src={cadeado} alt="" />
                 <p>Ambiente 100% seguro</p>
