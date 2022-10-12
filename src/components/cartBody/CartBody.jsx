@@ -12,7 +12,7 @@ import './style.scss'
 
 export function CartBody() {
     const navigate = useNavigate();
-    const { cart, cartLoadData } = useContext(Context);
+    const { cart, cartLoadData, setCart } = useContext(Context);
     const [cards, setCards] = useState([]);
     const [paymentAddress, setPaymentAddress] = useState();
     const [deliveryAddress, setDeliveryAddress] = useState();
@@ -28,7 +28,10 @@ export function CartBody() {
             })
 
             toast(response.data.message);
-            cartLoadData();
+
+            const newCart = await api.post('/carts')
+            setCart(newCart);
+            
             navigate('/meus-pedidos')
         } catch(err){
             toast.error(err.response.data.message || 'Falha ao finalizar compra');

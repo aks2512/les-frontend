@@ -12,12 +12,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export function MeusPedidos() {
-    const [purchases, setPurchases] = useState([])
+    const [purchases, setPurchases] = useState([]);
 
     async function loadPurchases() {
         try {
             const response = await api.get(`purchases`);
-            console.log(response.data)
             setPurchases(response.data);
         } catch(err) {
             toast.error(err.response.data.message || 'Falha ao carregar pedidos');
@@ -25,7 +24,7 @@ export function MeusPedidos() {
     }
 
     useEffect(() => {
-        loadPurchases()
+        loadPurchases();
     }, [])
     return (
         <>
