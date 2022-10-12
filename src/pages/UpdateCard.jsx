@@ -8,6 +8,7 @@ import { Header } from '../components/header/Header';
 import { Titulo } from '../components/titulo/Titulo';
 
 import cartao from '../assets/imgs/cartao.svg';
+import { toast } from 'react-toastify';
 
 export function UpdateCard() {
     const navigate = useNavigate();
@@ -53,20 +54,22 @@ export function UpdateCard() {
     async function updateCard(e) {
         e.preventDefault();
 
-        const response = await api.put('/cards', {
-            id: id,
-            card:{
+        try{
+            const response = await api.put(`/cards/${id}`, {
                 name: name,
                 owner_name: ownerName,
                 number: number,
                 brand_id: brandId,
                 security_code: securityCode
-            }
-        })
-
-        if(response.status === 201) {
-            navigate('/meu-perfil');
+            })
+    
+            toast(response.data.message)
+            navigate(-1);
+        } catch(err){
+            console.log(err)
+            toast.error(err?.response?.data?.message || 'falha ao atualizar cartão')
         }
+
     }
 
     return (
