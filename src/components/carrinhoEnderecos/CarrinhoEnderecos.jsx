@@ -3,7 +3,9 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../contexts/AuthContext";
 import { RegisterAddress } from "../../pages/RegisterAddress";
-import { Modal } from "../modal/Modal";
+import { AddressForm } from "../addressForm/AddressForm";
+import { Modal, ModalTest } from "../modal/Modal";
+import { Titulo } from "../titulo/Titulo";
 
 import { CarrinhoEndereco } from "./partials/CarrinhoEndereco";
 import { CarrinhoEnderecoSelect } from "./partials/CarrinhoEnderecoSelect";
@@ -16,7 +18,7 @@ export function CarrinhoEnderecos() {
     const [deliveryAddress, setDeliveryAddress] = useState();
     const [showModalSelect, setShowModalSelect] = useState({open: false, type: 3});
     const [showModalCreate, setShowModalCreate] = useState(false);
-    const [newAddress, setNewAddress] = useState({});
+    const [newAddress, setNewAddress] = useState({ save: false });
 
     useEffect(() => {
         if (user) {
@@ -96,15 +98,25 @@ export function CarrinhoEnderecos() {
     return (
         <div className="carrinho-enderecos">
             {selectAddress()}
-            {
-                showModalCreate && (
-                    <Modal isOpen={showModalCreate} setIsOpen={setShowModalCreate}>
-                        <div className="modal-endereco">
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                        </div>
-                    </Modal>
-                )         
-            }
+            <ModalTest setIsOpen={setShowModalCreate} isOpen={showModalCreate}>
+                <div className="cadastrar-endereco custom-form">
+                    <Titulo title={'Deseja Salvar o Endereço na Sua Conta?'} />
+                    <button 
+                        className={newAddress.save ? 'button-true' : 'button-false'} 
+                        onClick={
+                            () => setNewAddress({...newAddress, save: !newAddress.save})
+                        }
+                    >
+                        {newAddress.save ? 'Sim' : 'Não'}
+                    </button>
+                </div>
+                <AddressForm onSubmit={(e,{...params}) => {
+                    e.preventDefault();
+                    console.log(params);
+                    setNewAddress(params);
+                    setShowModalCreate(false);
+                }}/>
+            </ModalTest>  
         </div>
     );
 }
