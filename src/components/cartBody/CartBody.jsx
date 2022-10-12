@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../api";
 import { Context } from "../../contexts/AuthContext";
@@ -10,7 +11,8 @@ import { WhiteBox } from "../whiteBox/WhiteBox";
 import './style.scss'
 
 export function CartBody() {
-    const { cart } = useContext(Context);
+    const navigate = useNavigate();
+    const { cart, cartLoadData } = useContext(Context);
     const [cards, setCards] = useState([]);
     const [paymentAddress, setPaymentAddress] = useState();
     const [deliveryAddress, setDeliveryAddress] = useState();
@@ -25,7 +27,9 @@ export function CartBody() {
                 cards: activeCards,
             })
 
-            toast(response.data.message)
+            toast(response.data.message);
+            cartLoadData();
+            navigate('/meus-pedidos')
         } catch(err){
             toast.error(err.response.data.message || 'Falha ao finalizar compra');
         }
