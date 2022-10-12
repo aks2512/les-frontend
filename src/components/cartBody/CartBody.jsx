@@ -21,7 +21,7 @@ export function CartBody() {
             const response = await api.post('/purchases', {
                 cart_id: cart.id,
                 payment_address: paymentAddress,
-                deliveryAddress: deliveryAddress,
+                delivery_address: deliveryAddress,
                 cards: activeCards,
             })
 
