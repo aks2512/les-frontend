@@ -41,11 +41,14 @@ export function CarrinhoEnderecos({
                     type={showModalSelect.type}
                     onClose={(params) => setShowModalSelect({ open: false })}
                     onSelect={(address) => {
-                        if(showModalSelect.type === 1){
-                            setPaymentAddress(address);
-                        } else {
+                        if(showModalSelect.type == 1){
                             setDeliveryAddress(address);
                         }
+                        
+                        if(showModalSelect.type == 2){
+                            setPaymentAddress(address);
+                        } 
+
                         setShowModalSelect({ open: false });
                     }}
                 />
