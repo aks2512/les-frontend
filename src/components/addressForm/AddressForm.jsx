@@ -157,7 +157,7 @@ export function AddressForm({ onSubmit, children, addressPass }) {
                                         value={address.address_type_id}
                                         onChange={(e) => setAddress({ 
                                             ...address, 
-                                            address_type_id: e.target.value 
+                                            address_type_id: Number(e.target.value) 
                                         })}
                                     >
                                         {addressTypes.map((addressType)=>{
@@ -176,7 +176,7 @@ export function AddressForm({ onSubmit, children, addressPass }) {
                                         value={address.place_type_id}
                                         onChange={(e) => setAddress({ 
                                             ...address, 
-                                            place_type_id: e.target.value 
+                                            place_type_id: Number(e.target.value) 
                                         })}
                                     >
                                        {placeTypes.map((placeType)=>{
