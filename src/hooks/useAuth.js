@@ -12,36 +12,30 @@ export default function useAuth() {
 
   useEffect(() => {
 
-    let userExist = localStorage.getItem('access_token');
+    let userExist = localStorage.getItem(`${userType} access_token`);
 
     if (userExist) {
-
       api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
-      userLoadData();
       setAuthenticated(true);
-
+      userLoadData();
     } else {
       setAuthenticated(false);
     }
-
     setLoading(false);
-
   }, []);
 
   async function userLoadData() {
     try{
-      if(authenticated){
-        const response = await api.patch(`users/auth`);
+      const response = await api.patch(`users/auth`);
 
-        setUser(response.data.user);
-        setUserType(user.person ? '@person' : '@master');
-  
-        localStorage.setItem(`${userType} access_token`, response.data.access_token);
-        api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
-      }
+      setUser(response.data.user);
+      setUserType(response.person ? '@person' : '@master');
+
+      localStorage.setItem(`${userType} access_token`, response.data.access_token);
+      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
     }catch(err){
-      handleLogout();
       toast.error('Erro ao carregar dados do usuário');
+      handleLogout();
     }
   }
   
@@ -68,6 +62,7 @@ export default function useAuth() {
         }
       ));
       if (auth.data) {
+        setUserType(auth.person ? '@person' : '@master');
         localStorage.setItem(`${userType} access_token`, auth.data.access_token);
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
