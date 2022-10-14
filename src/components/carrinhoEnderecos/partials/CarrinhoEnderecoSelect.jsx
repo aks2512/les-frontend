@@ -11,35 +11,37 @@ export function CarrinhoEnderecoSelect({ onClose, onSelect, type }) {
     const { user } = useContext(Context);
 
     return (
-        <div className="carrinho-enderecos">
+        <div className="modal__enderecos">
              <div className="select-endereco d-block d-md-flex">
                     <div className="enderecos col-12 col-md-12">
-                    <button className="select-endereco-fechar" onClick={onClose}>x</button>
-                        <div className="select-address">
-                            <h3>{type === 1 ? 'Cobrança' : 'Entrega'}</h3>
-                            {user?.person?.addresses?.map(address => {
-                                if([3,type].includes(address.address_type.id)){
-                                        return (
-                                        <div className="d-block d-md-flex">
-                                            <div className="col-12 col-md-8">
-                                                <CarrinhoEndereco
-                                                    name={address?.name}
-                                                    place={address?.place}
-                                                    city={address?.city}
-                                                    state={address?.state}
-                                                    cep={address?.cep}
-                                                />
+                        <h3>{type === 1 ? 'Cobrança' : 'Entrega'}</h3>
+                        <button className="select-endereco-fechar" onClick={onClose}>x</button>
+                        <div className="enderecos-overflow">
+                            <div className="select-address">
+                                {user?.person?.addresses?.map(address => {
+                                    if([3,type].includes(address.address_type.id)){
+                                            return (
+                                            <div className="d-block d-md-flex justify-content-between">
+                                                <div>
+                                                    <CarrinhoEndereco
+                                                        name={address?.name}
+                                                        place={address?.place}
+                                                        city={address?.city}
+                                                        state={address?.state}
+                                                        cep={address?.cep}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <button 
+                                                        className="enderecos-select-tipo" 
+                                                        onClick={(e) => onSelect(address)}
+                                                    > Selecionar </button>
+                                                </div>
                                             </div>
-                                            <div className="col-12 col-md-4">
-                                                <button 
-                                                    className="enderecos-select-tipo" 
-                                                    onClick={(e) => onSelect(address)}
-                                                > Selecionar </button>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            })}
+                                        )
+                                    }
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>

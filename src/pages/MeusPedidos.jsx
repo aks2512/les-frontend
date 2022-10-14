@@ -43,13 +43,13 @@ export function MeusPedidos() {
                                 </div>
                                     { purchases.map((purchase, index) => {
                                         return (<>
-                                            <div className={`accordion ${purchase.selected ? '' : 'collapsed'}`}>
-                                                <input className="accordion-radio" id="accordion-radio" type="checkbox" onChange={(e) => {
+                                            <div className={`accordion ${purchase.selected ? '' : 'active'}`}>
+                                                <input className="accordion-radio" id={`accordion-radio-${index}`} type="checkbox" onChange={(e) => {
                                                     const newPurchases = purchases.slice();
                                                     newPurchases[index].selected= e.target.checked;
                                                     setPurchases(newPurchases);
                                                 }}/>
-                                                <label htmlFor="accordion-radio" className="accordion-header">
+                                                <label htmlFor={`accordion-radio-${index}`} className="accordion-header">
                                                     <div>Pedido: {purchase.id}</div>
                                                     <div>Status: {purchase.status}</div>
                                                     <div>R$ {purchase.total_price}</div>

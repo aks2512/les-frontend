@@ -130,3 +130,45 @@
         }
     }
 }
+
+.modal__enderecos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+
+    .select-endereco {
+        background: white;
+        width: 50%;
+        min-width: 320px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 1px 0px 15px 1px rgb(0, 0, 0 / 50%);
+
+        .enderecos {
+            position: relative;
+            padding-right: 0!important;
+            overflow: unset;
+
+            .select-endereco-fechar {
+                right: 10px;
+                top: 10px;
+                left: unset;
+            }
+
+            .enderecos-overflow {
+                overflow-y: auto;
+                .select-address {
+                    padding: 5px;
+                    border-bottom: 1px solid #4c4c4c94;
+                }
+            }
+        }
+    }
+}

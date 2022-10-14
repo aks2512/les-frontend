@@ -12,7 +12,7 @@ import './style.scss'
 
 export function CartBody() {
     const navigate = useNavigate();
-    const { cart, cartLoadData, setCart } = useContext(Context);
+    const { cart, cartLoadData, setCart, userLoadData } = useContext(Context);
     const [cards, setCards] = useState([]);
     const [paymentAddress, setPaymentAddress] = useState();
     const [deliveryAddress, setDeliveryAddress] = useState();
@@ -31,6 +31,7 @@ export function CartBody() {
 
             const newCart = await api.post('/carts')
             setCart(newCart);
+            userLoadData();
             
             navigate('/meus-pedidos')
         } catch(err){

@@ -11,6 +11,7 @@ import { Titulo } from "../titulo/Titulo";
 
 import { CarrinhoEndereco } from "./partials/CarrinhoEndereco";
 import { CarrinhoEnderecoSelect } from "./partials/CarrinhoEnderecoSelect";
+import { CarrinhoEnderecoTipo } from "./partials/CarrinhoEnderecoTipo";
 
 import './style.scss';
 
@@ -53,66 +54,47 @@ export function CarrinhoEnderecos({
                     }}
                 />
             )
-        } else {
-            return (
-                <div className="d-block d-md-flex">
-                    <div className="enderecos col-12 col-md-12">
-                        <div className="enderecos-tipo title d-block d-md-flex">
-                            <div className="col-12 col-md-6">
-                                <h4>Endereços</h4>
-                            </div>
-                        </div>
-                        <div className="enderecos-tipo d-block d-md-flex">
-                            <h5 className="col-md-6">Cobrança</h5>
-                            <button 
-                                className="enderecos-create col-md-3" 
-                                onClick={(e) => {
-                                    setShowModalCreate({open: true, type: 2})
-                                }}
-                            >Cadastrar</button>
-                            <button 
-                                className="enderecos-select-tipo col-md-3" 
-                                onClick={(e) => setShowModalSelect({ open: true, type: 2 })}
-                            >Selecionar</button>
-                        </div>
-                        { paymentAddress ? <CarrinhoEndereco
-                            name={paymentAddress?.name}
-                            place={paymentAddress?.place}
-                            city={paymentAddress?.city}
-                            state={paymentAddress?.state}
-                            cep={paymentAddress?.cep}
-                        /> : <p className="text-center">Nenhum endereço cadastrado</p> }
-                        <hr></hr>
-                        <div className="enderecos-tipo d-block d-md-flex">
-                            <h5 className="col-md-6">Entrega</h5>
-                            <button 
-                                className="enderecos-create col-md-3" 
-                                onClick={(e) => {
-                                    setShowModalCreate({open: true, type: 1})
-                                }}
-                            >Cadastrar</button>
-                            <button 
-                                className="enderecos-select-tipo col-md-6" 
-                                onClick={(e) => setShowModalSelect({ open: true, type: 1 })}
-                            >Selecionar</button>
-                        </div>
-                        { deliveryAddress ? <CarrinhoEndereco
-                            type={deliveryAddress?.address_type}
-                            name={deliveryAddress?.name}
-                            place={deliveryAddress?.place}
-                            city={deliveryAddress?.city}
-                            state={deliveryAddress?.state}
-                            cep={deliveryAddress?.cep}
-                        /> : <p className="text-center">Nenhum endereço cadastrado</p> }
-                    </div>
-                </div>
-            )
         }
     }
 
     return (
         <div className="carrinho-enderecos">
             {selectAddress()}
+            <div className="d-block d-md-flex">
+                <div className="enderecos col-12 col-md-12">
+                    <div className="enderecos-tipo title d-block d-md-flex">
+                        <div className="col-12 col-md-6">
+                            <h4>Endereços</h4>
+                        </div>
+                    </div>
+                    <CarrinhoEnderecoTipo
+                        type_name="Cobrança"
+                        register_func={(e) => { setShowModalCreate({open: true, type: 1}) }}
+                        select_func={(e) => { setShowModalSelect({open: true, type: 1}) }}     
+                    />
+                    { paymentAddress ? <CarrinhoEndereco
+                        name={paymentAddress?.name}
+                        place={paymentAddress?.place}
+                        city={paymentAddress?.city}
+                        state={paymentAddress?.state}
+                        cep={paymentAddress?.cep}
+                    /> : <p className="text-center">Nenhum endereço cadastrado</p> }
+                    <hr></hr>
+                    <CarrinhoEnderecoTipo
+                        type_name="Entrega"
+                        register_func={(e) => { setShowModalCreate({open: true, type: 2}) }}
+                        select_func={(e) => { setShowModalSelect({open: true, type: 2}) }}     
+                    />
+                    { deliveryAddress ? <CarrinhoEndereco
+                        type={deliveryAddress?.address_type}
+                        name={deliveryAddress?.name}
+                        place={deliveryAddress?.place}
+                        city={deliveryAddress?.city}
+                        state={deliveryAddress?.state}
+                        cep={deliveryAddress?.cep}
+                    /> : <p className="text-center">Nenhum endereço cadastrado</p> }
+                </div>
+            </div>
             <ModalTest onClose={()=>{setShowModalCreate({...showModalCreate, open: false})}} isOpen={showModalCreate.open}>
                 <div className="container">
                     <AddressForm onSubmit={async (e,{...params}) => {
