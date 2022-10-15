@@ -7,7 +7,7 @@ const Context = createContext();
 function AuthProvider({children}) {
   const {
     setUser, user, userLoadData, cart, setCart, cartLoadData, authenticated, loading, handleLogin, handleLogout,
-  } = useAuth();
+  } = useAuth({ type: 'user' });
 
   return (
     <Context.Provider value={{ 

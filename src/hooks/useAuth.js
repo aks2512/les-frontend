@@ -3,14 +3,14 @@ import { toast } from 'react-toastify';
 
 import api from '../api';
 
-export default function useAuth() {
+export default function useAuth({ type = 'user' }) {
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let userExist = localStorage.getItem(`access_token`);
+    let userExist = localStorage.getItem(`${type} access_token`);
 
     if (userExist) {
       api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
@@ -26,12 +26,6 @@ export default function useAuth() {
   async function userLoadData() {
     try{
       const response = await api.patch(`users/auth`);
-
-      setUser(response.data.user);
-
-      localStorage.setItem(`access_token`, response.data.access_token);
-      api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
-
       if(response.data.user?.person?.carts) {
         const cartExists = response.data.user.person.carts.find(cart => cart.isOpen);
         if(cartExists) {
@@ -39,6 +33,7 @@ export default function useAuth() {
         }
       }
     }catch(err){
+      console.log(err);
       toast.error('Erro ao carregar dados do usuário');
       handleLogout();
     }
@@ -46,7 +41,6 @@ export default function useAuth() {
   
   async function cartLoadData() {
     try{
-      console.log(user)
       if(user){
         const response = await api.get(`carts`, {
           isOpen: true
@@ -74,7 +68,7 @@ export default function useAuth() {
         }
       ));
       if (auth.data) {
-        localStorage.setItem(`access_token`, auth.data.access_token);
+        localStorage.setItem(`${type} access_token`, auth.data.access_token);
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
@@ -88,7 +82,7 @@ export default function useAuth() {
   }
 
   async function handleLogout() {
-    localStorage.removeItem(`access_token`);
+    localStorage.removeItem(`${type} access_token`);
 
     setUser({});
     setCart({});
