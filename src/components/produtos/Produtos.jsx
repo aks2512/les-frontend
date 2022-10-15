@@ -3,23 +3,23 @@ import api from '../../api';
 import { Produto } from './partials/Produto';
 import './style.scss';
 
-export function Produtos() {
+export function Produtos({ search = '' }) {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
 
-    useEffect(() => {
-        async function loadProducts() {
-            const response = await api.get('/products');
-            if(response.status === 201) {
-                console.log(response)
-                setProducts(response.data);
-                setLoading(false);
-            }
+
+    async function loadProducts() {
+        const response = await api.get(`/products?search=${search}`);
+        if(response.status === 201) {
+            setProducts(response.data);
+            setLoading(false);
         }
+    }
 
+
+    useEffect(() => {
         loadProducts();
-
-    }, [])
+    }, [search])
 
     return (
         <section className="produtos container">

@@ -134,7 +134,7 @@ function App() {
               <UserRoute isPrivate={true} redirectTo="/"><UpdateCard/></UserRoute>
             } />
           <Route  
-            path="/result" 
+            path="/result/:search" 
             exact 
             element={
               <UserRoute redirectTo="/"><Result/></UserRoute>
