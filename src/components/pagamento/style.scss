@@ -100,4 +100,14 @@
     .checkbox-card{
         width: 40px;
     }
+
+    .payment-quantity{
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+
+        input{
+            border-radius: 10px;
+        }
+    }
 }

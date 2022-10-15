@@ -31,13 +31,28 @@ export function Pagamento({ cards, setCards }) {
                             image=""
                         >
                         <input className="checkbox-card" type='checkbox' value={card.active} onChange={(e) => {
-                            const cardExists = cards.findIndex(c => c.id == card.id)
                             const newCards = cards.slice();
-
-                            newCards[cardExists].active = e.target.checked
+                            newCards[index].active = e.target.checked
                             setCards(newCards)
                         }} />
                         </Cartao>
+                        {
+                            card.active && (
+                                <div className="payment-quantity">
+                                    Valor:
+                                    <input 
+                                        type="number" 
+                                        value={card.value} 
+                                        onChange={(e)=>{ 
+                                            const newCards = cards.slice();
+                                            newCards[index].value = e.target.value
+                                            setCards(newCards)
+                                        }} 
+                                        placeholder="0,00" 
+                                    />
+                                </div>
+                            )
+                        }
                     </div>
                 ))}
             </div>
