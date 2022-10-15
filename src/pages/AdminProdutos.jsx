@@ -26,11 +26,13 @@ export function AdminProdutos() {
 
     async function deleteProduct(e, id) {
         e.preventDefault();
-        const response = await api.delete(`/products/${id}`);
-        if(response.status === 201) {
-            loadProducts()
+        try{
+            const response = await api.delete('/products/' + id);
+            toast('Deletado com sucesso')
+            loadProducts();
+        } catch(error){
+            toast.error(error?.message)
         }
-        toast(response.data.message);
     }
 
     return (
@@ -51,6 +53,7 @@ export function AdminProdutos() {
                     >
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Imagem</th>
                                 <th>Nome</th>
                                 <th></th>
@@ -62,6 +65,7 @@ export function AdminProdutos() {
                             {loading === false && products.map((product) => 
                                 (
                                     <tr key={product.id}>
+                                        <td className="small">{product.id}</td>
                                         <td><img width="100" height="80" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
                                         <td>{product.name}</td>
                                         <td className="btn"><Link to={'/update-produto?id='+product.id}>Editar</Link></td>
