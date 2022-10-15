@@ -4,8 +4,9 @@ import { CarrinhoProduto } from "./partials/CarrinhoProduto";
 
 import './style.scss';
 
-export function CarrinhoProdutos() {
+export function CarrinhoProdutos({ totalPaid }) {
     const { cart } = useContext(Context);
+    const cardCupomTotal = totalPaid.card + totalPaid.coupon;
 
     return (
         <div className="carrinho-produtos">
@@ -19,8 +20,18 @@ export function CarrinhoProdutos() {
                 }
             </div>
             <div className="total">
-                <p>Total</p>
-                <p><strong>R$ {cart?.total_price}</strong></p>
+                <div>
+                    <p>Total</p>
+                    <p>
+                        <strong>R$ {cart?.total_price || 0}</strong>   
+                    </p>
+                </div>
+                <div>
+                    <p>A pagar</p>
+                    <p className={cart?.total_price - cardCupomTotal > 0 ? 'alert' : 'success' }>
+                        R$ {(cart?.total_price || 0) - cardCupomTotal}
+                    </p>
+                </div>
             </div>
         </div>
     );

@@ -53,16 +53,17 @@
         }
     }
 
-    .cupom {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 40px;
+    .cupons {
+        height: 130px;
+        overflow-y: auto;
+        margin-bottom: 20px;
 
-        input {
-            margin-left: 16px;
-            font-size: 10px;
-            width: 150px;
+        .cupom {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            transition: 1s;
         }
     }
 

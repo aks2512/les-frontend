@@ -10,12 +10,13 @@ import './style.scss';
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../contexts/AuthContext";
 
-export function Pagamento({ cards, setCards }) {
+export function Pagamento({ cards, setCards, coupons, setCoupons }) {
     const { user } = useContext(Context);
 
     useEffect(() => {
         if (user) {
             setCards(user.person?.cards);
+            setCoupons(user.person?.coupons);
         }
     }, [user]);
 
@@ -30,7 +31,7 @@ export function Pagamento({ cards, setCards }) {
                             name={card.number}
                             image=""
                         >
-                        <input className="checkbox-card" type='checkbox' value={card.active} onChange={(e) => {
+                        <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
                             const newCards = cards.slice();
                             newCards[index].active = e.target.checked
                             setCards(newCards)
@@ -62,9 +63,24 @@ export function Pagamento({ cards, setCards }) {
                 <Link to='/register-card'>Novo cartão de crédito</Link>
             </div>
 
-            <div className="cupom">
-                <img src={cupom} alt="" />
-                <input type="text" placeholder="Cupom de Desconto ou Troca" />
+            <div className="cupons">
+
+                {
+                    coupons.length > 0 ? coupons.map((coupon, index) => (
+                        <div className="cupom">                
+                            <img src={cupom} alt="" />
+                            <div className={`coupon-selector ${coupon.active ? 'active-coupon' : ''}`}>
+                                <input className="checkbox-coupon" type='checkbox' checked={coupon.active} onChange={(e) => {
+                                    const newCoupons = coupons.slice();
+                                    newCoupons[index].active = e.target.checked
+                                    setCoupons(newCoupons)
+                                }
+                                } />
+                                <p>{coupon.code.replace(/.+?(?=-)/g,'')}</p>
+                        </div>
+                        </div>
+                    )) : <p>Nenhum cupom cadastrado</p>
+                }
             </div>
             <div className="protegido">
                 <img src={cadeado} alt="" />
