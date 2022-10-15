@@ -159,22 +159,14 @@ export function MeuPerfil() {
                                     <div className="table-container">
                                         <table className="odd">
                                             <tbody>
-                                                <tr>
-                                                    <td>R$ 75</td>
-                                                    <td>xxxxx-xxxxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>R$ 75</td>
-                                                    <td>xxxxx-xxxxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>R$ 75</td>
-                                                    <td>xxxxx-xxxxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>R$ 75</td>
-                                                    <td>xxxxx-xxxxxx</td>
-                                                </tr>
+                                                {
+                                                    user?.person?.coupons?.map(coupon => (
+                                                        <tr key={coupon.id}>
+                                                            <td>R$ {coupon.value}</td>
+                                                            <td>{coupon.code}</td>
+                                                        </tr>
+                                                    ))
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
