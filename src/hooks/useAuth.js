@@ -32,6 +32,9 @@ export default function useAuth({ type = 'user' }) {
           setCart(cartExists);
         }
       }
+
+      setUser(response.data.user);
+      localStorage.setItem(`${type} access_token`, response.data.access_token);
     }catch(err){
       console.log(err);
       toast.error('Erro ao carregar dados do usuário');
