@@ -9,13 +9,14 @@ import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 export function AdminEstoque() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         loadProducts();
     }, [])
 
     async function loadProducts() {
-        const response = await api.get('/products');
+        const response = await api.get(`/products?search=${search}`);
         if(response.status === 201) {
             setProducts(response.data);
             setLoading(false);
@@ -50,6 +51,9 @@ export function AdminEstoque() {
                     <AdminListagem 
                         title="Estoque"
                         registerLink="/register-estoque"
+                        search={search}
+                        setSearch={setSearch}
+                        onClick={loadProducts}
                     >
                         <thead>
                             <tr>
