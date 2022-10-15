@@ -31,25 +31,25 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                             name={card.number}
                             image=""
                         >
-                        <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
-                            const newCards = cards.slice();
-                            newCards[index].active = e.target.checked
-                            setCards(newCards)
-                        }} />
+                            <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
+                                const newCards = cards.slice();
+                                newCards[index].active = e.target.checked
+                                setCards(newCards)
+                            }} />
                         </Cartao>
                         {
                             card.active && (
                                 <div className="payment-quantity">
                                     Valor:
-                                    <input 
-                                        type="number" 
-                                        value={card.value} 
-                                        onChange={(e)=>{ 
+                                    <input
+                                        type="number"
+                                        value={card.value}
+                                        onChange={(e) => {
                                             const newCards = cards.slice();
                                             newCards[index].value = e.target.value
                                             setCards(newCards)
-                                        }} 
-                                        placeholder="0,00" 
+                                        }}
+                                        placeholder="0,00"
                                     />
                                 </div>
                             )
@@ -63,24 +63,35 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                 <Link to='/register-card'>Novo cartão de crédito</Link>
             </div>
 
-            <div className="cupons">
+            <div className="cupons table-container">
 
-                {
-                    coupons.length > 0 ? coupons.map((coupon, index) => (
-                        <div className="cupom">                
-                            <img src={cupom} alt="" />
-                            <div className={`coupon-selector ${coupon.active ? 'active-coupon' : ''}`}>
-                                <input className="checkbox-coupon" type='checkbox' checked={coupon.active} onChange={(e) => {
-                                    const newCoupons = coupons.slice();
-                                    newCoupons[index].active = e.target.checked
-                                    setCoupons(newCoupons)
+                <table className="odd">
+                    {
+                        coupons.length > 0 ? coupons.map((coupon, index) => (
+
+                            <tbody>
+                                {
+                                    user?.person?.coupons?.map(coupon => (
+                                        <tr key={coupon.id}>
+                                            <td><img src={cupom} alt="" /></td>
+                                            <td>{coupon.code.replace(/.+?(?=)-/g, '')}</td>
+                                            <td>R$ {coupon.value}</td>
+                                            <td>
+                                                <input className="checkbox-coupon" type='checkbox' checked={coupon.active} onChange={(e) => {
+                                                    const newCoupons = coupons.slice();
+                                                    newCoupons[index].active = e.target.checked
+                                                    setCoupons(newCoupons)
+                                                }}
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))
                                 }
-                                } />
-                                <p>{coupon.code.replace(/.+?(?=-)/g,'')}</p>
-                        </div>
-                        </div>
-                    )) : <p>Nenhum cupom cadastrado</p>
-                }
+                            </tbody>
+
+                        )) : <p>Nenhum cupom cadastrado</p>
+                    }
+                </table>
             </div>
             <div className="protegido">
                 <img src={cadeado} alt="" />
