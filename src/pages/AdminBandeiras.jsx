@@ -8,20 +8,19 @@ import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
 export function AdminBandeiras() {
     const [loading, setLoading] = useState(true);
-    const [brands, setBrands] = useState();
+    const [brands, setBrands] = useState([]);
+    const [search, setSearch] = useState("");
+
+    async function loadBrands() {
+        const response = await api.get(`/brands?search=${search}`);
+        if(response.status === 201) {
+            setBrands(response.data);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        async function loadBrands() {
-            const response = await api.get('/brands');
-            console.log(response);
-            if(response.status === 201) {
-                setBrands(response.data);
-                setLoading(false);
-            }
-        }
-
         loadBrands();
-
     }, [])
 
     async function deleteBrand(e, id) {
@@ -47,6 +46,9 @@ export function AdminBandeiras() {
                         title="Bandeiras"
                         hasRegisterLink={true}
                         registerLink="/register-bandeira"
+                        search={search}
+                        setSearch={setSearch}
+                        onClick={loadBrands}
                     >
                         <thead>
                             <tr>

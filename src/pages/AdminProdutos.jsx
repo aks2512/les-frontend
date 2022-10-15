@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import api from "../api";
 
@@ -9,13 +10,14 @@ import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 export function AdminProdutos() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         loadProducts();
     }, [])
 
     async function loadProducts() {
-        const response = await api.get('/products');
+        const response = await api.get(`/products?search=${search}`);
         if(response.status === 201) {
             setProducts(response.data);
             setLoading(false);
@@ -28,6 +30,7 @@ export function AdminProdutos() {
         if(response.status === 201) {
             loadProducts()
         }
+        toast(response.data.message);
     }
 
     return (
@@ -42,6 +45,9 @@ export function AdminProdutos() {
                         title="Produtos"
                         hasRegisterLink={true}
                         registerLink="/register-produto"
+                        search={search}
+                        setSearch={setSearch}
+                        onClick={loadProducts}
                     >
                         <thead>
                             <tr>
