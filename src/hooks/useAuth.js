@@ -14,8 +14,8 @@ export default function useAuth() {
 
     if (userExist) {
       api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
-      setAuthenticated(true);
       userLoadData();
+      setAuthenticated(true);
     } else {
       setAuthenticated(false);
       toast('Sua sessão expirou, faça login novamente');
@@ -31,6 +31,13 @@ export default function useAuth() {
 
       localStorage.setItem(`access_token`, response.data.access_token);
       api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
+
+      if(response.data.user?.person?.carts) {
+        const cartExists = response.data.user.person.carts.find(cart => cart.isOpen);
+        if(cartExists) {
+          setCart(cartExists);
+        }
+      }
     }catch(err){
       toast.error('Erro ao carregar dados do usuário');
       handleLogout();
@@ -39,7 +46,8 @@ export default function useAuth() {
   
   async function cartLoadData() {
     try{
-      if(authenticated){
+      console.log(user)
+      if(user){
         const response = await api.get(`carts`, {
           isOpen: true
         });
