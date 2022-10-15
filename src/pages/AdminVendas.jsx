@@ -1,22 +1,41 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import api from "../api";
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 
+const PurchaseStatusEnum = [
+    "EM ANÁLISE",
+    "PAGAMENTO REALIZADO",
+    "EM TRANSPORTE",
+    "ENTREGA REALIZADA",
+    "FINALIZADO"
+]
+
 export function AdminVendas() {
     const [loading, setLoading] = useState(true);
-    const [sales, setSales] = useState([]);
+    const [purchases, setPurchases] = useState([]);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        loadSales();
+        loadPurchases();
     }, [])
 
-    async function loadSales() {
+    async function loadPurchases() {
         const response = await api.get(`/purchases?search=${search}`);
         if(response.status === 201) {
-            setSales(response.data);
+            setPurchases(response.data);
             setLoading(false);
+        }
+    }
+
+    async function updatePurchase(purchase) {
+        try{
+            const response = await api.put(`/purchases/${purchase.id}`, purchase);
+            toast(response.data.message);
+            loadPurchases();
+        } catch (err) {
+            toast.error(err.response.data.message);
         }
     }
 
@@ -32,8 +51,42 @@ export function AdminVendas() {
                         registerLink="/register-venda"
                         search={search}
                         setSearch={setSearch}
-                        onClick={loadSales}
-                    />
+                        onClick={loadPurchases}
+                    >
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Valor</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {loading === false && purchases.map((purchase) => 
+                                (
+                                    <tr key={purchase.id}>
+                                        <td>{purchase.id}</td>
+                                        <td>{purchase.name}</td>
+                                        <td>{purchase.status}</td>
+                                        <td>R$ {purchase.total_price}</td>
+                                        <td>
+                                            <select name="status" value={purchase.status} id="">
+                                                {
+                                                    Object.values(PurchaseStatusEnum).map((status) => (
+                                                        <option value={status}>{status}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </td>
+                                        <td className="btn"><button onClick={(e) => updatePurchase(purchase)}>Atualizar</button></td>
+                                    </tr>
+                                )
+                            )}
+                        </tbody>
+                    </AdminListagem>
                 </div>
             </div>
         </main>
