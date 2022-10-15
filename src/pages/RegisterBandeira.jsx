@@ -22,12 +22,10 @@ export function RegisterBandeira() {
                         console.log(Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
                     }
                 }
-            ).then(res => {
-                console.log(res);
-            })
+            );
     
             if(response.status === 201) {
-                alert('Bandeira cadastrada com sucesso!')
+                toast('Bandeira cadastrada com sucesso!')
             }
         }catch(error){
             toast.error(error.message)
