@@ -8,11 +8,9 @@ export default function useAuth() {
   const [cart, setCart] = useState();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [userType , setUserType] = useState();
 
   useEffect(() => {
-
-    let userExist = localStorage.getItem(`${userType} access_token`);
+    let userExist = localStorage.getItem(`access_token`);
 
     if (userExist) {
       api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
@@ -20,6 +18,7 @@ export default function useAuth() {
       userLoadData();
     } else {
       setAuthenticated(false);
+      toast('Sua sessão expirou, faça login novamente');
     }
     setLoading(false);
   }, []);
@@ -29,9 +28,8 @@ export default function useAuth() {
       const response = await api.patch(`users/auth`);
 
       setUser(response.data.user);
-      setUserType(response.person ? '@person' : '@master');
 
-      localStorage.setItem(`${userType} access_token`, response.data.access_token);
+      localStorage.setItem(`access_token`, response.data.access_token);
       api.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
     }catch(err){
       toast.error('Erro ao carregar dados do usuário');
@@ -68,8 +66,7 @@ export default function useAuth() {
         }
       ));
       if (auth.data) {
-        setUserType(auth.person ? '@person' : '@master');
-        localStorage.setItem(`${userType} access_token`, auth.data.access_token);
+        localStorage.setItem(`access_token`, auth.data.access_token);
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
@@ -83,9 +80,14 @@ export default function useAuth() {
   }
 
   async function handleLogout() {
+    localStorage.removeItem(`access_token`);
+
+    setUser({});
+    setCart({});
+
+    api.defaults.headers.common.Authorization = '';
+
     setAuthenticated(false);
-    localStorage.removeItem(`${userType} access_token`);
-    localStorage.removeItem(`${userType} refresh_token`);
   }
   
   return { user, setUser, userLoadData, cart, setCart, cartLoadData,  authenticated, setAuthenticated, loading, handleLogin, handleLogout };
