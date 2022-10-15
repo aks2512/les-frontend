@@ -11,7 +11,7 @@ export function AdminClientes() {
 
     async function loadClients() {
         const response = await api.get(`/users?search=${search}`, {
-            role: "usuario"
+            
         });
 
         if(response.status === 201) {

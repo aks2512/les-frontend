@@ -56,7 +56,6 @@ export function AdminVendas() {
                         <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Nome</th>
                                 <th>Status</th>
                                 <th>Valor</th>
                                 <th></th>
@@ -65,15 +64,21 @@ export function AdminVendas() {
                         </thead>
                         <tbody>
 
-                            {loading === false && purchases.map((purchase) => 
+                            {loading === false && purchases.map((purchase, index) => 
                                 (
                                     <tr key={purchase.id}>
                                         <td>{purchase.id}</td>
-                                        <td>{purchase.name}</td>
                                         <td>{purchase.status}</td>
                                         <td>R$ {purchase.total_price}</td>
                                         <td>
-                                            <select name="status" value={purchase.status} id="">
+                                            <select name="status" value={purchase.status} onChange={(e) => {
+                                                setPurchases(purchases.map((p, i) => {
+                                                    if(i === index) {
+                                                        p.status = e.target.value;
+                                                    }
+                                                    return p;
+                                                }))
+                                            }} id="">
                                                 {
                                                     Object.values(PurchaseStatusEnum).map((status) => (
                                                         <option value={status}>{status}</option>
