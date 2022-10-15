@@ -20,7 +20,7 @@ export function AdminForm() {
                 navigate('/admin-dashboard');
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response.data.message);
         }
     }
     

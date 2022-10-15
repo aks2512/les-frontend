@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import api from "../api";
 
@@ -25,12 +26,12 @@ export function AdminBandeiras() {
 
     async function deleteBrand(e, id) {
         e.preventDefault();
-        const response = await api.delete('/brands/' + id);
-
-        console.log(response);
-
-        if(response.status === 201) {
-            setBrands(brands.filter(brand => brand.id !== id));
+        try{
+            const response = await api.delete('/brands/' + id);
+            toast('Deletado com sucesso')
+            loadBrands();
+        } catch(error){
+            toast.error(error.response.data.message)
         }
     }
 

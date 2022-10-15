@@ -66,7 +66,6 @@ export function UpdateCard() {
             toast(response.data.message)
             navigate(-1);
         } catch(err){
-            console.log(err)
             toast.error(err?.response?.data?.message || 'falha ao atualizar cartão')
         }
 

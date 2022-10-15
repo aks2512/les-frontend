@@ -55,7 +55,6 @@ export function Signup() {
 
     async function registerClient(e) {
         e.preventDefault();
-        console.log(enderecos)
 
         //formatado
         let formatedBirthdate = birthdate.replace(/(\d{4})-(\d{2})-(\d{2})/, (match, group1, group2, group3) => {

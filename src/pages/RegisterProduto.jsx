@@ -44,7 +44,6 @@ export function RegisterProduto() {
                     }
                 }
             ).then(res => {
-                console.log(res);
                 if(res.status === 201) {
                     toast.success('Produto cadastrado com sucesso!');
                     navigate('/admin-produtos');

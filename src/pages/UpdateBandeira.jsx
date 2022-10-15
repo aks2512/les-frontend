@@ -17,7 +17,6 @@ export function UpdateBandeira() {
         async function loadData() {
             if (id) {
                 const response = await api.get(`/brands?id=${id}`);
-                console.log(response.status)
                 if(response.status === 201) {
                     setNomeDaBandeira(response.data.name);
                     setLinkDaBandeira(response.data.image);
@@ -35,7 +34,6 @@ export function UpdateBandeira() {
         const fd = new FormData();
         fd.append('image', linkDaBandeira, linkDaBandeira.name);
         fd.append('name', nomeDaBandeira);
-        console.log(id)
         const response = await api.put('brands/'+ id, fd,
             {
                 onUploadProgress: progressEvent => {

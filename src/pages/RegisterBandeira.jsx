@@ -28,7 +28,7 @@ export function RegisterBandeira() {
                 toast('Bandeira cadastrada com sucesso!')
             }
         }catch(error){
-            toast.error(error.message)
+            toast.error(error.response.data.message);
         }
 
     }

@@ -27,7 +27,7 @@ export function LoginForm() {
                 return
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response.data.message);
         }
     }
 
