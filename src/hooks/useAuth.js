@@ -3,15 +3,14 @@ import { toast } from 'react-toastify';
 
 import api from '../api';
 
-export default function useAuth({ type = 'user' }) {
+export default function useAuth() {
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let userExist = localStorage.getItem(`${type} access_token`);
-
+    let userExist = localStorage.getItem(`access_token`);
     if (userExist) {
       api.defaults.headers.common = {'Authorization': `Bearer ${userExist}`}
       userLoadData();
@@ -27,14 +26,18 @@ export default function useAuth({ type = 'user' }) {
     try{
       const response = await api.patch(`users/auth`);
       if(response.data.user?.person?.carts) {
-        const cartExists = response.data.user.person.carts.find(cart => cart.isOpen);
+        const cartExists = response.data.user?.person.carts.find(cart => cart.isOpen);
         if(cartExists) {
           setCart(cartExists);
         }
       }
 
       setUser(response.data.user);
-      localStorage.setItem(`${type} access_token`, response.data.access_token);
+      localStorage.setItem(`access_token`, response.data.access_token);
+
+      if(response?.data?.user?.person){
+        cartLoadData()
+      }
     }catch(err){
       console.log(err);
       toast.error('Erro ao carregar dados do usuário');
@@ -62,7 +65,6 @@ export default function useAuth({ type = 'user' }) {
   }
 
   async function handleLogin(email, password) {
-
     try {
       const auth = await api.post('users/auth',(
         {
@@ -71,7 +73,7 @@ export default function useAuth({ type = 'user' }) {
         }
       ));
       if (auth.data) {
-        localStorage.setItem(`${type} access_token`, auth.data.access_token);
+        localStorage.setItem(`access_token`, auth.data.access_token);
         api.defaults.headers.common = {'Authorization': `Bearer ${auth.data.access_token}`}
         userLoadData();
         setAuthenticated(true);
@@ -80,12 +82,12 @@ export default function useAuth({ type = 'user' }) {
       }
       
     } catch (e) {
-      return e?.response?.data?.message || 'Error :(';
+      return toast(e?.response?.data?.message || 'Erro ao fazer login');
     } 
   }
 
   async function handleLogout() {
-    localStorage.removeItem(`${type} access_token`);
+    localStorage.removeItem(`access_token`);
 
     setUser({});
     setCart({});
