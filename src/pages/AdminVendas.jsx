@@ -23,14 +23,14 @@ export function AdminVendas() {
 
     async function loadPurchases() {
         const response = await api.get(`/purchases?search=${search}`);
-        if(response.status === 201) {
+        if (response.status === 201) {
             setPurchases(response.data);
             setLoading(false);
         }
     }
 
     async function updatePurchase(purchase) {
-        try{
+        try {
             const response = await api.put(`/purchases/${purchase.id}`, purchase);
             toast(response.data.message);
             loadPurchases();
@@ -41,12 +41,12 @@ export function AdminVendas() {
 
     return (
         <main className="admin">
-            <div className="row w-100 px-0 m-0">    
+            <div className="row w-100 px-0 m-0">
                 <div className="col-12 col-xl-3 px-0">
-                    <AdminSideMenu/>
+                    <AdminSideMenu />
                 </div>
                 <div className="col-12 col-xl-9 px-0">
-                    <AdminListagem 
+                    <AdminListagem
                         title="Vendas"
                         registerLink="/register-venda"
                         search={search}
@@ -64,31 +64,31 @@ export function AdminVendas() {
                         </thead>
                         <tbody>
 
-                            {loading === false && purchases.map((purchase, index) => 
-                                (
-                                    <tr key={purchase.id}>
-                                        <td>{purchase.id}</td>
-                                        <td>{purchase.status}</td>
-                                        <td>R$ {purchase.total_price}</td>
-                                        <td>
-                                            <select name="status" value={purchase.status} onChange={(e) => {
-                                                setPurchases(purchases.map((p, i) => {
-                                                    if(i === index) {
-                                                        p.status = e.target.value;
-                                                    }
-                                                    return p;
-                                                }))
-                                            }} id="">
-                                                {
-                                                    Object.values(PurchaseStatusEnum).map((status) => (
-                                                        <option value={status}>{status}</option>
-                                                    ))
+                            {loading === false && purchases.map((purchase, index) =>
+                            (
+                                <tr key={purchase.id}>
+                                    <td>{purchase.id}</td>
+                                    <td>{purchase.status}</td>
+                                    <td>R$ {purchase.total_price}</td>
+                                    <td>
+                                        <select name="status" value={purchase.status} onChange={(e) => {
+                                            setPurchases(purchases.map((p, i) => {
+                                                if (i === index) {
+                                                    p.status = e.target.value;
                                                 }
-                                            </select>
-                                        </td>
-                                        <td className="btn"><button onClick={(e) => updatePurchase(purchase)}>Atualizar</button></td>
-                                    </tr>
-                                )
+                                                return p;
+                                            }))
+                                        }} id="">
+                                            {
+                                                Object.values(PurchaseStatusEnum).map((status) => (
+                                                    <option value={status}>{status}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    </td>
+                                    <td className="btn"><button onClick={(e) => updatePurchase(purchase)}>Atualizar</button></td>
+                                </tr>
+                            )
                             )}
                         </tbody>
                     </AdminListagem>

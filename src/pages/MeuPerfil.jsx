@@ -37,13 +37,13 @@ export function MeuPerfil() {
         if (!user) {
             userLoadData();
         } else {
-            setEmail(user.email);
-            setName(user.person.name);
-            setCPF(user.person.cpf);
-            setPhone(user.person.phone);
-            setBirthdate(moment(user.person.birth_date).format('DD/MM/YYYY'));
-            setCards(user.person.cards)
-            setAddresses(user.person.addresses)
+            setEmail(user?.email);
+            setName(user?.person.name);
+            setCPF(user?.person.cpf);
+            setPhone(user?.person.phone);
+            setBirthdate(moment(user?.person.birth_date).format('DD/MM/YYYY'));
+            setCards(user?.person.cards)
+            setAddresses(user?.person.addresses)
         }
     }, [userLoadData]);
 
@@ -52,7 +52,7 @@ export function MeuPerfil() {
             await api.delete(`/cards/${id}`);
             setCards(cards.filter(card => card.id !== id));
             toast.success('Cartão removido com sucesso!');
-        } catch(e) {
+        } catch (e) {
             toast.error(e.response.data.message);
         }
     }
@@ -62,7 +62,7 @@ export function MeuPerfil() {
             await api.delete(`/addresses/${id}`);
             setAddresses(addresses.filter(address => address.id !== id));
             toast.success('Endereço removido com sucesso!');
-        } catch(e) {
+        } catch (e) {
             toast.error(e.response.data.message);
         }
     }
@@ -73,12 +73,12 @@ export function MeuPerfil() {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
                     <div className="row">
                         <div className="col-12 col-lg-4">
-                            <SideMenu/>
+                            <SideMenu />
                         </div>
                         <div className="col-12 col-lg-8">
                             <WhiteBox>
@@ -132,15 +132,15 @@ export function MeuPerfil() {
                                     <div className="table-container">
                                         <table className="odd">
                                             <tbody>
-                                                
-                                                {addresses && addresses.map((address, index) => 
-                                                    (
-                                                        <tr key={address.id}>
-                                                            <td className="ellipsis">{address.name || "Endereco " + (index+1)}</td>
-                                                            <td><Link to={`/update-address?id=${address.id}`}>editar</Link></td>
-                                                            <td><button onClick={() => deleteAddress(address.id)}>remover</button></td>
-                                                        </tr>
-                                                    )
+
+                                                {addresses && addresses.map((address, index) =>
+                                                (
+                                                    <tr key={address.id}>
+                                                        <td className="ellipsis">{address.name || "Endereco " + (index + 1)}</td>
+                                                        <td><Link to={`/update-address?id=${address.id}`}>editar</Link></td>
+                                                        <td><button onClick={() => deleteAddress(address.id)}>remover</button></td>
+                                                    </tr>
+                                                )
                                                 )}
                                             </tbody>
                                         </table>
@@ -181,14 +181,14 @@ export function MeuPerfil() {
                                     <div className="table-container">
                                         <table className="odd">
                                             <tbody>
-                                                {cards && cards.map(card => 
-                                                    (
-                                                        <tr key={card.id}>
-                                                            <td>{card.number}</td>
-                                                            <td><Link to={`/update-card?id=${card.id}`}>editar</Link></td>
-                                                            <td><button onClick={() => deleteCard(card.id)}>remover</button></td>
-                                                        </tr>
-                                                    )
+                                                {cards && cards.map(card =>
+                                                (
+                                                    <tr key={card.id}>
+                                                        <td>{card.number}</td>
+                                                        <td><Link to={`/update-card?id=${card.id}`}>editar</Link></td>
+                                                        <td><button onClick={() => deleteCard(card.id)}>remover</button></td>
+                                                    </tr>
+                                                )
                                                 )}
                                             </tbody>
                                         </table>
@@ -204,7 +204,7 @@ export function MeuPerfil() {
                     </div>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }

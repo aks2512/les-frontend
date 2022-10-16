@@ -17,7 +17,7 @@ import moment from 'moment';
 export function UpdatePersonalData() {
     const navigate = useNavigate();
     const { user, userLoadData } = useContext(Context);
-    
+
     //dados pessoais
     const [name, setName] = useState();
     const [CPF, setCPF] = useState();
@@ -30,7 +30,7 @@ export function UpdatePersonalData() {
         e.preventDefault();
 
         try {
-            const response = await api.put('/persons/' + user.person.id, {
+            const response = await api.put('/persons/' + user?.person.id, {
                 "name": name,
                 "cpf": CPF,
                 "cellphone": cellphone,
@@ -38,34 +38,34 @@ export function UpdatePersonalData() {
                 "birth_date": moment(birthdate).toDate(),
                 "phone": phone,
             });
-    
-            if(response.status === 201) {
+
+            if (response.status === 201) {
                 toast.success('Dados pessoais atualizados com sucesso!');
                 navigate('/meu-perfil');
             }
         } catch (e) {
             toast.error(e?.response?.data?.message);
-        }        
+        }
     }
-    
+
     useEffect(() => {
         if (!user) {
             userLoadData();
         } else {
-            setName(user.person.name);
-            setCPF(user.person.cpf);
-            setCellphone(user.person.cellphone);
-            setPhone(user.person.phone);
-            setBirthdate(moment(user.person.birth_date).format('DD/MM/YYYY'));
+            setName(user?.person.name);
+            setCPF(user?.person.cpf);
+            setCellphone(user?.person.cellphone);
+            setPhone(user?.person.phone);
+            setBirthdate(moment(user?.person.birth_date).format('DD/MM/YYYY'));
         }
     }, [userLoadData]);
 
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
-                    <Titulo title="Atualizar dados pessoais"/>
+                    <Titulo title="Atualizar dados pessoais" />
                     <CustomForm onSubmit={updatePersonalData}>
 
                         <h3>Deseja atualizar seus dados</h3>
@@ -81,9 +81,9 @@ export function UpdatePersonalData() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="nome">Nome Completo</label>
-                                    <input 
-                                        id="nome" 
-                                        type="text" 
+                                    <input
+                                        id="nome"
+                                        type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
@@ -91,9 +91,9 @@ export function UpdatePersonalData() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="cpf">CPF</label>
-                                    <input 
-                                        id="cpf" 
-                                        type="text" 
+                                    <input
+                                        id="cpf"
+                                        type="text"
                                         value={CPF}
                                         onChange={(e) => setCPF(e.target.value)}
                                         disabled={true}
@@ -102,33 +102,33 @@ export function UpdatePersonalData() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="celular">Celular</label>
-                                    <input 
-                                        id="celular" 
-                                        type="phone" 
+                                    <input
+                                        id="celular"
+                                        type="phone"
                                         value={cellphone}
                                         onChange={(e) => setCellphone(e.target.value)}
                                     />
                                 </fieldset>
-                                
+
                                 <fieldset className="p10">
                                     <label htmlFor="ddd">DDD</label>
-                                    <input 
-                                        id="ddd" 
+                                    <input
+                                        id="ddd"
                                         type="text"
                                         value={phone?.ddd}
-                                        onChange={(e) => setPhone({ 
-                                            ...phone, ddd: e.target.value 
-                                        })} 
+                                        onChange={(e) => setPhone({
+                                            ...phone, ddd: e.target.value
+                                        })}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p40">
                                     <label htmlFor="telefone">Telefone Fixo</label>
-                                    <input 
-                                        id="telefone" 
-                                        type="text" 
+                                    <input
+                                        id="telefone"
+                                        type="text"
                                         value={phone?.number}
-                                        onChange={(e) => setPhone({ 
+                                        onChange={(e) => setPhone({
                                             ...phone, number: e.target.value
                                         })}
                                     />
@@ -145,9 +145,9 @@ export function UpdatePersonalData() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="data_de_nascimento">Data de Nascimento</label>
-                                    <input 
-                                        id="data_de_nascimento" 
-                                        type="date" 
+                                    <input
+                                        id="data_de_nascimento"
+                                        type="date"
                                         value={birthdate}
                                         onChange={(e) => setBirthdate(e.target.value)}
                                         disabled={false}
@@ -162,7 +162,7 @@ export function UpdatePersonalData() {
                     </CustomForm>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }

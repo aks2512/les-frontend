@@ -7,17 +7,16 @@ import cupom from '../../assets/imgs/cupom.svg';
 import cadeado from '../../assets/imgs/cadeado.svg';
 
 import './style.scss';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../../contexts/AuthContext";
-import { Titulo } from "../titulo/Titulo";
 
 export function Pagamento({ cards, setCards, coupons, setCoupons }) {
     const { user } = useContext(Context);
 
     useEffect(() => {
         if (user) {
-            setCards(user.person?.cards);
-            setCoupons(user.person?.coupons);
+            setCards(user?.person?.cards);
+            setCoupons(user?.person?.coupons);
         }
     }, [user]);
 

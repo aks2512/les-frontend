@@ -22,8 +22,8 @@ export function UpdatePassword() {
         e.preventDefault();
 
         try {
-            if(password === confirmPassword) {
-                await api.put(`users/${user.id}`, {
+            if (password === confirmPassword) {
+                await api.put(`users/${user?.id}`, {
                     user: {
                         password: password,
                     }
@@ -41,10 +41,10 @@ export function UpdatePassword() {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
-                    <Titulo title="Atualizar senha"/>
+                    <Titulo title="Atualizar senha" />
                     <CustomForm onSubmit={updatePassword}>
 
                         <h3>Deseja atualizar sua senha</h3>
@@ -57,22 +57,22 @@ export function UpdatePassword() {
                             </div>
 
                             <div className="row">
-                                
+
                                 <fieldset className="p50">
                                     <label htmlFor="password">Senha</label>
-                                    <input 
-                                        id="password" 
-                                        type="password" 
+                                    <input
+                                        id="password"
+                                        type="password"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)} 
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="confirmePassword">Confirme a senha</label>
-                                    <input 
-                                        id="confirmePassword" 
-                                        type="password" 
+                                    <input
+                                        id="confirmePassword"
+                                        type="password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
@@ -86,7 +86,7 @@ export function UpdatePassword() {
                     </CustomForm>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
