@@ -9,7 +9,7 @@ import './style.scss';
 
 export function Detalhes() {
     const navigate = useNavigate();
-    
+
     const { authenticated } = useContext(Context);
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
@@ -25,29 +25,31 @@ export function Detalhes() {
     const [idioma, setIdioma] = useState('');
     const [legenda, setLegenda] = useState('');
 
-    useEffect(() => {
-        async function loadData() {
-            if(id) {
-                const response = await api.get(`/products/${id}`);
-                if(response.status === 201) {
-                    setNome(response.data.name);
-                    setImage(response.data.image);
-                    setPreco(response.data.price);
-                    setDescricao(response.data.description);
-                    setRequisitos(response.data.requirements);
-                    setDesenvolvedora(response.data.developer);
-                    setPublicadora(response.data.publisher);
-                    setDataDeLancamento(response.data.release_date);
-                    setIdioma(response.data.language);
-                    setLegenda(response.data.subtitle);
-                }
+    async function loadData() {
+        if (id) {
+            console.log(id);
+            const response = await api.get(`/products/${id}`);
+            if (response.status === 201) {
+                setNome(response.data.name);
+                setImage(response.data.image);
+                setPreco(response.data.price);
+                setDescricao(response.data.description);
+                setRequisitos(response.data.requirements);
+                setDesenvolvedora(response.data.developer);
+                setPublicadora(response.data.publisher);
+                setDataDeLancamento(response.data.release_date);
+                setIdioma(response.data.language);
+                setLegenda(response.data.subtitle);
             }
         }
+    }
+
+    useEffect(() => {
         loadData();
     }, [id]);
 
-    async function addProductToCart(){
-        if(!authenticated) {
+    async function addProductToCart() {
+        if (!authenticated) {
             toast.error('Você precisa entrar ou cadastrar uma conta para adicionar um produto ao carrinho');
             History.push('/login');
         }
@@ -60,11 +62,11 @@ export function Detalhes() {
                     }
                 ]
             });
-            if(response.status === 201) {
+            if (response.status === 201) {
                 toast.success('Produto adicionado ao carrinho com sucesso');
             }
             navigate('/carrinho');
-        }   catch (error) {
+        } catch (error) {
             toast.error(error.response.data.message);
         }
     }
@@ -74,7 +76,7 @@ export function Detalhes() {
             <div className="col-12 col-md-4">
 
                 <div className="produto-img">
-                    <img src={'http://localhost:3333/files' + '/' + image} alt="" />
+                    <img src={'http://localhost:3333/files' + '/' + (image || 'default.png')} alt="" />
                 </div>
 
                 <div className="information">
@@ -103,8 +105,8 @@ export function Detalhes() {
                 </ul>
 
                 <h4 className="preco">R$ {preco}</h4>
-                <button className="buy" onClick={(e) => {addProductToCart()}}>Adicionar ao Carrinho</button>
-                
+                <button className="buy" onClick={(e) => { addProductToCart() }}>Adicionar ao Carrinho</button>
+
                 <div className="descricao">
                     <h4>Descrição</h4>
                     <p>{descricao}</p>
