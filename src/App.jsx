@@ -49,7 +49,6 @@ function UserRoute({ isPrivate = false, children, redirectTo, roles }) {
   }
 
   if (isPrivate && !authenticated) {
-    toast('Você precisa estar logado para acessar essa página');
     return <Navigate to={redirectTo} />
   }
 
@@ -60,9 +59,6 @@ function UserRoute({ isPrivate = false, children, redirectTo, roles }) {
 
   return children;
 }
-
-
-
 
 function App() {
   return (
