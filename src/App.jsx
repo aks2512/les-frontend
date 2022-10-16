@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, Context } from './contexts/AuthContext';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //pages loja
@@ -45,14 +45,16 @@ function UserRoute({ isPrivate = false, children, redirectTo, roles }) {
   const { loading, authenticated, user } = useContext(Context);
 
   if (loading) {
-      return <h1>Loading...</h1>;
+    return <h1>Loading...</h1>;
   }
 
   if (isPrivate && !authenticated) {
+    toast('Você precisa estar logado para acessar essa página');
     return <Navigate to={redirectTo} />
   }
 
-  if(roles && !roles.includes(user.role)){
+  if (roles && !roles.includes(user?.role)) {
+    toast('Não autorizado');
     return <Navigate to={redirectTo} />
   }
 
@@ -60,7 +62,7 @@ function UserRoute({ isPrivate = false, children, redirectTo, roles }) {
 }
 
 
-  
+
 
 function App() {
   return (
@@ -78,230 +80,230 @@ function App() {
           pauseOnHover
         />
         <Routes>
-          <Route  
+          <Route
             path="/"
-            exact 
+            exact
             element={
-              <UserRoute redirectTo="/"><Home/></UserRoute>
-            } 
+              <UserRoute redirectTo="/"><Home /></UserRoute>
+            }
           />
-          <Route  
-            path="/signin" 
-            exact 
+          <Route
+            path="/signin"
+            exact
             element={
-              <UserRoute redirectTo="/"><Signin/></UserRoute>
+              <UserRoute redirectTo="/"><Signin /></UserRoute>
             } />
-          <Route  
-            path="/signup" 
-            exact 
+          <Route
+            path="/signup"
+            exact
             element={
-              <UserRoute redirectTo="/"><Signup/></UserRoute>
+              <UserRoute redirectTo="/"><Signup /></UserRoute>
             } />
-          <Route  
-            path="/register-card" 
-            exact 
+          <Route
+            path="/register-card"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><RegisterCard/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><RegisterCard /></UserRoute>
             } />
-          <Route  
-            path="/register-address" 
-            exact 
+          <Route
+            path="/register-address"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><RegisterAddress/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><RegisterAddress /></UserRoute>
             } />
-          <Route  
-            path="/update-personal-data" 
-            exact 
+          <Route
+            path="/update-personal-data"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><UpdatePersonalData/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><UpdatePersonalData /></UserRoute>
             } />
-          <Route  
-            path="/update-address" 
-            exact 
+          <Route
+            path="/update-address"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><UpdateAddress/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><UpdateAddress /></UserRoute>
             } />
-          <Route  
-            path="/update-password" 
-            exact 
+          <Route
+            path="/update-password"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><UpdatePassword/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><UpdatePassword /></UserRoute>
             } />
-          <Route  
-            path="/update-card" 
-            exact 
+          <Route
+            path="/update-card"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><UpdateCard/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><UpdateCard /></UserRoute>
             } />
-          <Route  
-            path="/result/:search" 
-            exact 
+          <Route
+            path="/result/:search"
+            exact
             element={
-              <UserRoute redirectTo="/"><Result/></UserRoute>
+              <UserRoute redirectTo="/"><Result /></UserRoute>
             } />
-          <Route  
-            path="/playstation/playstation5" 
-            exact 
+          <Route
+            path="/playstation/playstation5"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/playstation/playstation4" 
-            exact 
+          <Route
+            path="/playstation/playstation4"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/playstation/playstation3" 
-            exact 
+          <Route
+            path="/playstation/playstation3"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/xbox/xbox360" 
-            exact 
+          <Route
+            path="/xbox/xbox360"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/xbox/xboxone" 
-            exact 
+          <Route
+            path="/xbox/xboxone"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/xbox/xboxseriesxs" 
-            exact 
+          <Route
+            path="/xbox/xboxseriesxs"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/nintendo/nintendowii" 
-            exact 
+          <Route
+            path="/nintendo/nintendowii"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/nintendo/nintendo3ds" 
-            exact 
+          <Route
+            path="/nintendo/nintendo3ds"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/nintendo/nintendoswitch" 
-            exact 
+          <Route
+            path="/nintendo/nintendoswitch"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/pc/perifericos" 
-            exact 
+          <Route
+            path="/pc/perifericos"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutosCategorizados/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutosCategorizados /></UserRoute>
             } />
-          <Route  
-            path="/meu-perfil" 
-            exact 
+          <Route
+            path="/meu-perfil"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><MeuPerfil/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><MeuPerfil /></UserRoute>
             } />
-          <Route  
-            path="/meus-pedidos" 
-            exact 
+          <Route
+            path="/meus-pedidos"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><MeusPedidos/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><MeusPedidos /></UserRoute>
             } />
-          <Route  
-            path="/troca-produto" 
-            exact 
+          <Route
+            path="/troca-produto"
+            exact
             element={
-              <UserRoute isPrivate={true} redirectTo="/"><TrocaProduto/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><TrocaProduto /></UserRoute>
             } />
-          <Route  
-            path="/carrinho" 
-            exact 
+          <Route
+            path="/carrinho"
+            exact
             element={
-              <UserRoute redirectTo="/" isPrivate={true}><Carrinho/></UserRoute>
+              <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><Carrinho /></UserRoute>
             } />
-          <Route  
-            path="/produto-detalhes" 
-            exact 
+          <Route
+            path="/produto-detalhes"
+            exact
             element={
-              <UserRoute redirectTo="/"><ProdutoDetalhes/></UserRoute>
+              <UserRoute redirectTo="/"><ProdutoDetalhes /></UserRoute>
             } />
-          <Route  
-            path="/admin-login" 
-            exact 
+          <Route
+            path="/admin-login"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login"><AdminLogin/></UserRoute>
+              <UserRoute redirectTo="/admin-login"><AdminLogin /></UserRoute>
             } />
-          <Route  
-            path="/admin-dashboard" 
-            exact 
+          <Route
+            path="/admin-dashboard"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminDashboard/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminDashboard /></UserRoute>
             } />
-          <Route  
-            path="/admin-produtos" 
-            exact 
+          <Route
+            path="/admin-produtos"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminProdutos/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminProdutos /></UserRoute>
             } />
-          <Route  
-            path="/admin-bandeiras" 
-            exact 
+          <Route
+            path="/admin-bandeiras"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminBandeiras/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminBandeiras /></UserRoute>
             } />
-          <Route  
-            path="/admin-trocas" 
-            exact 
+          <Route
+            path="/admin-trocas"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminTrocas/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminTrocas /></UserRoute>
             } />
-          <Route  
-            path="/admin-vendas" 
-            exact 
+          <Route
+            path="/admin-vendas"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminVendas/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminVendas /></UserRoute>
             } />
-          <Route  
-            path="/admin-estoque" 
-            exact 
+          <Route
+            path="/admin-estoque"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminEstoque/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminEstoque /></UserRoute>
             } />
-          <Route  
-            path="/admin-clientes" 
-            exact 
+          <Route
+            path="/admin-clientes"
+            exact
             element={
-              <UserRoute redirectTo="/admin-login" isPrivate={true}><AdminClientes/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><AdminClientes /></UserRoute>
             } />
-          <Route  
-            path="/register-bandeira" 
-            exact 
+          <Route
+            path="/register-bandeira"
+            exact
             element={
-              <UserRoute redirectTo="/"><RegisterBandeira/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><RegisterBandeira /></UserRoute>
             } />
-          <Route  
-            path="/register-produto" 
-            exact 
+          <Route
+            path="/register-produto"
+            exact
             element={
-              <UserRoute redirectTo="/"><RegisterProduto/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><RegisterProduto /></UserRoute>
             } />
-          <Route  
-            path="/update-produto" 
-            exact 
+          <Route
+            path="/update-produto"
+            exact
             element={
-              <UserRoute redirectTo="/"><UpdateProduto/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><UpdateProduto /></UserRoute>
             } />
-          <Route  
-            path="/update-bandeira" 
-            exact 
+          <Route
+            path="/update-bandeira"
+            exact
             element={
-              <UserRoute redirectTo="/"><UpdateBandeira/></UserRoute>
+              <UserRoute redirectTo="/admin-login" isPrivate={true} roles={['admin']}><UpdateBandeira /></UserRoute>
             } />
-        </Routes> 
+        </Routes>
       </BrowserRouter>
     </AuthProvider>
   );
