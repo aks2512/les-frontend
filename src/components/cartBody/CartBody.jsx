@@ -20,33 +20,33 @@ export function CartBody() {
     const [deliveryAddress, setDeliveryAddress] = useState();
     const [totalPaid, setTotalPaid] = useState({ coupon: 0, card: 0 });
 
-    function handleSetCards(cards){
+    function handleSetCards(cards) {
         const total = cards.reduce((total, card) => {
-            if(card.active){
-                return total + (card.value || 0);
+            if (card.active) {
+                return total + (Number(card.value) || 0);
             }
 
             return total;
         }, 0);
 
-        setTotalPaid({ ...totalPaid, card: Number(total) });
+        setTotalPaid({ ...totalPaid, card: total });
         setCards(cards);
     }
 
-    function handleSetCoupons(coupons){
+    function handleSetCoupons(coupons) {
         const total = coupons.reduce((total, coupon) => {
-            if(coupon.active){
+            if (coupon.active) {
                 return total + (coupon.value || 0);
             }
 
             return total;
         }, 0);
-        
+
         setTotalPaid({ ...totalPaid, coupon: Number(total) });
         setCoupons(coupons);
     }
-    async function onSubmit(){
-        try{
+    async function onSubmit() {
+        try {
             const activeCards = cards.filter(c => c.active)
             const activeCoupons = coupons.filter(c => c.active)
             const response = await api.post('/purchases', {
@@ -62,9 +62,9 @@ export function CartBody() {
             const newCart = await api.post('/carts')
             setCart(newCart);
             userLoadData();
-            
+
             navigate('/meus-pedidos')
-        } catch(err){
+        } catch (err) {
             toast.error(err.response.data.message || 'Falha ao finalizar compra');
         }
     }
@@ -75,7 +75,7 @@ export function CartBody() {
                 <h3>Carrinho</h3>
                 <div className="d-flex flex-wrap">
                     <div className="col-12 col-xl-8 mb-2">
-                        <CarrinhoProdutos totalPaid={totalPaid}/>
+                        <CarrinhoProdutos totalPaid={totalPaid} />
                         <CarrinhoEnderecos
                             deliveryAddress={deliveryAddress}
                             paymentAddress={paymentAddress}
@@ -84,15 +84,15 @@ export function CartBody() {
                         />
                     </div>
                     <div className="col-12 col-xl-4 mb-2">
-                        <Pagamento 
-                            cards={cards} 
-                            setCards={handleSetCards} 
-                            coupons={coupons} 
-                            setCoupons={handleSetCoupons} 
+                        <Pagamento
+                            cards={cards}
+                            setCards={handleSetCards}
+                            coupons={coupons}
+                            setCoupons={handleSetCoupons}
                             onSubmit={onSubmit}
                         />
                         <div className="d-flex justify-content-center create-purchase">
-                            <button className="btn-finalizar" onClick={(e) => {onSubmit(e)}}>Finalizar compra</button>
+                            <button className="btn-finalizar" onClick={(e) => { onSubmit(e) }}>Finalizar compra</button>
                         </div>
                     </div>
                 </div>
