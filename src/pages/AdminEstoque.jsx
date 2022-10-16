@@ -17,7 +17,7 @@ export function AdminEstoque() {
 
     async function loadProducts() {
         const response = await api.get(`/products?search=${search}`);
-        if(response.status === 201) {
+        if (response.status === 201) {
             setProducts(response.data);
             setLoading(false);
         }
@@ -25,30 +25,30 @@ export function AdminEstoque() {
 
     const onNumericChange = (product, e) => {
         const { name, value } = e.target;
-        product[name] = value.replace(/\D/g,'');
+        product[name] = value.replace(/\D/g, '');
         e.target.value = product[name]
     };
 
-    async function handleUpdateProduct(product){
+    async function handleUpdateProduct(product) {
         const { id } = product;
-        try{
+        try {
             const response = await api.put(`products/${id}`, product)
             toast('Atualizado com sucesso')
             loadProducts();
-        }catch(error){
-            toast.error(error?.message)
+        } catch (error) {
+            toast.error(error?.response?.data?.message || 'Erro ao atualizar estoque');
         }
     }
 
     return (
         <main className="admin">
-            <div className="row w-100 px-0 m-0">    
+            <div className="row w-100 px-0 m-0">
                 <div className="col-12 col-xl-3 px-0">
-                    <AdminSideMenu/>
+                    <AdminSideMenu />
                 </div>
 
                 <div className="col-12 col-xl-9 px-0">
-                    <AdminListagem 
+                    <AdminListagem
                         title="Estoque"
                         registerLink="/register-estoque"
                         search={search}
@@ -65,33 +65,33 @@ export function AdminEstoque() {
                         </thead>
                         <tbody>
 
-                            {loading === false && products.map((product, index) => 
-                                (
-                                    <tr key={product.id}>
-                                        <td><img width="100" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
-                                        <td>{product.name}</td>
-                                        <td>{product.stock}</td>
-                                        <td>
-                                            <input type="text" name="stock" onChange={(e)=>{onNumericChange(product, e)}} placeholder="adicionar ao estoque" />
-                                            <div className="d-flex">
-                                                <button onClick={(e)=>{handleUpdateProduct(product)}}>Atualizar</button>
-                                                {
-                                                    product.isActive ? 
+                            {loading === false && products.map((product, index) =>
+                            (
+                                <tr key={product.id}>
+                                    <td><img width="100" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
+                                    <td>{product.name}</td>
+                                    <td>{product.stock}</td>
+                                    <td>
+                                        <input type="text" name="stock" onChange={(e) => { onNumericChange(product, e) }} placeholder="adicionar ao estoque" />
+                                        <div className="d-flex">
+                                            <button onClick={(e) => { handleUpdateProduct(product) }}>Atualizar</button>
+                                            {
+                                                product.isActive ?
 
-                                                    <button onClick={(e)=>{
+                                                    <button onClick={(e) => {
                                                         product.isActive = false;
                                                         handleUpdateProduct(product)
                                                     }}>Inativar</button> :
 
-                                                    <button onClick={(e)=>{
+                                                    <button onClick={(e) => {
                                                         product.isActive = true;
                                                         handleUpdateProduct(product)
                                                     }}>Ativar</button>
-                                                }
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
                             )}
                         </tbody>
                     </AdminListagem>
