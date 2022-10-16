@@ -9,6 +9,7 @@ import cadeado from '../../assets/imgs/cadeado.svg';
 import './style.scss';
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../contexts/AuthContext";
+import { Titulo } from "../titulo/Titulo";
 
 export function Pagamento({ cards, setCards, coupons, setCoupons }) {
     const { user } = useContext(Context);
@@ -22,8 +23,10 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
 
     return (
         <div className="pagamento">
-            <p>Selecione pelo menos um cartão</p>
-
+            <p>
+                Selecione pelo menos um
+            </p>
+            <caption><strong>Cartões</strong></caption>
             <div className="cartoes">
                 {cards && cards.map((card, index) => (
                     <div className={`card-selector ${card.active ? 'active-card' : ''}`}>
@@ -57,21 +60,18 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                     </div>
                 ))}
             </div>
-
             <div className="novo-cartao">
                 <img src={cartao} alt="" />
                 <Link to='/register-card'>Novo cartão de crédito</Link>
             </div>
-
+            <caption><strong>Cupons</strong></caption>
             <div className="cupons table-container">
-
                 <table className="odd">
                     {
-                        coupons.length > 0 ? coupons.map((coupon, index) => (
-
+                        coupons.length > 0 ? (
                             <tbody>
                                 {
-                                    user?.person?.coupons?.map(coupon => (
+                                    user?.person?.coupons?.map((coupon, index) => (
                                         <tr key={coupon.id}>
                                             <td><img src={cupom} alt="" /></td>
                                             <td>{coupon.code.replace(/.+?(?=)-/g, '')}</td>
@@ -88,8 +88,7 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                                     ))
                                 }
                             </tbody>
-
-                        )) : <p>Nenhum cupom cadastrado</p>
+                        ) : <p>Nenhum cupom cadastrado</p>
                     }
                 </table>
             </div>
