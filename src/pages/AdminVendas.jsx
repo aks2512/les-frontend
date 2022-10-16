@@ -24,13 +24,22 @@ export function AdminVendas() {
     async function loadPurchases() {
         const response = await api.get(`/purchases?search=${search}`);
         if (response.status === 201) {
-            setPurchases(response.data);
+            setPurchases(() => {
+                return response.data.map(purchase => {
+                    return {
+                        newStatus: purchase.status,
+                        ...purchase
+                    };
+                })
+            });
+            console.log(purchases);
             setLoading(false);
         }
     }
 
     async function updatePurchase(purchase) {
         try {
+            purchase.status = purchase.newStatus
             const response = await api.put(`/purchases/${purchase.id}`, purchase);
             toast(response.data.message);
             loadPurchases();
@@ -71,10 +80,10 @@ export function AdminVendas() {
                                     <td>{purchase.status}</td>
                                     <td>R$ {purchase.total_price}</td>
                                     <td>
-                                        <select name="status" value={purchase.status} onChange={(e) => {
+                                        <select name="status" value={purchase.newStatus} onChange={(e) => {
                                             setPurchases(purchases.map((p, i) => {
                                                 if (i === index) {
-                                                    p.status = e.target.value;
+                                                    p.newStatus = e.target.value;
                                                 }
                                                 return p;
                                             }))
