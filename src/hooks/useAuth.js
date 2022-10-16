@@ -18,8 +18,8 @@ export default function useAuth() {
     } else {
       setAuthenticated(false);
       toast('Sua sessão expirou, faça login novamente');
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   async function userLoadData() {
@@ -37,6 +37,8 @@ export default function useAuth() {
 
       if(response?.data?.user?.person){
         cartLoadData()
+      } else {
+        setLoading(false);
       }
     }catch(err){
       console.log(err);
@@ -59,6 +61,7 @@ export default function useAuth() {
           setCart(newCart);
         }
       } 
+      setLoading(false);
     }catch(err){
       toast.error('Erro ao carregar dados do carrinho');
     }
