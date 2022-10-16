@@ -4,15 +4,23 @@ import { Context } from '../../../contexts/AuthContext';
 import login from '../../../assets/imgs/login.svg';
 
 export function Login() {
-    const { authenticated } = useContext(Context)
+    const { authenticated, user } = useContext(Context)
 
     function checkAuthentication() {
         if (authenticated) {
-            return (
-                <div className="content">
-                    <Link to="/meu-perfil">Meu Perfil</Link>
-                </div>
-            )
+            if (user?.person) {
+                return (
+                    <div className="content">
+                        <Link to="/meu-perfil">Meu Perfil</Link>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="content">
+                        <Link to="/signin">Não autorizado</Link>
+                    </div>
+                )
+            }
         }
 
         return (
@@ -24,7 +32,7 @@ export function Login() {
 
     return (
         <div className="login">
-            
+
             {checkAuthentication()}
 
             <div className="image">

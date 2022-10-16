@@ -5,19 +5,27 @@ import cartImg from '../../../assets/imgs/cart.svg';
 import { Context } from '../../../contexts/AuthContext';
 
 export function Cart() {
-    const { authenticated, cart, cartLoadData  } = useContext(Context)
-    
+    const { authenticated, user, cart, cartLoadData } = useContext(Context)
+
     function checkAuthentication() {
         if (authenticated) {
-            return (
-                <div className="content">
-                    <p> Meu carrinho<br/><strong>
-                        {cart?.items?.length || 0} itens
-                    </strong></p>
-                </div>
-            )
+            if (user?.person) {
+                return (
+                    <div className="content">
+                        <p> Meu carrinho<br /><strong>
+                            {cart?.items?.length || 0} itens
+                        </strong></p>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="content">
+                        <Link to="/signin">Não autorizado</Link>
+                    </div>
+                )
+            }
         }
-        
+
 
         return (
             <div className="content">
@@ -27,7 +35,7 @@ export function Cart() {
     }
 
     useEffect(() => {
-        if(authenticated) {
+        if (authenticated && user?.person) {
             cartLoadData();
         }
     }, [])
