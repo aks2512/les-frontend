@@ -13,44 +13,44 @@ export function AdminForm() {
 
     async function login(e) {
         e.preventDefault();
-        try{
+        try {
             const response = await handleLogin(email, password)
             toast(response.message);
             if (response.status === 201) {
                 navigate('/admin-dashboard');
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error?.response?.data?.message || 'Erro ao fazer login');
         }
     }
-    
+
     return (
         <div className="admin-form" onSubmit={(e) => login(e)}>
-             <form>
+            <form>
 
-             <fieldset>
+                <fieldset>
                     <label htmlFor="email">Email</label>
-                    <input 
-                        id="email" 
-                        type="email" 
+                    <input
+                        id="email"
+                        type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}  
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </fieldset>
 
                 <fieldset>
                     <label htmlFor="password">Senha</label>
-                    <input 
-                        id="password" 
+                    <input
+                        id="password"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </fieldset>
-                 
-                 <button type="submit">Login</button>
-                 
-             </form>
+
+                <button type="submit">Login</button>
+
+            </form>
         </div>
     );
 }
