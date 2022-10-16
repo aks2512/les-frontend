@@ -13,16 +13,9 @@ export function LoginForm() {
 
     async function login(e) {
         e.preventDefault();
-        try{
+        try {
             const response = await handleLogin(email, password)
-
-            toast(response);
             if (response.status === 201) {
-                if(response.user.role != "usuario"){
-                    toast.error('Apenas cliente pode utilizar essa função')
-                    handleLogout();
-                    return
-                }
                 navigate('/meu-perfil');
                 return
             }
@@ -38,21 +31,21 @@ export function LoginForm() {
 
                 <fieldset>
                     <label htmlFor="email">Email</label>
-                    <input 
-                        id="email" 
-                        type="email" 
+                    <input
+                        id="email"
+                        type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}  
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </fieldset>
 
                 <fieldset>
                     <label htmlFor="password">Senha</label>
-                    <input 
-                        id="password" 
+                    <input
+                        id="password"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </fieldset>
 
