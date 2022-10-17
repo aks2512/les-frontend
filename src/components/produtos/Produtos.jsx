@@ -10,7 +10,7 @@ export function Produtos({ search = '' }) {
 
     async function loadProducts() {
         const response = await api.get(`/products?search=${search}`);
-        if(response.status === 201) {
+        if (response.status === 201) {
             setProducts(response.data);
             setLoading(false);
         }
@@ -24,13 +24,13 @@ export function Produtos({ search = '' }) {
     return (
         <section className="produtos container">
             {loading === false && (
-                products.map( (product) => (
-                    <Produto 
-                        key={product.id} 
-                        id={product.id} 
-                        imageURL={'http://localhost:3333/files/' + product.image} 
-                        name={product.name} 
-                        price={product.price} 
+                products && products.length > 0 && products.map((product) => (
+                    <Produto
+                        key={product.id}
+                        id={product.id}
+                        imageURL={'http://localhost:3333/files/' + product.image}
+                        name={product.name}
+                        price={product.price}
                     />
                 ))
             )}

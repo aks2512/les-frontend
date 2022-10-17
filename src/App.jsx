@@ -132,7 +132,7 @@ function App() {
               <UserRoute isPrivate={true} redirectTo="/signin" roles={['usuario']}><UpdateCard /></UserRoute>
             } />
           <Route
-            path="/result/:search"
+            path="/result"
             exact
             element={
               <UserRoute redirectTo="/"><Result /></UserRoute>
