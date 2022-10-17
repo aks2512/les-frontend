@@ -32,7 +32,6 @@ export function AdminVendas() {
                     };
                 })
             });
-            console.log(purchases);
             setLoading(false);
         }
     }
