@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../api';
 import star from '../../assets/imgs/star.svg';
@@ -25,26 +25,27 @@ export function Detalhes() {
     const [idioma, setIdioma] = useState('');
     const [legenda, setLegenda] = useState('');
 
-    async function loadData() {
-        if (id) {
-            console.log(id);
-            const response = await api.get(`/products/${id}`);
-            if (response.status === 201) {
-                setNome(response.data.name);
-                setImage(response.data.image);
-                setPreco(response.data.price);
-                setDescricao(response.data.description);
-                setRequisitos(response.data.requirements);
-                setDesenvolvedora(response.data.developer);
-                setPublicadora(response.data.publisher);
-                setDataDeLancamento(response.data.release_date);
-                setIdioma(response.data.language);
-                setLegenda(response.data.subtitle);
+    
+    useEffect(() => {
+
+        async function loadData() {
+            if (id) {
+                const response = await api.get(`/products/${id}`);
+                if (response.status === 201) {
+                    setNome(response.data.name);
+                    setImage(response.data.image);
+                    setPreco(response.data.price);
+                    setDescricao(response.data.description);
+                    setRequisitos(response.data.requirements);
+                    setDesenvolvedora(response.data.developer);
+                    setPublicadora(response.data.publisher);
+                    setDataDeLancamento(response.data.release_date);
+                    setIdioma(response.data.language);
+                    setLegenda(response.data.subtitle);
+                }
             }
         }
-    }
 
-    useEffect(() => {
         loadData();
     }, [id]);
 
@@ -76,7 +77,7 @@ export function Detalhes() {
             <div className="col-12 col-md-4">
 
                 <div className="produto-img">
-                    <img src={'http://localhost:3333/files' + '/' + (image || 'default.png')} alt="" />
+                    <img src={`http://localhost:3333/files/${(image || 'default.png')}`} alt="" />
                 </div>
 
                 <div className="information">

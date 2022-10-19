@@ -1,30 +1,47 @@
 @import '../../styles/global/variables.scss';
 
-.modal-custom {
-    width: 40%;
-    height: 80%;
+.modal__custom {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow-y: auto;
-    z-index: 2;
-    background-color: $backgroundColor;
-
-    .modal-content {
-        padding: 50px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-}
-
-.modal-fechar{
-    all: unset;
-    cursor: pointer;
-    padding: 0 10px;
-    position: absolute;
-    background-color: red;
-    color: $backgroundColor4;
-    border-radius: 5px;
-    z-index: 3;
+    top: 0;
+    left: 0;
     right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,.5);
+    z-index: 2;
+
+    &__content {
+        padding: 15px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+        position: relative;
+        width: 50%;
+        min-width: 320px;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #474747;
+    }
+
+    &__fechar{
+        all: unset;
+        cursor: pointer;
+        padding: 0 10px;
+        position: absolute;
+        background-color: red;
+        color: $backgroundColor4;
+        border-radius: 5px;
+        z-index: 3;
+        top: 10px;
+        right: 10px;
+    }
+
+    &__box {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow-y: overlay;
+    }
 }

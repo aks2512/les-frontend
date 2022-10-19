@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
-import { Titulo } from '../titulo/Titulo';
 import { CustomForm } from '../customForm/CustomForm';
 import localizacao from '../../assets/imgs/localizacao.svg';
 export function AddressForm({ onSubmit, children, addressPass }) {
@@ -52,7 +51,7 @@ export function AddressForm({ onSubmit, children, addressPass }) {
                 place_type_id: 1
             });
         }
-    }, []);
+    }, [addressPass]);
 
     return (
         <>
@@ -160,9 +159,9 @@ export function AddressForm({ onSubmit, children, addressPass }) {
                                             address_type_id: Number(e.target.value) 
                                         })}
                                     >
-                                        {addressTypes.map((addressType)=>{
+                                        {addressTypes.map((addressType, index)=>{
                                             return (
-                                                <option value={addressType.id}>{addressType.name}</option>
+                                                <option key={`addressType_${index}`} value={addressType.id}>{addressType.name}</option>
                                             )
                                         })}
                                     </select>
@@ -179,9 +178,9 @@ export function AddressForm({ onSubmit, children, addressPass }) {
                                             place_type_id: Number(e.target.value) 
                                         })}
                                     >
-                                       {placeTypes.map((placeType)=>{
+                                       {placeTypes.map((placeType, index)=>{
                                             return (
-                                                <option value={placeType.id}>{placeType.name}</option>
+                                                <option key={`placeType_${index}`} value={placeType.id}>{placeType.name}</option>
                                             )
                                         })}
                                     </select>

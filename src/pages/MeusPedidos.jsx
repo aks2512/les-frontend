@@ -17,7 +17,6 @@ export function MeusPedidos() {
     async function loadPurchases() {
         try {
             const response = await api.get(`purchases`);
-            console.log(response.data);
             setPurchases(response.data);
         } catch(err) {
             toast.error(err?.response?.data?.message || 'Falha ao carregar pedidos');

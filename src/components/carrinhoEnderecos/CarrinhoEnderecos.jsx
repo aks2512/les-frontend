@@ -6,7 +6,7 @@ import api from "../../api";
 import { Context } from "../../contexts/AuthContext";
 import { RegisterAddress } from "../../pages/RegisterAddress";
 import { AddressForm } from "../addressForm/AddressForm";
-import { Modal, ModalTest } from "../modal/Modal";
+import { Modal } from "../modal/Modal";
 import { Titulo } from "../titulo/Titulo";
 
 import { CarrinhoEndereco } from "./partials/CarrinhoEndereco";
@@ -95,50 +95,48 @@ export function CarrinhoEnderecos({
                     /> : <p className="text-center">Nenhum endereço cadastrado</p> }
                 </div>
             </div>
-            <ModalTest onClose={()=>{setShowModalCreate({...showModalCreate, open: false})}} isOpen={showModalCreate.open}>
-                <div className="container">
-                    <AddressForm onSubmit={async (e,{...params}) => {
-                        e.preventDefault();
-                        if([1, 3].includes(Number(params.address_type_id))){
-                            setDeliveryAddress({...params, save: createAddress.save})
-                        } 
-                        
-                        if([2, 3].includes(Number(params.address_type_id))){
-                            setPaymentAddress({...params, save: createAddress.save})
-                        }
+            <Modal onClose={()=>{setShowModalCreate({...showModalCreate, open: false})}} isOpen={showModalCreate.open}>
+                <AddressForm onSubmit={async (e,{...params}) => {
+                    e.preventDefault();
+                    if([1, 3].includes(Number(params.address_type_id))){
+                        setDeliveryAddress({...params, save: createAddress.save})
+                    } 
+                    
+                    if([2, 3].includes(Number(params.address_type_id))){
+                        setPaymentAddress({...params, save: createAddress.save})
+                    }
 
-                        if(createAddress){
-                            try{
-                                const response = await api.post(`addresses`, {
-                                    ...params
-                                })
-                                toast.message(response.data.message);
-                            } catch(err) {
-                                toast.error(err.response.data.message || 'Falha ao cadastrar endereço')
-                                return;
-                            }
+                    if(createAddress){
+                        try{
+                            const response = await api.post(`addresses`, {
+                                ...params
+                            })
+                            toast.message(response.data.message);
+                        } catch(err) {
+                            toast.error(err.response.data.message || 'Falha ao cadastrar endereço')
+                            return;
                         }
-                        
-                        setCreateAddress(false)
-                        setShowModalCreate(false)
-                    }}>
-                        <div className="cadastrar-endereco custom-form">
-                            <Titulo title={'Deseja Salvar o Endereço na Sua Conta?'} />
-                            <button 
-                                className={createAddress ? 'button-true' : 'button-false'} 
-                                onClick={
-                                    (e) => {
-                                        e.preventDefault()
-                                        setCreateAddress(!createAddress)
-                                    }
+                    }
+                    
+                    setCreateAddress(false)
+                    setShowModalCreate(false)
+                }}>
+                    <div className="cadastrar-endereco custom-form mb-4">
+                        <Titulo title={'Deseja Salvar o Endereço na Sua Conta?'} />
+                        <button 
+                            className={createAddress ? 'button-true' : 'button-false'} 
+                            onClick={
+                                (e) => {
+                                    e.preventDefault()
+                                    setCreateAddress(!createAddress)
                                 }
-                            >
-                                {createAddress ? 'Sim' : 'Não'}
-                            </button>
-                        </div>
-                    </AddressForm>
-                </div>
-            </ModalTest>  
+                            }
+                        >
+                            {createAddress ? 'Sim' : 'Não'}
+                        </button>
+                    </div>
+                </AddressForm>
+            </Modal>  
         </div>
     );
 }

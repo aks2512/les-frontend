@@ -56,9 +56,9 @@ export function UpdatePersonalData() {
             setCPF(user?.person.cpf);
             setCellphone(user?.person.cellphone);
             setPhone(user?.person.phone);
-            setBirthdate(moment(user?.person.birth_date).format('DD/MM/YYYY'));
+            setBirthdate(moment(user?.person.birth_date).format('YYYY-MM-DD'));
         }
-    }, [userLoadData]);
+    }, [user, userLoadData]);
 
     return (
         <>
@@ -150,7 +150,7 @@ export function UpdatePersonalData() {
                                         type="date"
                                         value={birthdate}
                                         onChange={(e) => setBirthdate(e.target.value)}
-                                        disabled={false}
+                                        disabled={true}
                                     />
                                 </fieldset>
 

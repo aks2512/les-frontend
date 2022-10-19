@@ -1,14 +1,16 @@
 import './style.scss';
 
-export function ModalTest({ isOpen, onClose , children }) {
+export function Modal({ isOpen, onClose , children }) {
     return (
         <>
             {
                 isOpen && (
-                    <div className="modal-custom container">
-                        <button className='modal-fechar' onClick={onClose}>X</button>
-                        <div className="modal-content">
-                            {children}
+                    <div className="modal__custom">
+                        <div className="modal__custom__content">
+                            <button className='modal__custom__fechar' onClick={onClose}>X</button>
+                            <div className="modal__custom__box">
+                                {children}
+                            </div>
                         </div>
                     </div>
                 )
