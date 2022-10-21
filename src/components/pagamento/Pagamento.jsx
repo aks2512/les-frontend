@@ -35,10 +35,11 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                     {cards && cards.map((card, index) => (
                         <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
                             <Cartao
+                                index={index}
                                 name={card.number}
                                 image=""
                             >
-                                <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
+                                <input id={`card_checkbox${index}`} className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
                                     const newCards = cards.slice();
                                     newCards[index].active = e.target.checked
                                     setCards(newCards)

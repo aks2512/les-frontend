@@ -1,10 +1,10 @@
 import { Children } from 'react';
 import mastercard from '../../../assets/imgs/mastercard.svg';
 
-export function Cartao({name, image, children}) {
+export function Cartao({name, image, children, index}) {
 
     return (
-        <div className="cartao" >
+        <label htmlFor={`card_checkbox${index}`} className="cartao" >
             {children}
             <div className="image">
                 <img src={mastercard} alt="" />
@@ -12,6 +12,6 @@ export function Cartao({name, image, children}) {
             <div className="content">
                 <p>{name}</p>
             </div>
-        </div>
+        </label>
     );
 }
