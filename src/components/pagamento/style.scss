@@ -8,6 +8,27 @@
         height: 130px;
         overflow-y: auto;
         margin-bottom: 20px;
+        // new styles
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0,0,0,.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transition: .5s;
+
+        &.active {
+            visibility: visible;
+            opacity: 1;
+        }
 
         .cartao {
             cursor: pointer;
@@ -80,6 +101,30 @@
             line-height: 10px;
             margin-left: 4px;
             margin-bottom: 0;
+        }
+    }
+
+    .cartoes-container {
+        // new styles
+        position: relative;
+        min-width: 320px;
+        width: 50%;
+        height: auto;
+        background-color: white;
+        padding: 5px;
+        border: 2px solid gray;
+        box-shadow: 0px 0px 1px 40px rgb(255, 255, 255);
+        border-radius: 4px;
+
+        .close {
+            position: absolute;
+            top: -25px;
+            right: -30px;
+            background-color: red;
+            padding: 0 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
         }
     }
 

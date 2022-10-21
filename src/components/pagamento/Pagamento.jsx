@@ -27,39 +27,43 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
             <p>
                 Selecione pelo menos um
             </p>
-            <strong>Cartões</strong>
+            <p><strong>Cartões</strong></p>
+            <Link to="#" onClick={(e) => e.target.nextSibling.classList.add('active')}>Selecionar um cartão</Link>
             <div className="cartoes">
-                {cards && cards.map((card, index) => (
-                    <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
-                        <Cartao
-                            name={card.number}
-                            image=""
-                        >
-                            <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
-                                const newCards = cards.slice();
-                                newCards[index].active = e.target.checked
-                                setCards(newCards)
-                            }} />
-                        </Cartao>
-                        {
-                            card.active && (
-                                <div className="payment-quantity">
-                                    Valor:
-                                    <input
-                                        type="number"
-                                        value={card.value}
-                                        onChange={(e) => {
-                                            const newCards = cards.slice();
-                                            newCards[index].value = e.target.value
-                                            setCards(newCards)
-                                        }}
-                                        placeholder="0,00"
-                                    />
-                                </div>
-                            )
-                        }
-                    </div>
-                ))}
+                <div className="cartoes-container">
+                    <div className="close" onClick={(e) => e.target.parentNode.parentNode.classList.remove('active')}>X</div>
+                    {cards && cards.map((card, index) => (
+                        <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
+                            <Cartao
+                                name={card.number}
+                                image=""
+                            >
+                                <input className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
+                                    const newCards = cards.slice();
+                                    newCards[index].active = e.target.checked
+                                    setCards(newCards)
+                                }} />
+                            </Cartao>
+                            {
+                                card.active && (
+                                    <div className="payment-quantity">
+                                        Valor:
+                                        <input
+                                            type="number"
+                                            value={card.value}
+                                            onChange={(e) => {
+                                                const newCards = cards.slice();
+                                                newCards[index].value = e.target.value
+                                                setCards(newCards)
+                                            }}
+                                            placeholder="0,00"
+                                        />
+                                    </div>
+                                )
+                            }
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="novo-cartao">
                 <img src={cartao} alt="" />
