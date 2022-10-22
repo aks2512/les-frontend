@@ -32,7 +32,7 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
             <div className="cartoes">
                 <div className="cartoes-container">
                     <div className="close" onClick={(e) => e.target.parentNode.parentNode.classList.remove('active')}>X</div>
-                    {cards && cards.map((card, index) => (
+                    {cards?.length > 0 ? cards.map((card, index) => (
                         <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
                             <Cartao
                                 index={index}
@@ -63,7 +63,7 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                                 )
                             }
                         </div>
-                    ))}
+                    )) : <div>Nenhum cartão cadastrado</div>}
                 </div>
             </div>
             <div className="novo-cartao">
@@ -95,10 +95,10 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                                 }
                             </tbody>
                         ) : <tbody>
-                                <tr>
-                                    <td>Nenhum cupom cadastrado</td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td>Nenhum cupom cadastrado</td>
+                            </tr>
+                        </tbody>
                     }
                 </table>
             </div>
