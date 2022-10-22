@@ -28,8 +28,8 @@ export function CarrinhoEnderecos({
 
     useEffect(() => {
         if (user) {
-            setPaymentAddress(user?.person?.addresses?.find(address => [1, 3].includes(address.address_type.id)));
-            setDeliveryAddress(user?.person?.addresses?.find(address => [2, 3].includes(address.address_type.id)));
+            setPaymentAddress(user?.person?.addresses?.find(address => [2, 3].includes(address.address_type.id)));
+            setDeliveryAddress(user?.person?.addresses?.find(address => [1, 3].includes(address.address_type.id)));
         }
     }, []);
 
@@ -69,8 +69,8 @@ export function CarrinhoEnderecos({
                     </div>
                     <CarrinhoEnderecoTipo
                         type_name="Cobrança"
-                        register_func={(e) => { setShowModalCreate({ open: true, type: 1 }) }}
-                        select_func={(e) => { setShowModalSelect({ open: true, type: 1 }) }}
+                        register_func={(e) => { setShowModalCreate({ open: true, type: 2 }) }}
+                        select_func={(e) => { setShowModalSelect({ open: true, type: 2 }) }}
                     />
                     {paymentAddress ? <CarrinhoEndereco
                         name={paymentAddress?.name}
@@ -82,8 +82,8 @@ export function CarrinhoEnderecos({
                     <hr></hr>
                     <CarrinhoEnderecoTipo
                         type_name="Entrega"
-                        register_func={(e) => { setShowModalCreate({ open: true, type: 2 }) }}
-                        select_func={(e) => { setShowModalSelect({ open: true, type: 2 }) }}
+                        register_func={(e) => { setShowModalCreate({ open: true, type: 1 }) }}
+                        select_func={(e) => { setShowModalSelect({ open: true, type: 1 }) }}
                     />
                     {deliveryAddress ? <CarrinhoEndereco
                         type={deliveryAddress?.address_type}
