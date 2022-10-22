@@ -18,8 +18,21 @@ export function MeusPedidos() {
         try {
             const response = await api.get(`purchases`);
             setPurchases(response.data);
-        } catch(err) {
+        } catch (err) {
             toast.error(err?.response?.data?.message || 'Falha ao carregar pedidos');
+        }
+    }
+
+    async function refundPurchase(e, item) {
+        e.preventDefault();
+        try {
+            const response = await api.post(`refunds/${item.id}`, {
+                ...item
+            });
+            toast(response.data.message);
+            loadPurchases();
+        } catch (err) {
+            toast.error(err?.response?.data?.message || 'Falha abrir pedido de troca');
         }
     }
 
@@ -28,12 +41,12 @@ export function MeusPedidos() {
     }, [])
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
                     <div className="row">
                         <div className="col-12 col-lg-4">
-                            <SideMenu/>
+                            <SideMenu />
                         </div>
                         <div className="col-12 col-lg-8">
                             <WhiteBox>
@@ -41,57 +54,55 @@ export function MeusPedidos() {
                                     <img src={pedido} alt="" />
                                     <h4>Pedidos</h4>
                                 </div>
-                                    { purchases.map((purchase, index) => {
-                                        return (<>
-                                            <div className={`accordion ${purchase.selected ? '' : 'active'}`}>
-                                                <input className="accordion-radio" id={`accordion-radio-${index}`} type="checkbox" onChange={(e) => {
-                                                    const newPurchases = purchases.slice();
-                                                    newPurchases[index].selected= e.target.checked;
-                                                    setPurchases(newPurchases);
-                                                }}/>
-                                                <label htmlFor={`accordion-radio-${index}`} className="accordion-header">
-                                                    <div>Pedido: {purchase.id}</div>
-                                                    <div>Status: {purchase.status}</div>
-                                                    <div>R$ {purchase.total_price}</div>
-                                                </label>
-                                                <div className="accordion-body">
-                                                    <div className="table-container">
-                                                        <table>
+                                {purchases.map((purchase, index) => {
+                                    return (<>
+                                        <div className={`accordion ${purchase.selected ? '' : 'active'}`}>
+                                            <input className="accordion-radio" id={`accordion-radio-${index}`} type="checkbox" onChange={(e) => {
+                                                const newPurchases = purchases.slice();
+                                                newPurchases[index].selected = e.target.checked;
+                                                setPurchases(newPurchases);
+                                            }} />
+                                            <label htmlFor={`accordion-radio-${index}`} className="accordion-header">
+                                                <div>Pedido: {purchase.id}</div>
+                                                <div>Status: {purchase.status}</div>
+                                                <div>R$ {purchase.total_price}</div>
+                                            </label>
+                                            <div className="accordion-body">
+                                                <div className="table-container">
+                                                    <table>
                                                         <thead>
                                                             <tr>
                                                                 <th>Produto</th>
                                                                 <th>Valor</th>
                                                                 <th>Quantidade</th>
                                                                 <th></th>
-                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                        { purchase.cart && purchase.cart.items.map((item => {
-                                                            return (
-                                                                <tr>
-                                                                    <td>{item.product.name}</td>
-                                                                    <td>R$ {item.price}</td>
-                                                                    <td className="amount">{item.quantity}</td>
-                                                                    <td>trocar</td>
-                                                                    <td>cancelar</td>
-                                                                </tr>
-                                                            )
-                                                        }))}
+                                                            {purchase.cart && purchase.cart.items.map((item => {
+                                                                return (
+                                                                    <tr>
+                                                                        <td>{item.product.name}</td>
+                                                                        <td>R$ {item.price}</td>
+                                                                        <td className="amount">{item.quantity}</td>
+                                                                        <td><button className="bnt btn-trocar" onClick={(e) => refundPurchase(e, item)}>Trocar</button></td>
+                                                                    </tr>
+                                                                )
+                                                            }))}
                                                         </tbody>
-                                                        </table>
-                                                    </div>
+                                                    </table>
                                                 </div>
                                             </div>
-                                        </>
-                                        )
-                                    })}
+                                        </div>
+                                    </>
+                                    )
+                                })}
                             </WhiteBox>
                         </div>
                     </div>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
