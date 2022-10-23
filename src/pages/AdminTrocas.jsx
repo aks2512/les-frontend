@@ -87,9 +87,12 @@ export function AdminTrocas() {
                                     <td>{refund?.cart_item?.product?.name}</td>
                                     <td>
                                         <select name="status" value={refund.newStatus} onChange={(e) => {
-                                            const newRefunds = [...refunds];
-                                            newRefunds[index].newStatus = e.target.value;
-                                            setRefunds(newRefunds);
+                                            setRefunds(refunds.map((r, i) => {
+                                                if (i === index) {
+                                                    r.newStatus = e.target.value;
+                                                }
+                                                return r;
+                                            }))
                                         }} id="">
                                             {
                                                 Object.values(RefundStatusEnum).map((status) => (
@@ -103,7 +106,10 @@ export function AdminTrocas() {
                                         setRefund(refund);
                                         setModal(!modal)
                                     }}>Motivo</button></td>
-                                    <td className="btn"><button onClick={(e) => updateRefund(refund)}>Atualizar</button></td>
+                                    <td className="btn"><button onClick={(e) => {
+                                        refund.status = refund.newStatus || refund.status;
+                                        updateRefund(refund);
+                                    }}>Atualizar</button></td>
                                 </tr>
                             )
                             )}
