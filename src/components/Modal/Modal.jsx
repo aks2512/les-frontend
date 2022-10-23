@@ -1,6 +1,6 @@
 import './style.scss';
 
-export function Modal({ isOpen, onClose , children }) {
+export function Modal({ isOpen, onClose, children }) {
     return (
         <>
             {

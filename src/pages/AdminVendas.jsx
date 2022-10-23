@@ -41,10 +41,10 @@ export function AdminVendas() {
             purchase.status = purchase.newStatus
             const response = await api.put(`/purchases/${purchase.id}`, purchase);
             toast(response.data.message);
-            loadPurchases();
         } catch (err) {
             toast.error(err.response.data.message);
         }
+        loadPurchases();
     }
 
     return (

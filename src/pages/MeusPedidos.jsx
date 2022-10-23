@@ -10,9 +10,12 @@ import { toast } from "react-toastify";
 import api from "../api";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Modal } from "../components/modal/Modal";
 
 export function MeusPedidos() {
     const [purchases, setPurchases] = useState([]);
+    const [modal, setModal] = useState(false);
+    const [newRefund, setNewRefund] = useState({});
 
     async function loadPurchases() {
         try {
@@ -23,11 +26,11 @@ export function MeusPedidos() {
         }
     }
 
-    async function refundPurchase(e, item) {
+    async function refundItem(e) {
         e.preventDefault();
         try {
-            const response = await api.post(`refunds/${item.id}`, {
-                ...item
+            const response = await api.post(`/refunds`, {
+                ...newRefund
             });
             toast(response.data.message);
             loadPurchases();
@@ -85,7 +88,10 @@ export function MeusPedidos() {
                                                                         <td>{item.product.name}</td>
                                                                         <td>R$ {item.price}</td>
                                                                         <td className="amount">{item.quantity}</td>
-                                                                        <td><button className="bnt btn-trocar" onClick={(e) => refundPurchase(e, item)}>Trocar</button></td>
+                                                                        <td><button className="bnt btn-trocar" onClick={(e) => {
+                                                                            setModal(!modal)
+                                                                            setNewRefund({ ...item })
+                                                                        }}>Trocar</button></td>
                                                                     </tr>
                                                                 )
                                                             }))}
@@ -101,6 +107,47 @@ export function MeusPedidos() {
                         </div>
                     </div>
                 </div>
+                <Modal isOpen={modal} onClose={(e) => setModal(!modal)}>
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">#{
+                                `${newRefund.product && newRefund.product.id} - ${newRefund.product && newRefund.product.name}`
+                            }</h5>
+                        </div>
+                        <div className="modal-body">
+                            <div className="item">
+                                <div className="row">
+                                    <div className="col-12 col-lg-6">
+                                        <div className="img-container">
+                                            <img src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
+                                        </div>
+
+                                    </div>
+                                    <div className="item-details">
+                                        <p>{newRefund.product?.description}</p>
+                                        <p>Quantidade: {newRefund.quantity}</p>
+                                        <p>Valor: R$ {newRefund.price}</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div className="refund-details group">
+                                    <div className="row">
+                                        <fieldset className="p50">
+                                            <label htmlFor="reason">Motivo da troca</label>
+                                            <textarea className="long-text" type="text" name="reason" onChange={(e) => setNewRefund({ ...newRefund, reason: e.target.value })} id="" />
+                                        </fieldset>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-primary" onClick={(e) => refundItem(e)}>
+                                    Criar pedido de troca
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
             </main>
             <Footer />
         </>
