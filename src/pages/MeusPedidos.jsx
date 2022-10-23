@@ -107,19 +107,20 @@ export function MeusPedidos() {
                         </div>
                     </div>
                 </div>
-                <Modal isOpen={modal} onClose={(e) => setModal(!modal)}>
+                <Modal isOpen={modal}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">#{
                                 `${newRefund.product && newRefund.product.id} - ${newRefund.product && newRefund.product.name}`
                             }</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => setModal(!modal)}></button>
                         </div>
                         <div className="modal-body">
                             <div className="item">
                                 <div className="row">
                                     <div className="col-12 col-lg-6">
                                         <div className="img-container">
-                                            <img src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
+                                            <img width={250} height={350} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
                                         </div>
 
                                     </div>

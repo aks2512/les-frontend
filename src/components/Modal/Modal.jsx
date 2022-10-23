@@ -7,7 +7,11 @@ export function Modal({ isOpen, onClose, children }) {
                 isOpen && (
                     <div className="modal__custom">
                         <div className="modal__custom__content">
-                            <button className='modal__custom__fechar' onClick={onClose}>X</button>
+                            {
+                                onClose && (
+                                    <button className="modal__custom__close" onClick={onClose} />
+                                )
+                            }
                             <div className="modal__custom__box">
                                 {children}
                             </div>

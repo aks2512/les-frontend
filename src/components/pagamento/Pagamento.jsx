@@ -9,10 +9,12 @@ import cadeado from '../../assets/imgs/cadeado.svg';
 import './style.scss';
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../contexts/AuthContext";
+import { Modal } from "../modal/Modal";
 
 export function Pagamento({ cards, setCards, coupons, setCoupons }) {
     const { user } = useContext(Context);
     const [userVerify, setUserVerify] = useState(false);
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
         if (user && userVerify === false) {
@@ -28,43 +30,52 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                 Selecione pelo menos um
             </p>
             <p><strong>Cartões</strong></p>
-            <Link to="#" onClick={(e) => e.target.nextSibling.classList.add('active')}>Selecionar um cartão</Link>
-            <div className="cartoes">
-                <div className="cartoes-container">
-                    <div className="close" onClick={(e) => e.target.parentNode.parentNode.classList.remove('active')}>X</div>
-                    {cards?.length > 0 ? cards.map((card, index) => (
-                        <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
-                            <Cartao
-                                index={index}
-                                name={card.number}
-                                image=""
-                            >
-                                <input id={`card_checkbox${index}`} className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
-                                    const newCards = cards.slice();
-                                    newCards[index].active = e.target.checked
-                                    setCards(newCards)
-                                }} />
-                            </Cartao>
-                            {
-                                card.active && (
-                                    <div className="payment-quantity">
-                                        Valor:
-                                        <input
-                                            type="number"
-                                            value={card.value}
-                                            onChange={(e) => {
-                                                const newCards = cards.slice();
-                                                newCards[index].value = e.target.value
-                                                setCards(newCards)
-                                            }}
-                                            placeholder="0,00"
-                                        />
-                                    </div>
-                                )
-                            }
+            <Link to="#" onClick={(e) => { setModal(!modal) }}>Selecionar um cartão</Link>
+            <div className={`cartoes ${modal ? 'active' : ''}`}>
+                <Modal
+                    isOpen={modal}
+                >
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Cartões de Crédito</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={(e) => { setModal(!modal) }}></button>
                         </div>
-                    )) : <div>Nenhum cartão cadastrado</div>}
-                </div>
+                        <div className="modal-body">
+                            {cards?.length > 0 ? cards.map((card, index) => (
+                                <div key={`card_${index}`} className={`card-selector ${card.active ? 'active-card' : ''}`}>
+                                    <Cartao
+                                        index={index}
+                                        name={card.number}
+                                        image=""
+                                    >
+                                        <input id={`card_checkbox${index}`} className="checkbox-card" type='checkbox' checked={card.active} onChange={(e) => {
+                                            const newCards = cards.slice();
+                                            newCards[index].active = e.target.checked
+                                            setCards(newCards)
+                                        }} />
+                                    </Cartao>
+                                    {
+                                        card.active && (
+                                            <div className="payment-quantity">
+                                                Valor:
+                                                <input
+                                                    type="number"
+                                                    value={card.value}
+                                                    onChange={(e) => {
+                                                        const newCards = cards.slice();
+                                                        newCards[index].value = e.target.value
+                                                        setCards(newCards)
+                                                    }}
+                                                    placeholder="0,00"
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            )) : <div>Nenhum cartão cadastrado</div>}
+                        </div>
+                    </div>
+                </Modal>
             </div>
             <div className="novo-cartao">
                 <img src={cartao} alt="" />

@@ -96,3 +96,11 @@ td.small{
     justify-content: center;
     align-items: center;
 }
+
+textarea{
+    width: 100%;
+    height: 100%;
+    display: block;
+    resize: none;
+    margin-bottom: 15px;
+}
