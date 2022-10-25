@@ -113,32 +113,24 @@ export function MeusPedidos() {
                             <h5 className="modal-title" id="exampleModalLabel">#{
                                 `${newRefund.product && newRefund.product.id} - ${newRefund.product && newRefund.product.name}`
                             }</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => setModal(!modal)}></button>
                         </div>
                         <div className="modal-body">
                             <div className="item">
-                                <div className="row">
-                                    <div className="col-12 col-lg-6">
-                                        <div className="img-container">
-                                            <img width={250} height={350} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
-                                        </div>
-
-                                    </div>
-                                    <div className="item-details">
-                                        <p>{newRefund.product?.description}</p>
-                                        <p>Quantidade: {newRefund.quantity}</p>
-                                        <p>Valor: R$ {newRefund.price}</p>
+                                <div className="container col-12 col-lg-6">
+                                    <div className="img-container">
+                                        <img width={250} height={350} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
                                     </div>
                                 </div>
-                                <hr />
-                                <div className="refund-details group">
+                                <div className="container item-details">
+                                    <p>{newRefund.product?.description}</p>
+                                    <p>Quantidade: {newRefund.quantity}</p>
+                                    <p>Valor: R$ {newRefund.price}</p>
                                     <div className="row">
                                         <fieldset className="p50">
                                             <label htmlFor="reason">Motivo da troca</label>
                                             <textarea className="long-text" type="text" name="reason" onChange={(e) => setNewRefund({ ...newRefund, reason: e.target.value })} id="" />
                                         </fieldset>
                                     </div>
-
                                 </div>
                             </div>
                             <div className="modal-footer">
