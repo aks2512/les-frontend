@@ -107,37 +107,56 @@ export function MeusPedidos() {
                         </div>
                     </div>
                 </div>
-                <Modal isOpen={modal}>
+                <Modal isOpen={modal} on>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">#{
                                 `${newRefund.product && newRefund.product.id} - ${newRefund.product && newRefund.product.name}`
                             }</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => {
+                                setModal(!modal)
+                            }}></button>
                         </div>
                         <div className="modal-body">
                             <div className="item">
-                                <div className="container col-12 col-lg-6">
-                                    <div className="img-container">
-                                        <img width={250} height={350} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
+                                <div className="container row">
+                                    <div className="col-md-3 container">
+                                        <img width={250} height={250} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
                                     </div>
-                                </div>
-                                <div className="container item-details">
-                                    <p>{newRefund.product?.description}</p>
-                                    <p>Quantidade: {newRefund.quantity}</p>
-                                    <p>Valor: R$ {newRefund.price}</p>
-                                    <div className="row">
-                                        <fieldset className="p50">
+                                    <div className="col-md-9 container">
+                                        <h4>Descrição</h4>
+                                        <p>{newRefund.product?.description}</p>
+                                    </div>
+                                    <div className="col-md-12  col-sm-12 row">
+                                        <div className="col-md-8 col-sm-12">
+                                            <h4>Detalhes do Produto</h4>
+
+                                            <p><strong>Publicadora: </strong>{newRefund.product?.publisher}</p>
+                                            <p><strong>Desenvolvedora: </strong>{newRefund.product?.developer}</p>
+                                            <p><strong>Lançamento: </strong>{newRefund.product?.release_date}</p>
+                                            <p><strong>Idioma: </strong>{newRefund.product?.language}</p>
+                                            <p><strong>Legenda: </strong>{newRefund.product?.subtitle}</p>
+                                        </div>
+                                        <div className="col-md-4 col-sm-12">
+                                            <h4>Detalhes da Compra</h4>
+                                            <p>Quantidade: {newRefund.quantity}</p>
+                                            <p>Valor: R$ {newRefund.price}</p>
+                                            {
+                                                newRefund.refund ? <p><strong>Devolução: </strong> {newRefund.refund.status}</p> : ''}
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12 container">
+                                        <fieldset>
                                             <label htmlFor="reason">Motivo da troca</label>
                                             <textarea className="long-text" type="text" name="reason" onChange={(e) => setNewRefund({ ...newRefund, reason: e.target.value })} id="" />
                                         </fieldset>
+                                        <button type="button" className="btn btn-primary" onClick={(e) => refundItem(e)}>
+                                            Criar pedido de troca
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" onClick={(e) => refundItem(e)}>
-                                    Criar pedido de troca
-                                </button>
-                            </div>
+
                         </div>
                     </div>
                 </Modal>

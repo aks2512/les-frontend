@@ -9,7 +9,7 @@ export function Modal({ isOpen, onClose, children }) {
                         <div className="modal__custom__content">
                             {
                                 onClose && (
-                                    <button className="modal__custom__close" onClick={onClose} />
+                                    <button className="modal__custom__fechar" onClick={onClose} />
                                 )
                             }
                             <div className="modal__custom__box">
