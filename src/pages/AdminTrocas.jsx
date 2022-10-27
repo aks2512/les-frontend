@@ -129,6 +129,18 @@ export function AdminTrocas() {
                     <div className="modal-body">
                         <p>{refund?.reason}</p>
                     </div>
+                    <div className="modal-footer">
+                    <div className="btns">
+                            <button
+                                className="btn_accept"
+                                onClick={(e) => { updateRefund("ACEITO"); }}
+                            >Aceitar</button>
+                            <button
+                                className="btn_reject"
+                                onClick={(e) => { updateRefund("RECUSADO"); }}
+                            >Recusar</button>
+                        </div>
+                    </div>
                 </div>
             </Modal>
         </main>

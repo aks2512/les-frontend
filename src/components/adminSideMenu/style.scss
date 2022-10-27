@@ -1,8 +1,8 @@
 @import '../../styles/global/variables.scss';
 
 .admin-side-menu {
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    min-height: 100vh;
     background-color: $backgroundColor3;
 
     .admin-informacao {

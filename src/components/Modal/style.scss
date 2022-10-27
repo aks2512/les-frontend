@@ -42,5 +42,43 @@
         width: 100%;
         height: 100%;
         overflow-y: overlay;
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .btns {
+            button + button {
+                margin-left: 10px;
+            }
+
+            .btn_accept {
+                background-color: $backgroundColor;
+                border: none;
+                color: white;
+                padding: 5px;
+                font-weight: bold;
+                border-radius: 2px;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+    
+            .btn_reject {
+                background-color: #CA1B0E;
+                border: none;
+                color: white;
+                padding: 5px;
+                font-weight: bold;
+                border-radius: 2px;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+        }
     }
 }

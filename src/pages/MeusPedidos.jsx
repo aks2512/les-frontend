@@ -110,9 +110,9 @@ export function MeusPedidos() {
                 <Modal isOpen={modal} on>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">#{
+                            <p className="modal-title" id="exampleModalLabel">#{
                                 `${newRefund.product && newRefund.product.id} - ${newRefund.product && newRefund.product.name}`
-                            }</h5>
+                            }</p>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => {
                                 setModal(!modal)
                             }}></button>
@@ -120,16 +120,16 @@ export function MeusPedidos() {
                         <div className="modal-body">
                             <div className="item">
                                 <div className="container row">
-                                    <div className="col-md-3 container">
-                                        <img width={250} height={250} src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
+                                    <div className="col-md-12 container">
+                                        <img width="100%" src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
                                     </div>
-                                    <div className="col-md-9 container">
-                                        <h4>Descrição</h4>
+                                    <div className="col-md-12 container">
+                                        <h5>Descrição</h5>
                                         <p>{newRefund.product?.description}</p>
                                     </div>
                                     <div className="col-md-12  col-sm-12 row">
                                         <div className="col-md-8 col-sm-12">
-                                            <h4>Detalhes do Produto</h4>
+                                            <h5>Detalhes do Produto</h5>
 
                                             <p><strong>Publicadora: </strong>{newRefund.product?.publisher}</p>
                                             <p><strong>Desenvolvedora: </strong>{newRefund.product?.developer}</p>
@@ -138,7 +138,7 @@ export function MeusPedidos() {
                                             <p><strong>Legenda: </strong>{newRefund.product?.subtitle}</p>
                                         </div>
                                         <div className="col-md-4 col-sm-12">
-                                            <h4>Detalhes da Compra</h4>
+                                            <h5>Detalhes da Compra</h5>
                                             <p>Quantidade: {newRefund.quantity}</p>
                                             <p>Valor: R$ {newRefund.price}</p>
                                             {
