@@ -35,7 +35,7 @@ export function UpdateCard() {
 
             setName(card.name);
             setOwnerName(card.owner_name);
-            setNumber(card.number);
+            setNumber('');
             setBrandId(card.brand_id);
             setSecurityCode(card.security_code);
         }
@@ -54,18 +54,18 @@ export function UpdateCard() {
     async function updateCard(e) {
         e.preventDefault();
 
-        try{
+        try {
             const response = await api.put(`/cards/${id}`, {
                 name: name,
                 owner_name: ownerName,
-                number: number,
+
                 brand_id: brandId,
                 security_code: securityCode
             })
-    
+
             toast(response.data.message)
             navigate(-1);
-        } catch(err){
+        } catch (err) {
             toast.error(err?.response?.data?.message || 'falha ao atualizar cartão')
         }
 
@@ -73,10 +73,10 @@ export function UpdateCard() {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
-                    <Titulo title="Atualizar cartão"/>
+                    <Titulo title="Atualizar cartão" />
                     <CustomForm onSubmit={updateCard}>
 
                         <h3>Atualizar Cartão</h3>
@@ -89,10 +89,10 @@ export function UpdateCard() {
                             </div>
 
                             <div className="row">
-                                
+
                                 <fieldset className="p100">
                                     <label htmlFor="nome">Nome</label>
-                                    <input 
+                                    <input
                                         id="nome"
                                         type="text"
                                         value={name}
@@ -102,7 +102,7 @@ export function UpdateCard() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="nome_do_titular">Nome do Titular</label>
-                                    <input 
+                                    <input
                                         id="nome_do_titular"
                                         type="text"
                                         value={ownerName}
@@ -112,32 +112,33 @@ export function UpdateCard() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="numero_do_cartao">Numero do Cartão</label>
-                                    <input 
+                                    <input
                                         id="numero_do_cartao"
                                         type="text"
                                         value={number}
-                                        onChange={e => setNumber(e.target.value)} 
+                                        onChange={e => setNumber(e.target.value)}
+                                        placeholder="0000000000000000"
                                     />
                                 </fieldset>
-                                
+
                                 <fieldset className="p50">
                                     <label htmlFor="bandeira">Bandeira do Cartão</label>
                                     <select id="bandeira" value={brandId} onChange={e => setBrandId(e.target.value)}>
-                                        {brands && brands.map((brand) => 
-                                            (
-                                                <option key={brand.id} value={brand.id}>{brand.name}</option>
-                                            )
+                                        {brands && brands.map((brand) =>
+                                        (
+                                            <option key={brand.id} value={brand.id}>{brand.name}</option>
+                                        )
                                         )}
                                     </select>
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="codigo">Código de Segurança</label>
-                                    <input 
-                                        id="codigo" 
+                                    <input
+                                        id="codigo"
                                         type="text"
                                         value={securityCode}
-                                        onChange={e => setSecurityCode(e.target.value)} 
+                                        onChange={e => setSecurityCode(e.target.value)}
                                     />
                                 </fieldset>
 
@@ -149,7 +150,7 @@ export function UpdateCard() {
                     </CustomForm>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
