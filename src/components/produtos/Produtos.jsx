@@ -28,7 +28,7 @@ export function Produtos({ search = '' }) {
                     <Produto
                         key={product.id}
                         id={product.id}
-                        imageURL={'http://localhost:3333/files/' + product.image}
+                        imageURL={product.image_url}
                         name={product.name}
                         price={product.price}
                     />

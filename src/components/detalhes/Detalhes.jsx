@@ -16,6 +16,7 @@ export function Detalhes() {
 
     const [nome, setNome] = useState('');
     const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState('');
     const [preco, setPreco] = useState('');
     const [descricao, setDescricao] = useState('');
     const [requisitos, setRequisitos] = useState('');
@@ -25,7 +26,7 @@ export function Detalhes() {
     const [idioma, setIdioma] = useState('');
     const [legenda, setLegenda] = useState('');
 
-    
+
     useEffect(() => {
 
         async function loadData() {
@@ -34,6 +35,7 @@ export function Detalhes() {
                 if (response.status === 201) {
                     setNome(response.data.name);
                     setImage(response.data.image);
+                    setImageURL(response.data.image_url);
                     setPreco(response.data.price);
                     setDescricao(response.data.description);
                     setRequisitos(response.data.requirements);
@@ -77,7 +79,7 @@ export function Detalhes() {
             <div className="col-12 col-md-4">
 
                 <div className="produto-img">
-                    <img src={`http://localhost:3333/files/${(image || 'default.png')}`} alt="" />
+                    <img src={imageURL} alt="" />
                 </div>
 
                 <div className="information">
