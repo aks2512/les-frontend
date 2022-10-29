@@ -26,10 +26,10 @@ export function UpdateProduto() {
 
     useEffect(() => {
         async function loadData() {
-            if(id) {
+            if (id) {
                 const response = await api.get(`/products/${id}`);
                 console.log(response.status)
-                if(response.status === 201) {
+                if (response.status === 201) {
                     setNome(response.data.name);
                     setPreco(response.data.price);
                     setDescricao(response.data.description);
@@ -45,15 +45,18 @@ export function UpdateProduto() {
             }
         }
 
-        console.log('teste master')
         loadData();
     }, [id, navigate]);
 
     async function updateProduct(e) {
         e.preventDefault();
         const fd = new FormData();
+
+        if (imagem) {
+            fd.append('image', imagem, imagem.name);
+        }
+
         fd.append('name', nome);
-        fd.append('image', imagem, imagem.name);
         fd.append('description', descricao);
         fd.append('price', preco);
         fd.append('stock', 1);
@@ -73,13 +76,13 @@ export function UpdateProduto() {
                 }
             ).then(res => {
                 console.log(res);
-                if(res.status === 201) {
+                if (res.status === 201) {
                     toast.success('Produto atualizado com sucesso!');
                     navigate('/admin-produtos');
                 }
             })
 
-            
+
         } catch (e) {
             toast.error(e?.response?.data?.message);
             navigate(`/update-produto?id=${id}`);
@@ -89,10 +92,10 @@ export function UpdateProduto() {
 
     return (
         <main className="admin">
-            <div className="row w-100 px-0 m-0">   
+            <div className="row w-100 px-0 m-0">
 
                 <div className="col-12 col-xl-3 px-0">
-                    <AdminSideMenu/>
+                    <AdminSideMenu />
                 </div>
 
                 <div className="col-12 col-xl-9 px-0">
@@ -107,13 +110,13 @@ export function UpdateProduto() {
 
                                 <fieldset>
                                     <label htmlFor="nome">Nome</label>
-                                    <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
+                                    <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
                                     <label htmlFor="imagem">Imagem</label>
-                                    <input 
-                                        type="file" 
+                                    <input
+                                        type="file"
                                         id="imagem"
                                         required={true}
                                         onChange={(e) => setImagem(e.target.files[0])}
@@ -122,7 +125,7 @@ export function UpdateProduto() {
 
                                 <fieldset>
                                     <label htmlFor="preco">Preço</label>
-                                    <input type="text" id="preco" value={preco} onChange={(e) => setPreco(e.target.value)}/>
+                                    <input type="text" id="preco" value={preco} onChange={(e) => setPreco(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
@@ -132,9 +135,9 @@ export function UpdateProduto() {
 
                                 <fieldset>
                                     <label htmlFor="requisitos">Requisitos</label>
-                                    <input id="requisitos" value={requisitos} onChange={(e) => setRequisitos(e.target.value)}/>
+                                    <input id="requisitos" value={requisitos} onChange={(e) => setRequisitos(e.target.value)} />
                                 </fieldset>
-                                
+
                             </div>
 
                             <div className="col-12 col-md-6">
@@ -142,27 +145,27 @@ export function UpdateProduto() {
 
                                 <fieldset>
                                     <label htmlFor="desenvolvedora">Desenvolvedora</label>
-                                    <input id="desenvolvedora" value={desenvolvedora} onChange={(e) => setDesenvolvedora(e.target.value)}/>
+                                    <input id="desenvolvedora" value={desenvolvedora} onChange={(e) => setDesenvolvedora(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
                                     <label htmlFor="publicadora">Publicadora</label>
-                                    <input id="publicadora" value={publicadora} onChange={(e) => setPublicadora(e.target.value)}/>
+                                    <input id="publicadora" value={publicadora} onChange={(e) => setPublicadora(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
                                     <label htmlFor="data_de_lancamento">Data de lançamento</label>
-                                    <input id="data_de_lancamento" value={dataDeLancamento} onChange={(e) => setDataDeLancamento(e.target.value)}/>
+                                    <input id="data_de_lancamento" value={dataDeLancamento} onChange={(e) => setDataDeLancamento(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
                                     <label htmlFor="idioma">Idioma</label>
-                                    <input id="idioma" value={idioma} onChange={(e) => setIdioma(e.target.value)}/>
+                                    <input id="idioma" value={idioma} onChange={(e) => setIdioma(e.target.value)} />
                                 </fieldset>
 
                                 <fieldset>
                                     <label htmlFor="legenda">Legenda</label>
-                                    <input id="legenda" value={legenda} onChange={(e) => setLegenda(e.target.value)}/>
+                                    <input id="legenda" value={legenda} onChange={(e) => setLegenda(e.target.value)} />
                                 </fieldset>
 
                             </div>
@@ -173,7 +176,7 @@ export function UpdateProduto() {
                             <Link className="voltar" to="/admin-produtos">Voltar</Link>
                             <button className="submit">Atualizar</button>
                         </div>
-                        
+
                     </AdminCustomForm>
                 </div>
             </div>
