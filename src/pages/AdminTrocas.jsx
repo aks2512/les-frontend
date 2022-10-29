@@ -9,7 +9,6 @@ const RefundStatusEnum = [
     "EM ANÁLISE",
     "ACEITO",
     "RECUSADO",
-    "CANCELADO",
     "EM TRANSPORTE",
     "ENTREGA REALIZADA",
     "FINALIZADO"
@@ -19,7 +18,7 @@ export function AdminTrocas() {
     const [refunds, setRefunds] = useState([]);
     const [search, setSearch] = useState("");
     const [modal, setModal] = useState(false);
-    const [refund, setRefund] = useState();
+    const [selectedRefund, setSelectedRefund] = useState();
 
     useEffect(() => {
         loadRefunds();
@@ -86,10 +85,10 @@ export function AdminTrocas() {
                                     <td>{refund.cart_item.price}</td>
                                     <td>{refund?.cart_item?.product?.name}</td>
                                     <td>
-                                        <select name="status" value={refund.newStatus} onChange={(e) => {
+                                        <select name="status" value={refund.selectedStatus} onChange={(e) => {
                                             setRefunds(refunds.map((r, i) => {
                                                 if (i === index) {
-                                                    r.newStatus = e.target.value;
+                                                    r.selectedStatus = e.target.value;
                                                 }
                                                 return r;
                                             }))
@@ -103,11 +102,11 @@ export function AdminTrocas() {
                                     </td>
                                     <td className="btn"><button onClick={(e) => {
                                         e.preventDefault();
-                                        setRefund(refund);
+                                        setSelectedRefund(refund);
                                         setModal(!modal)
                                     }}>Motivo</button></td>
                                     <td className="btn"><button onClick={(e) => {
-                                        refund.status = refund.newStatus || refund.status;
+                                        refund.status = refund.selectedStatus || refund.status;
                                         updateRefund(refund);
                                     }}>Atualizar</button></td>
                                 </tr>
@@ -127,17 +126,27 @@ export function AdminTrocas() {
                         <h5 className="modal-title" id="exampleModalLabel">Motivo</h5>
                     </div>
                     <div className="modal-body">
-                        <p>{refund?.reason}</p>
+                        <p>{selectedRefund?.reason}</p>
                     </div>
                     <div className="modal-footer">
-                    <div className="btns">
+                        <div className="btns">
                             <button
                                 className="btn_accept"
-                                onClick={(e) => { updateRefund("ACEITO"); }}
+                                onClick={(e) => {
+                                    updateRefund({
+                                        ...selectedRefund,
+                                        status: "ACEITO"
+                                    });
+                                }}
                             >Aceitar</button>
                             <button
                                 className="btn_reject"
-                                onClick={(e) => { updateRefund("RECUSADO"); }}
+                                onClick={(e) => {
+                                    updateRefund({
+                                        ...selectedRefund,
+                                        status: "RECUSADO"
+                                    });
+                                }}
                             >Recusar</button>
                         </div>
                     </div>
