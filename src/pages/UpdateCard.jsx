@@ -33,14 +33,13 @@ export function UpdateCard() {
         setName(card.name);
         setOwnerName(card.owner_name);
         setNumber('');
-        setBrandId(card.brand_id || brands[0].id);
+        setBrandId(card.brand_id ? card.brand_id : brands[0].id);
         setSecurityCode(card.security_code);
     }
 
     async function loadBrandsdata() {
         const brandsdata = await api.get('/brands');
         setBrands(brandsdata.data);
-        setBrandId(brandsdata.data[0].id)
     }
 
 
@@ -121,7 +120,12 @@ export function UpdateCard() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="bandeira">Bandeira do Cartão</label>
-                                    <select id="bandeira" value={brandId} onChange={e => setBrandId(e.target.value)}>
+                                    <select
+                                        id="bandeira"
+
+                                        onChange={e => setBrandId(e.target.value)}
+                                        defaultValue={brandId}
+                                    >
                                         {brands && brands.map((brand) =>
                                         (
                                             <option key={brand.id} value={brand.id}>{brand.name}</option>
@@ -137,6 +141,7 @@ export function UpdateCard() {
                                         type="text"
                                         value={securityCode}
                                         onChange={e => setSecurityCode(e.target.value)}
+                                        placeholder="000"
                                     />
                                 </fieldset>
 
