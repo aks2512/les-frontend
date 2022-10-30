@@ -25,30 +25,28 @@ export function UpdateCard() {
     const [brandId, setBrandId] = useState();
     const [securityCode, setSecurityCode] = useState();
 
+    async function cardLoadData() {
+        const cardData = await api.get(`/cards/${id}`);
+
+        const card = cardData.data;
+
+        setName(card.name);
+        setOwnerName(card.owner_name);
+        setNumber('');
+        setBrandId(card.brand_id || brands[0].id);
+        setSecurityCode(card.security_code);
+    }
+
+    async function loadBrandsdata() {
+        const brandsdata = await api.get('/brands');
+        setBrands(brandsdata.data);
+        setBrandId(brandsdata.data[0].id)
+    }
+
 
     useEffect(() => {
-
-        async function cardLoadData() {
-            const cardData = await api.get(`/cards/${id}`);
-
-            const card = cardData.data;
-
-            setName(card.name);
-            setOwnerName(card.owner_name);
-            setNumber('');
-            setBrandId(card.brand_id);
-            setSecurityCode(card.security_code);
-        }
-
-        async function loadBrandsdata() {
-            const brandsdata = await api.get('/brands');
-            setBrands(brandsdata.data);
-            setBrandId(brandsdata.data[0].id)
-        }
-
         loadBrandsdata();
         cardLoadData();
-
     }, [id]);
 
     async function updateCard(e) {
