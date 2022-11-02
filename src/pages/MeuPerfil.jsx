@@ -162,7 +162,7 @@ export function MeuPerfil() {
                                                 {
                                                     user?.person?.coupons?.map(coupon => (
                                                         <tr key={coupon.id}>
-                                                            <td>R$ {coupon.value}</td>
+                                                            <td>{coupon.type == 'TROCA' ? 'R$' : '%'} {coupon.value}</td>
                                                             <td>{coupon.code}</td>
                                                         </tr>
                                                     ))
