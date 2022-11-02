@@ -1,28 +1,28 @@
 import bag from '../../../assets/imgs/shopping-bag.svg';
 
-export function Resultado() {
+export function Resultado({ data }) {
     return (
         <div className="resultado-mensal">
             <div className="row justify-content-around">
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
-                    <p>Numero de Compras</p>
-                    <p><strong>R$ 20000</strong></p>
+                    <p>Lucro Bruto</p>
+                    <p><strong>R$ {data?.monthly_sales}</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
-                    <p>Numero de Compras</p>
-                    <p><strong>R$ 20000</strong></p>
+                    <p>Quantidade de Itens Vendidos</p>
+                    <p><strong>{data?.monthly_quantity} Un.</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
-                    <p>Numero de Compras</p>
-                    <p><strong>R$ 20000</strong></p>
+                    <p>Cupons de troca</p>
+                    <p><strong>R$ {data?.monthly_coupom} usados</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
-                    <p>Numero de Compras</p>
-                    <p><strong>R$ 20000</strong></p>
+                    <p>Lucro - Cupons de Troca</p>
+                    <p><strong>R$ {data?.monthly_sales - data?.monthly_coupom}</strong></p>
                 </div>
             </div>
         </div>
