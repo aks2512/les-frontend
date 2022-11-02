@@ -121,7 +121,7 @@ export function MeusPedidos() {
                             <div className="item">
                                 <div className="container row">
                                     <div className="col-md-12 container">
-                                        <img width="100%" src={"http://localhost:3333/files/" + (newRefund.product?.image || 'default.png')} alt="" />
+                                        <img width="100%" src={newRefund.product?.image_url} alt="" />
                                     </div>
                                     <div className="col-md-12 container">
                                         <h5>Descrição</h5>
