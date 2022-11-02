@@ -18,10 +18,10 @@ export function GraficoColuna({ months }) {
                 y: Number(month.total_sales)
             });
             columns.coupons.push({
-                y: Number(month.total_coupom)
+                y: Number(month.total_coupomgen)
             });
             columns.profit.push({
-                y: Number(month.total_sales) - Number(month.total_coupom)
+                y: Number(month.total_sales) - Number(month.total_coupomgen)
             });
         })
 
