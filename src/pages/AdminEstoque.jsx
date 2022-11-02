@@ -5,11 +5,14 @@ import api from "../api";
 
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
+import { Modal } from "../components/modal/Modal";
+import { ProdutoDetalhes } from "../components/produtoDetalhes/ProdutoDetalhes";
 
 export function AdminEstoque() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
     const [search, setSearch] = useState("");
+    const [modal, setModal] = useState({ show: false, product: {} });
 
     useEffect(() => {
         loadProducts();
@@ -20,6 +23,7 @@ export function AdminEstoque() {
         if (response.status === 201) {
             setProducts(response.data);
             setLoading(false);
+            setModal({ show: false, product: {} })
         }
     }
 
@@ -32,7 +36,7 @@ export function AdminEstoque() {
     async function handleUpdateProduct(product) {
         const { id } = product;
         try {
-            const response = await api.put(`products/${id}`, product)
+            await api.put(`products/${id}`, product)
             toast('Atualizado com sucesso')
             loadProducts();
         } catch (error) {
@@ -75,19 +79,9 @@ export function AdminEstoque() {
                                         <input type="text" name="stock" onChange={(e) => { onNumericChange(product, e) }} placeholder="adicionar ao estoque" />
                                         <div className="d-flex">
                                             <button onClick={(e) => { handleUpdateProduct(product) }}>Atualizar</button>
-                                            {
-                                                product.isActive ?
-
-                                                    <button onClick={(e) => {
-                                                        product.isActive = false;
-                                                        handleUpdateProduct(product)
-                                                    }}>Inativar</button> :
-
-                                                    <button onClick={(e) => {
-                                                        product.isActive = true;
-                                                        handleUpdateProduct(product)
-                                                    }}>Ativar</button>
-                                            }
+                                            <button onClick={(e) => {
+                                                setModal({ show: true, product })
+                                            }}>{product?.isActive ? 'Inativar' : 'Ativar'}</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -97,6 +91,49 @@ export function AdminEstoque() {
                     </AdminListagem>
                 </div>
             </div>
+            <Modal
+                isOpen={modal.show}
+                onClose={() => setModal({ show: false, product: {} })}
+            >
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">
+                            {`
+                                #${modal?.product?.id} - ${modal?.product?.name} - 
+                                (${modal.product?.isActive ? 'Inativar' : 'Ativar'})
+                            `}
+                        </h5>
+                    </div>
+                    <div className="modal-body">
+                        <div className="container row">
+                            <ProdutoDetalhes product={modal.product} />
+                            <div className="col-md-12">
+                                <h4>Motivo:</h4>
+                                <textarea value={modal.product.reason} onChange={(e) => {
+                                    setModal({
+                                        show: true,
+                                        product: {
+                                            ...modal.product, reason: e.target.value
+                                        }
+                                    })
+                                }} />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="modal-footer container">
+                        <div className="btns">
+                            <button
+                                className="btn_update_status"
+                                onClick={(e) => {
+                                    modal.product.isActive = !modal.product.isActive;
+                                    handleUpdateProduct(modal.product);
+                                }}
+                            >{modal.product?.isActive ? 'Inativar' : 'Ativar'}</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </main>
     );
 }
