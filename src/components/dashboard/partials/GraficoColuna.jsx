@@ -6,6 +6,25 @@ export function GraficoColuna({ months }) {
     const [chart, setChart] = useState();
 
     useEffect(() => {
+        let columns = {
+            sales: [],
+            coupons: [],
+            profit: [],
+        };
+
+        months && months.map(month => {
+            columns.sales.push({
+                name: month.month,
+                y: Number(month.total_sales)
+            });
+            columns.coupons.push({
+                y: Number(month.total_coupom)
+            });
+            columns.profit.push({
+                y: Number(month.total_sales) - Number(month.total_coupom)
+            });
+        })
+
         setChart({
             title: {
                 text: `Lucro bruto por mês nos últimos ${months?.length} meses`
@@ -16,12 +35,15 @@ export function GraficoColuna({ months }) {
             series: [{
                 type: 'column',
                 name: 'Lucro (R$)',
-                data: months && months.map(month => {
-                    return {
-                        name: month.month,
-                        y: Number(month.total_sales)
-                    }
-                })
+                data: columns.sales
+            }, {
+                type: 'column',
+                name: 'Cupons de troca (R$)',
+                data: columns.coupons
+            }, {
+                type: 'column',
+                name: 'Lucro líquido (R$)',
+                data: columns.profit
             }]
         });
     }, [months]);
