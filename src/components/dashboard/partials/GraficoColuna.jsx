@@ -27,7 +27,7 @@ export function GraficoColuna({ months }) {
 
         setChart({
             title: {
-                text: `Lucro bruto por mês nos últimos ${months?.length} meses`
+                text: `Lucro por mês nos últimos ${months?.length} meses`
             },
             xAxis: {
                 categories: months && months.map(month => `${month.month}/${month.year}`)
