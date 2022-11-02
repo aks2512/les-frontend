@@ -16,8 +16,8 @@ export function Resultado({ data }) {
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
-                    <p>Cupons de troca</p>
-                    <p><strong>R$ {data?.monthly_coupom} usados</strong></p>
+                    <p>Cupons de troca Gerados</p>
+                    <p><strong>R$ {data?.monthly_coupom}</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
