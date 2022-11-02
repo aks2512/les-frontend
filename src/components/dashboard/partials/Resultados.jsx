@@ -17,12 +17,12 @@ export function Resultado({ data }) {
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Cupons de troca Gerados</p>
-                    <p><strong>R$ {data?.monthly_coupom}</strong></p>
+                    <p><strong>R$ {data?.monthly_coupomgen}</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Lucro - Cupons de Troca</p>
-                    <p><strong>R$ {data?.monthly_sales - data?.monthly_coupom}</strong></p>
+                    <p><strong>R$ {data?.monthly_sales - data?.monthly_coupomgen}</strong></p>
                 </div>
             </div>
         </div>
