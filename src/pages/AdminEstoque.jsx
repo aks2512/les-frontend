@@ -13,6 +13,7 @@ export function AdminEstoque() {
     const [products, setProducts] = useState();
     const [search, setSearch] = useState("");
     const [modal, setModal] = useState({ show: false, product: {} });
+    const [modalReason, setModalReason] = useState({ show: false, reason: {} });
 
     useEffect(() => {
         loadProducts();
@@ -63,7 +64,8 @@ export function AdminEstoque() {
                             <tr>
                                 <th>Imagem</th>
                                 <th>Nome</th>
-                                <th></th>
+                                <th>Estoque</th>
+                                <th>Histórico</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -72,13 +74,33 @@ export function AdminEstoque() {
                             {loading === false && products.map((product, index) =>
                             (
                                 <tr key={product.id}>
-                                    <td><img width="100" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
+                                    <td className="small"><img width="100" src={'http://localhost:3333/files/' + product.image} alt="" /></td>
                                     <td>{product.name}</td>
-                                    <td>{product.stock}</td>
+                                    <td className="small">{product.stock}</td>
+                                    <td>
+                                        {/* {
+                                            product.history.length > 0 &&
+                                            `${product.history[0]?.action} - ${product.history[0]?.reason}`
+                                        } */}
+                                        <select name="" id="" onChange={(e) => {
+                                            if (e.target.value < 0) return;
+                                            setModalReason({ show: true, reason: product.history[e.target.value] })
+                                        }}>
+                                            <option key={0} value={-1}>
+                                                Selecione a data de alteração
+                                            </option>
+                                            {product.history.length > 0 && product.history.map((history, index) => {
+                                                let date = history.created_at.split('T')[0];
+                                                return <option key={index} value={index}>
+                                                    {date}-{history.action}
+                                                </option>
+                                            })}
+                                        </select>
+                                    </td>
                                     <td>
                                         <input type="text" name="stock" onChange={(e) => { onNumericChange(product, e) }} placeholder="adicionar ao estoque" />
                                         <div className="d-flex">
-                                            <button onClick={(e) => { handleUpdateProduct(product) }}>Atualizar</button>
+                                            <button onClick={(e) => { handleUpdateProduct({ ...product, isActive: undefined }) }}>Atualizar</button>
                                             <button onClick={(e) => {
                                                 setModal({ show: true, product })
                                             }}>{product?.isActive ? 'Inativar' : 'Ativar'}</button>
@@ -130,6 +152,29 @@ export function AdminEstoque() {
                                     handleUpdateProduct(modal.product);
                                 }}
                             >{modal.product?.isActive ? 'Inativar' : 'Ativar'}</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                isOpen={modalReason.show}
+                onClose={() => setModalReason({ show: false, reason: {} })}
+            >
+                <div className="modal-content">
+                    <div className="modal-body">
+                        <div className="container row">
+                            <div className="col-md-6">
+                                <h3>Ação</h3>
+                                <p>{modalReason.reason?.action}</p>
+
+                                <h3>Data</h3>
+                                <p>{modalReason.reason?.created_at?.split('T')[0]}</p>
+                            </div>
+
+
+                            <h3>Motivo</h3>
+                            <p>{modalReason.reason?.reason}</p>
+
                         </div>
                     </div>
                 </div>
