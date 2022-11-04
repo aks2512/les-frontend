@@ -168,7 +168,10 @@ export function AdminEstoque() {
                                 <p>{modalReason.reason?.action}</p>
 
                                 <h3>Data</h3>
-                                <p>{modalReason.reason?.created_at?.split('T')[0]}</p>
+                                <p>{
+                                    modalReason.reason?.created_at?.split('T')[0] + "-" +
+                                    modalReason.reason?.created_at?.split('T')[1].split('.')[0]
+                                }</p>
                             </div>
 
 
