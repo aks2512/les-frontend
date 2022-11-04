@@ -55,7 +55,7 @@ export function UpdateCard() {
             const response = await api.put(`/cards/${id}`, {
                 name: name,
                 owner_name: ownerName,
-
+                number: number,
                 brand_id: brandId,
                 security_code: securityCode
             })
