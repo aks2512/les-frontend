@@ -32,7 +32,7 @@ export function AdminTrocas() {
                     search
                 }
             });
-            console.log(response.data);
+
             if (response.status === 201) {
                 setRefunds(response.data);
                 setLoading(false);
@@ -107,8 +107,7 @@ export function AdminTrocas() {
                                         setModal(!modal)
                                     }}>Motivo</button></td>
                                     <td className="btn"><button onClick={(e) => {
-                                        setSelectedRefund({ ...refund, status: refund.selectedStatus });
-
+                                        e.preventDefault();
                                         if (
                                             refund.selectedStatus === "FINALIZADO" &&
                                             refund.status === "ENTREGA REALIZADA"
@@ -118,6 +117,7 @@ export function AdminTrocas() {
                                             return;
                                         }
 
+                                        refund.status = refund.selectedStatus || refund.status;
                                         updateRefund(refund);
                                     }}>Atualizar</button></td>
                                 </tr>
@@ -137,6 +137,11 @@ export function AdminTrocas() {
                     </div>
                     <div className="modal-body">
                         <p>Deseja adicionar os itens da troca ao estoque?</p>
+                        <hr />
+                        <div className="row">
+                            <p className="col-6">Produto:  {selectedRefund?.cart_item.product.name}</p>
+                            <p className="col-6">Quantidade: {selectedRefund?.cart_item.quantity}</p>
+                        </div>
                     </div>
                     <div className="modal-footer">
                         <div className="btns">
@@ -145,9 +150,10 @@ export function AdminTrocas() {
                                 onClick={(e) => {
                                     updateRefund({
                                         ...selectedRefund,
+                                        status: "FINALIZADO",
                                         restock: true,
                                     });
-                                    setSelectedRefund(null);
+                                    setModalRestock(false);
                                 }}
                             >Sim</button>
                             <button
@@ -155,9 +161,10 @@ export function AdminTrocas() {
                                 onClick={(e) => {
                                     updateRefund({
                                         ...selectedRefund,
+                                        status: "FINALIZADO",
                                         restock: false,
                                     });
-                                    setSelectedRefund(null);
+                                    setModalRestock(false);
                                 }}
                             >Não</button>
                         </div>
@@ -186,7 +193,6 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "ACEITO"
                                     });
-                                    setSelectedRefund(null);
                                 }}
                             >Aceitar</button>
                             <button
@@ -196,7 +202,6 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "RECUSADO"
                                     });
-                                    setSelectedRefund(null);
                                 }}
                             >Recusar</button>
                         </div>
