@@ -35,7 +35,7 @@ export function UpdatePersonalData() {
                 "cpf": CPF,
                 "cellphone": cellphone,
                 "gender_id": gender,
-                "birth_date": moment(birthdate).toDate(),
+                "birth_date": moment(birthdate).format('YYYY-MM-DD'),
                 "phone": phone,
             });
 
@@ -150,7 +150,6 @@ export function UpdatePersonalData() {
                                         type="date"
                                         value={birthdate}
                                         onChange={(e) => setBirthdate(e.target.value)}
-                                        disabled={true}
                                     />
                                 </fieldset>
 
