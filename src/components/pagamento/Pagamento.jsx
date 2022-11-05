@@ -88,11 +88,14 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                         coupons.length > 0 ? (
                             <tbody>
                                 {
-                                    user?.person?.coupons?.map((coupon, index) => (
-                                        <tr key={coupon.id}>
+                                    user?.person?.coupons?.map((coupon, index) => {
+                                        const value = coupon.type == 'DESCONTO' ?
+                                            `${coupon.value}%` : `R$ ${coupon.value}`
+
+                                        return (<tr key={coupon.id}>
                                             <td><img src={cupom} alt="" /></td>
                                             <td>{coupon.code.replace(/.+?(?=)-/g, '')}</td>
-                                            <td>R$ {coupon.value}</td>
+                                            <td>{value}</td>
                                             <td>
                                                 <input className="checkbox-coupon" type='checkbox' checked={coupon.active} onChange={(e) => {
                                                     const newCoupons = coupons.slice();
@@ -101,8 +104,8 @@ export function Pagamento({ cards, setCards, coupons, setCoupons }) {
                                                 }}
                                                 />
                                             </td>
-                                        </tr>
-                                    ))
+                                        </tr>)
+                                    })
                                 }
                             </tbody>
                         ) : <tbody>

@@ -18,7 +18,7 @@ export function CartBody() {
     const [coupons, setCoupons] = useState([]);
     const [paymentAddress, setPaymentAddress] = useState();
     const [deliveryAddress, setDeliveryAddress] = useState();
-    const [totalPaid, setTotalPaid] = useState({ coupon: 0, card: 0 });
+    const [totalPaid, setTotalPaid] = useState({ coupon: 0, card: 0, discount: 0 });
 
     function handleSetCards(cards) {
         const total = cards.reduce((total, card) => {
@@ -34,15 +34,30 @@ export function CartBody() {
     }
 
     function handleSetCoupons(coupons) {
-        const total = coupons.reduce((total, coupon) => {
+        let total = 0;
+        let discount = 0;
+
+        coupons.map((coupon) => {
             if (coupon.active) {
-                return total + (coupon.value || 0);
+                if (coupon.type == 'DESCONTO') {
+                    discount += coupon.value;
+
+                    if (discount >= 100) {
+                        coupon.active = false;
+                        toast('Não pode selecionar mais descontos');
+                    }
+                    return;
+                }
+                total += coupon.value;
             }
+        })
 
-            return total;
-        }, 0);
+        setTotalPaid({
+            ...totalPaid,
+            coupon: Number(total),
+            discount: Number(discount)
+        });
 
-        setTotalPaid({ ...totalPaid, coupon: Number(total) });
         setCoupons(coupons);
     }
     async function onSubmit() {
