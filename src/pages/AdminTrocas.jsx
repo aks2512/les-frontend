@@ -14,6 +14,7 @@ const RefundStatusEnum = [
     "FINALIZADO"
 ]
 export function AdminTrocas() {
+    const [modalRestock, setModalRestock] = useState(false);
     const [loading, setLoading] = useState(true);
     const [refunds, setRefunds] = useState([]);
     const [search, setSearch] = useState("");
@@ -106,7 +107,17 @@ export function AdminTrocas() {
                                         setModal(!modal)
                                     }}>Motivo</button></td>
                                     <td className="btn"><button onClick={(e) => {
-                                        refund.status = refund.selectedStatus || refund.status;
+                                        setSelectedRefund({ ...refund, status: refund.selectedStatus });
+
+                                        if (
+                                            refund.selectedStatus === "FINALIZADO" &&
+                                            refund.status === "ENTREGA REALIZADA"
+                                        ) {
+                                            setModalRestock(true);
+                                            setSelectedRefund(refund);
+                                            return;
+                                        }
+
                                         updateRefund(refund);
                                     }}>Atualizar</button></td>
                                 </tr>
@@ -117,6 +128,43 @@ export function AdminTrocas() {
                 </div>
             </div>
             <Modal
+                isOpen={modalRestock}
+                onClose={() => setModalRestock(!modalRestock)}
+            >
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Finalizar Troca</h5>
+                    </div>
+                    <div className="modal-body">
+                        <p>Deseja adicionar os itens da troca ao estoque?</p>
+                    </div>
+                    <div className="modal-footer">
+                        <div className="btns">
+                            <button
+                                className="btn_accept"
+                                onClick={(e) => {
+                                    updateRefund({
+                                        ...selectedRefund,
+                                        restock: true,
+                                    });
+                                    setSelectedRefund(null);
+                                }}
+                            >Sim</button>
+                            <button
+                                className="btn_reject"
+                                onClick={(e) => {
+                                    updateRefund({
+                                        ...selectedRefund,
+                                        restock: false,
+                                    });
+                                    setSelectedRefund(null);
+                                }}
+                            >Não</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
                 isOpen={modal}
                 onClose={() => setModal(!modal)}
 
@@ -126,6 +174,7 @@ export function AdminTrocas() {
                         <h5 className="modal-title" id="exampleModalLabel">Motivo</h5>
                     </div>
                     <div className="modal-body">
+                        <p>Deseja adicionar os itens da troca ao estoque?</p>
                         <p>{selectedRefund?.reason}</p>
                     </div>
                     <div className="modal-footer">
@@ -137,6 +186,7 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "ACEITO"
                                     });
+                                    setSelectedRefund(null);
                                 }}
                             >Aceitar</button>
                             <button
@@ -146,6 +196,7 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "RECUSADO"
                                     });
+                                    setSelectedRefund(null);
                                 }}
                             >Recusar</button>
                         </div>
