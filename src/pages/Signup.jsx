@@ -62,28 +62,37 @@ export function Signup() {
         });
         
         try {
-            await api.post('users', {
-                "user": {
-                    "email": email,
-                    "email_confirm": confirmEmail,
-                    "password": password,
-                    "password_confirm": confirmPassword
-                },
-                "person": {
-                    "name": name,
-                    "cpf": CPF,
-                    "cellphone": cellphone,
-                    "gender_id": Number(gender),
-                    "birth_date": formatedBirthdate,
-                    "phone": {
-                        "ddd": DDD,
-                        "number": phone
-                    }
-                },
-                "addresses": enderecos
-            })
+            if(
+                email === confirmEmail && password === confirmPassword
+            ) {
+                await api.post('users', {
+                    "user": {
+                        "email": email,
+                        "email_confirm": confirmEmail,
+                        "password": password,
+                        "password_confirm": confirmPassword
+                    },
+                    "person": {
+                        "name": name,
+                        "cpf": CPF,
+                        "cellphone": cellphone,
+                        "gender_id": Number(gender),
+                        "birth_date": formatedBirthdate,
+                        "phone": {
+                            "ddd": DDD,
+                            "number": phone
+                        }
+                    },
+                    "addresses": enderecos
+                })
 
-            toast.success('Cadastro realizado com sucesso!');
+                toast.success('Cadastro realizado com sucesso!');
+            } else {
+                if (email !== confirmEmail)
+                    toast.error('Campo email divergente de campo confirme o email');
+                if (password !== confirmPassword)
+                    toast.error('Campo senha divergente de campo confirme a senha');
+            }
         } catch(e) {
             toast.error(e.response.data.message);
         }
@@ -180,7 +189,9 @@ export function Signup() {
                                     <label htmlFor="cpf">CPF</label>
                                     <input 
                                         id="cpf" 
-                                        type="text" 
+                                        type="number"
+                                        min="99999999999"
+                                        max="00000000000"
                                         value={CPF}
                                         onChange={(e) => setCPF(e.target.value)}
                                     />
