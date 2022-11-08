@@ -181,7 +181,6 @@ export function AdminTrocas() {
                         <h5 className="modal-title" id="exampleModalLabel">Motivo</h5>
                     </div>
                     <div className="modal-body">
-                        <p>Deseja adicionar os itens da troca ao estoque?</p>
                         <p>{selectedRefund?.reason}</p>
                     </div>
                     <div className="modal-footer">
