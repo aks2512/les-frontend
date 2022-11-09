@@ -48,13 +48,34 @@ export function UpdatePersonalData() {
         }
     }
 
+    const handleCPF = (e) => {
+        let cpf = e?.target?.value || e;
+        cpf = cpf.replace(/\D/g, '')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1')
+
+        setCPF(cpf);
+    }
+
+    const handleCellphone = (e) => {
+        let phone = e?.target?.value || e;
+        phone = phone.replace(/\D/g, '')
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{5})(\d)/, '$1-$2')
+            .replace(/(-\d{4})\d+?$/, '$1')
+
+        setCellphone(phone);
+    }
+
     useEffect(() => {
         if (!user) {
             userLoadData();
         } else {
             setName(user?.person.name);
-            setCPF(user?.person.cpf);
-            setCellphone(user?.person.cellphone);
+            handleCPF(user?.person.cpf);
+            handleCellphone(user?.person.cellphone);
             setPhone(user?.person.phone);
             setBirthdate(moment(user?.person.birth_date).format('YYYY-MM-DD'));
         }
@@ -95,7 +116,7 @@ export function UpdatePersonalData() {
                                         id="cpf"
                                         type="text"
                                         value={CPF}
-                                        onChange={(e) => setCPF(e.target.value)}
+                                        onChange={(e) => handleCPF(e)}
                                         disabled={true}
                                     />
                                 </fieldset>
@@ -106,7 +127,7 @@ export function UpdatePersonalData() {
                                         id="celular"
                                         type="phone"
                                         value={cellphone}
-                                        onChange={(e) => setCellphone(e.target.value)}
+                                        onChange={(e) => handleCellphone(e)}
                                     />
                                 </fieldset>
 
