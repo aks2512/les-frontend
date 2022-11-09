@@ -12,8 +12,11 @@ import dadosPessoais from '../assets/imgs/dados_pessoais.svg';
 import localizacao from '../assets/imgs/localizacao.svg';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import moment from 'moment/moment';
+import { useNavigate } from 'react-router-dom';
 
 export function Signup() {
+    const navigage = useNavigate();
 
     //dados da conta
     const [email, setEmail] = useState('');
@@ -56,13 +59,8 @@ export function Signup() {
     async function registerClient(e) {
         e.preventDefault();
 
-        //formatado
-        let formatedBirthdate = birthdate.replace(/(\d{4})-(\d{2})-(\d{2})/, (match, group1, group2, group3) => {
-            return `${group3}/${group2}/${group1}` 
-        });
-        
         try {
-            if(
+            if (
                 email === confirmEmail && password === confirmPassword
             ) {
                 await api.post('users', {
@@ -77,7 +75,7 @@ export function Signup() {
                         "cpf": CPF,
                         "cellphone": cellphone,
                         "gender_id": Number(gender),
-                        "birth_date": formatedBirthdate,
+                        "birth_date": moment(birthdate).format('YYYY-MM-DD'),
                         "phone": {
                             "ddd": DDD,
                             "number": phone
@@ -87,15 +85,38 @@ export function Signup() {
                 })
 
                 toast.success('Cadastro realizado com sucesso!');
+
+                navigage('/login');
             } else {
                 if (email !== confirmEmail)
                     toast.error('Campo email divergente de campo confirme o email');
                 if (password !== confirmPassword)
                     toast.error('Campo senha divergente de campo confirme a senha');
             }
-        } catch(e) {
+        } catch (e) {
             toast.error(e.response.data.message);
         }
+    }
+
+    const handleCPF = (e) => {
+        let cpf = e.target.value;
+        cpf = cpf.replace(/\D/g, '')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1')
+
+        setCPF(cpf);
+    }
+
+    const HandleCellphone = (e) => {
+        let phone = e.target.value;
+        phone = phone.replace(/\D/g, '')
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{5})(\d)/, '$1-$2')
+            .replace(/(-\d{4})\d+?$/, '$1')
+
+        setCellphone(phone);
     }
 
     useEffect(() => {
@@ -106,10 +127,10 @@ export function Signup() {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main>
                 <div className="container py-5">
-                    <Titulo title="Sign Up"/>
+                    <Titulo title="Sign Up" />
                     <CustomForm onSubmit={registerClient}>
 
                         <h3>Ainda não sou cadastrado</h3>
@@ -125,39 +146,39 @@ export function Signup() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="email">Email</label>
-                                    <input 
+                                    <input
                                         id="email"
-                                        type="email" 
-                                        value={email} 
+                                        type="email"
+                                        value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="confirmeEmail">Confirme o email</label>
-                                    <input 
-                                        id="confirmeEmail" 
+                                    <input
+                                        id="confirmeEmail"
                                         type="confirmeEmail"
-                                        value={confirmEmail} 
+                                        value={confirmEmail}
                                         onChange={(e) => setConfirmEmail(e.target.value)}
                                     />
                                 </fieldset>
-                                
+
                                 <fieldset className="p50">
                                     <label htmlFor="password">Senha</label>
-                                    <input 
-                                        id="password" 
-                                        type="password" 
+                                    <input
+                                        id="password"
+                                        type="password"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)} 
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="confirmePassword">Confirme a senha</label>
-                                    <input 
-                                        id="confirmePassword" 
-                                        type="password" 
+                                    <input
+                                        id="confirmePassword"
+                                        type="password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
@@ -177,9 +198,9 @@ export function Signup() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="nome">Nome Completo</label>
-                                    <input 
-                                        id="nome" 
-                                        type="text" 
+                                    <input
+                                        id="nome"
+                                        type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
@@ -187,41 +208,37 @@ export function Signup() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="cpf">CPF</label>
-                                    <input 
-                                        id="cpf" 
-                                        type="number"
-                                        min="99999999999"
-                                        max="00000000000"
+                                    <input
+                                        id="cpf"
                                         value={CPF}
-                                        onChange={(e) => setCPF(e.target.value)}
+                                        onChange={(e) => handleCPF(e)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p50">
                                     <label htmlFor="celular">Celular</label>
-                                    <input 
-                                        id="celular" 
-                                        type="phone" 
+                                    <input
+                                        id="celular"
                                         value={cellphone}
-                                        onChange={(e) => setCellphone(e.target.value)}
+                                        onChange={(e) => HandleCellphone(e)}
                                     />
                                 </fieldset>
-                                
+
                                 <fieldset className="p10">
                                     <label htmlFor="ddd">DDD</label>
-                                    <input 
-                                        id="ddd" 
+                                    <input
+                                        id="ddd"
                                         type="text"
                                         value={DDD}
-                                        onChange={(e) => setDDD(e.target.value)} 
+                                        onChange={(e) => setDDD(e.target.value)}
                                     />
                                 </fieldset>
 
                                 <fieldset className="p40">
                                     <label htmlFor="telefone">Telefone Fixo</label>
-                                    <input 
-                                        id="telefone" 
-                                        type="text" 
+                                    <input
+                                        id="telefone"
+                                        type="text"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
                                     />
@@ -230,7 +247,7 @@ export function Signup() {
                                 <fieldset className="p50">
                                     <label htmlFor="sexo">Sexo</label>
                                     <select id="sexo" value={gender} onChange={(e) => setGender(e.target.value)}>
-                                        {genders.map((gender)=>{
+                                        {genders.map((gender) => {
                                             return (
                                                 <option value={gender.id}>{gender.name}</option>
                                             )
@@ -240,9 +257,9 @@ export function Signup() {
 
                                 <fieldset className="p50">
                                     <label htmlFor="data_de_nascimento">Data de Nascimento</label>
-                                    <input 
-                                        id="data_de_nascimento" 
-                                        type="date" 
+                                    <input
+                                        id="data_de_nascimento"
+                                        type="date"
                                         value={birthdate}
                                         onChange={(e) => setBirthdate(e.target.value)}
                                     />
@@ -253,7 +270,7 @@ export function Signup() {
 
                         <div className="group">
 
-                            { enderecos.map((endereco, index) => (
+                            {enderecos.map((endereco, index) => (
                                 <div key={index} className="accordion">
                                     <div className="accordion__header" >
                                         <div className="title">
@@ -261,9 +278,9 @@ export function Signup() {
                                             <h4>Endereço</h4>
                                         </div>
                                         <div className="btns">
-                                            <div 
+                                            <div
                                                 className="address__removed"
-                                                onClick={(e) => { let newArray = [...enderecos]; newArray.splice(index, 1) ; setEnderecos(newArray) }}
+                                                onClick={(e) => { let newArray = [...enderecos]; newArray.splice(index, 1); setEnderecos(newArray) }}
                                             >
                                                 Remover
                                             </div>
@@ -276,66 +293,66 @@ export function Signup() {
 
                                             <fieldset className="p100">
                                                 <label>Nome</label>
-                                                <input  
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.name}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].name = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].name = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>CEP</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.cep}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].cep = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].cep = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>Logradouro</label>
-                                                <input 
+                                                <input
                                                     type="text"
                                                     value={endereco.place}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].place = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].place = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
-                                            
+
                                             <fieldset className="p50">
                                                 <label>Número</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.number}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].number = Number(e.target.value) ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].number = Number(e.target.value); setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
-                                            
+
                                             <fieldset className="p50">
                                                 <label>Complemento</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.complement}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].complement = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].complement = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>Bairro</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.neighborhood}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].neighborhood = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].neighborhood = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>Tipo de endereço</label>
-                                                <select 
+                                                <select
                                                     className='select-addresstype'
-                                                    value={endereco.address_type_id} 
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].address_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
+                                                    value={endereco.address_type_id}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].address_type_id = Number(e.target.value); setEnderecos(newArray) }}
                                                 >
-                                                    {addressTypes.map((addressType)=>{
+                                                    {addressTypes.map((addressType) => {
                                                         return (
                                                             <option value={addressType.id}>{addressType.name}</option>
                                                         )
@@ -345,12 +362,12 @@ export function Signup() {
 
                                             <fieldset className="p50">
                                                 <label>Tipo de Logradouro</label>
-                                                <select 
+                                                <select
                                                     className='select-placestype'
-                                                    value={endereco.place_type_id} 
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].place_type_id = Number(e.target.value) ; setEnderecos(newArray) }}
+                                                    value={endereco.place_type_id}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].place_type_id = Number(e.target.value); setEnderecos(newArray) }}
                                                 >
-                                                    {placeTypes.map((placeType)=>{
+                                                    {placeTypes.map((placeType) => {
                                                         return (
                                                             <option value={placeType.id}>{placeType.name}</option>
                                                         )
@@ -360,39 +377,39 @@ export function Signup() {
 
                                             <fieldset className="p50">
                                                 <label>Cidade</label>
-                                                <input 
+                                                <input
                                                     type="text"
                                                     value={endereco.city}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].city = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].city = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label>Estado</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={endereco.state}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].state = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].state = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
 
                                             <fieldset className="p50">
                                                 <label htmlFor="pais">País</label>
-                                                <input 
-                                                    id="pais" 
-                                                    type="text" 
+                                                <input
+                                                    id="pais"
+                                                    type="text"
                                                     value={endereco.country}
-                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].country = e.target.value ; setEnderecos(newArray) }}
+                                                    onChange={(e) => { let newArray = [...enderecos]; newArray[index].country = e.target.value; setEnderecos(newArray) }}
                                                 />
                                             </fieldset>
-                                            
+
 
                                         </div>
                                     </div>
                                 </div>
                             ))}
 
-                            <div className="btn_add_addresses" style={{cursor: 'pointer', color: 'white'}}
+                            <div className="btn_add_addresses" style={{ cursor: 'pointer', color: 'white' }}
                                 onClick={(e) => setEnderecos(
                                     [
                                         ...enderecos,
@@ -414,7 +431,7 @@ export function Signup() {
                             >
                                 Adicionar
                             </div>
-                            
+
                         </div>
 
                         <button type="submit">Cadastrar</button>
@@ -423,7 +440,7 @@ export function Signup() {
 
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
