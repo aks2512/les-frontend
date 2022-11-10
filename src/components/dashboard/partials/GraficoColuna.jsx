@@ -26,25 +26,29 @@ export function GraficoColuna({ months }) {
         })
 
         setChart({
-            title: {
-                text: `Lucro por mês nos últimos ${months?.length} meses`
+            chart: {
+                alignTicks: false
             },
-            xAxis: {
-                categories: months && months.map(month => `${month.month}/${month.year}`)
+            title: {
+                text: ``
             },
             series: [{
                 type: 'column',
                 name: 'Lucro (R$)',
-                data: columns.sales
-            }, {
+                data: columns.sales,
+            },
+            {
                 type: 'column',
                 name: 'Cupons de troca (R$)',
                 data: columns.coupons
+
             }, {
                 type: 'column',
                 name: 'Lucro líquido (R$)',
                 data: columns.profit
-            }]
+
+            }
+            ]
         });
     }, [months]);
 

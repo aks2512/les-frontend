@@ -2,23 +2,13 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
 
-const options = {
-    title: {
-        text: 'My chart'
-    },
-    series: [{
-        type: 'pie',
-        data: [1, 2, 3]
-    }]
-}
-
 export function GraficoPizza({ percentage }) {
     const [chart, setChart] = useState();
 
     useEffect(() => {
         setChart({
             title: {
-                text: `Ranking anual dos ${percentage?.length} produtos mais lucrativos`
+                text: `Ranking dos ${percentage?.length} produtos mais lucrativos`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
