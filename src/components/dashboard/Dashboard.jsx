@@ -10,7 +10,8 @@ export function Dashboard() {
     const [params, setParams] = useState({
         start_date: new Date(),
         end_date: new Date(),
-        timespan: '1 month'
+        timespan: '1 month',
+        noGroup: true
     });
 
     async function loadDashboardData() {
