@@ -70,7 +70,7 @@ export function AdminTrocas() {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Imagem</th>
+                                <th>Estado</th>
                                 <th>Valor</th>
                                 <th>Nome</th>
                                 <th></th>
