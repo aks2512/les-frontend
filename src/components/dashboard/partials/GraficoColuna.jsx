@@ -17,7 +17,7 @@ export function GraficoColuna({ data }) {
                 item.timestamp, Number(item.value)
             ]);
             columns.coupons.push([
-                item.timestamp, Number(item.coupomgen)
+                item.timestamp, Number(item.coupomgen) || 0
             ]);
             columns.profit.push([
                 item.timestamp, (Number(item.value) - Number(item.coupomgen))
@@ -37,7 +37,7 @@ export function GraficoColuna({ data }) {
             },
 
             title: {
-                text: 'AAPL Stock Volume'
+                text: 'Totalização de vendas'
             },
 
             series: [
