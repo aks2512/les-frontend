@@ -14,13 +14,13 @@ export function GraficoColuna({ data }) {
 
         data && data.map(item => {
             columns.sales.push([
-                item.timestamp, Number(item.value)
+                Number(item.timestamp), Number(item.value)
             ]);
             columns.coupons.push([
-                item.timestamp, Number(item.coupomgen) || 0
+                Number(item.timestamp), Number(item.coupomgen) || 0
             ]);
             columns.profit.push([
-                item.timestamp, (Number(item.value) - Number(item.coupomgen))
+                Number(item.timestamp), (Number(item.value) - Number(item.coupomgen))
             ]);
         })
 
