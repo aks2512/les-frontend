@@ -104,3 +104,20 @@ textarea{
     resize: none;
     margin-bottom: 15px;
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+
+    li {
+        cursor: pointer;
+        color: white;
+        padding: 0 10px;
+        border-radius: 4px;
+        background-color: $backgroundColor;
+        margin: 0 10px;
+        font-weight: 700;
+    }
+}

@@ -6,20 +6,24 @@ import api from "../api";
 
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
+import { Pagination } from "../components/pagination/Pagination";
 
 export function AdminProdutos() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
         loadProducts();
     }, [])
 
-    async function loadProducts() {
-        const response = await api.get(`/products?search=${search}`);
+    async function loadProducts(page = 1, limit = 6) {
+        const response = await api.get(`/products?search=${search}&page=${page}&limit=${limit}`);
         if (response.status === 201) {
-            setProducts(response.data);
+            console.log(Math.ceil(response.data.total / response.data.limit))
+            setProducts(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);
         }
     }
@@ -74,7 +78,12 @@ export function AdminProdutos() {
                             )
                             )}
                         </tbody>
+
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadProducts}
+                    />
                 </div>
             </div>
         </main>
