@@ -12,7 +12,7 @@ export function GraficoColuna({ data }) {
             profit: [],
         };
 
-        data && data.map(item => {
+        data && data.items.map(item => {
             columns.sales.push([
                 Number(item.timestamp), Number(item.value)
             ]);

@@ -16,7 +16,6 @@ export function Dashboard() {
 
     async function loadDashboardData() {
         const response = await api.get('/dashboard', { params });
-        console.log(response.data.dated);
         setData(response.data);
     }
 
@@ -51,10 +50,10 @@ export function Dashboard() {
                 </select> */}
                 <div className="row">
                     <div className="col-12 pb-2">
-                        <GraficoColuna data={data?.dated} />
+                        <GraficoColuna data={data?.total} />
                     </div>
                     <div className="col-12 col-md-5 pb-2">
-                        <Resultado data={data?.dated} />
+                        <Resultado data={data?.total} />
                     </div>
                     <div className="col-12 col-md-7 pb-2">
                         <GraficoPizza percentage={data?.ranking} />

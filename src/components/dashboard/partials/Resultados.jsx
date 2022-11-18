@@ -7,22 +7,22 @@ export function Resultado({ data }) {
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Lucro Bruto</p>
-                    <p><strong>R$ {data?.monthly_sales}</strong></p>
+                    <p><strong>R$ {data?.total_sales}</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Quantidade de Itens Vendidos</p>
-                    <p><strong>{data?.monthly_quantity} Un.</strong></p>
+                    <p><strong>{data?.total_quantity} Un.</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Cupons de troca Gerados</p>
-                    <p><strong>R$ {data?.monthly_coupomgen}</strong></p>
+                    <p><strong>R$ {data?.total_coupomgen}</strong></p>
                 </div>
                 <div className="col-12 col-md-5 box">
                     <img src={bag} alt="" />
                     <p>Lucro - Cupons de Troca</p>
-                    <p><strong>R$ {data?.monthly_sales - data?.monthly_coupomgen}</strong></p>
+                    <p><strong>R$ {data?.total_sales - data?.total_coupomgen}</strong></p>
                 </div>
             </div>
         </div>
