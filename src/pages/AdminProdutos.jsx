@@ -21,7 +21,6 @@ export function AdminProdutos() {
     async function loadProducts(page = 1, limit = 6) {
         const response = await api.get(`/products?search=${search}&page=${page}&limit=${limit}`);
         if (response.status === 201) {
-            console.log(Math.ceil(response.data.total / response.data.limit))
             setProducts(response.data.results);
             setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);

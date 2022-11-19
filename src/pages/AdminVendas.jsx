@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import api from "../api";
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
+import { Pagination } from "../components/pagination/Pagination";
 
 const PurchaseStatusEnum = [
     "EM ANÁLISE",
@@ -15,23 +16,25 @@ const PurchaseStatusEnum = [
 export function AdminVendas() {
     const [loading, setLoading] = useState(true);
     const [purchases, setPurchases] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
         loadPurchases();
     }, [])
 
-    async function loadPurchases() {
-        const response = await api.get(`/purchases?search=${search}`);
+    async function loadPurchases(page = 1, limit = 6) {
+        const response = await api.get(`/purchases?search=${search}&page=${page}&limit=${limit}`);
         if (response.status === 201) {
             setPurchases(() => {
-                return response.data.map(purchase => {
+                return response.data.results.map(purchase => {
                     return {
                         newStatus: purchase.status,
                         ...purchase
                     };
                 })
             });
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);
         }
     }
@@ -100,6 +103,10 @@ export function AdminVendas() {
                             )}
                         </tbody>
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadPurchases}
+                    />
                 </div>
             </div>
         </main>

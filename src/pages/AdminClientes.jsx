@@ -3,19 +3,20 @@ import { toast } from "react-toastify";
 import api from "../api";
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
+import { Pagination } from "../components/pagination/Pagination";
 
 export function AdminClientes() {
     const [loading, setLoading] = useState(true);
     const [clients, setClients] = useState();
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
 
-    async function loadClients() {
-        const response = await api.get(`/users?search=${search}`, {
-            
-        });
+    async function loadClients(page = 1, limit = 10) {
+        const response = await api.get(`/users?search=${search}&page=${page}&limit=${limit}`);
 
         if(response.status === 201) {
-            setClients(response.data);
+            setClients(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);
         }
     }
@@ -82,6 +83,10 @@ export function AdminClientes() {
                             )}
                         </tbody>
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadClients}
+                    />
                 </div>
             </div>
         </main>

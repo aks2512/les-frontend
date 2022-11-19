@@ -6,16 +6,19 @@ import api from "../api";
 
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
+import { Pagination } from "../components/pagination/Pagination";
 
 export function AdminBandeiras() {
     const [loading, setLoading] = useState(true);
     const [brands, setBrands] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
 
-    async function loadBrands() {
-        const response = await api.get(`/brands?search=${search}`);
+    async function loadBrands(page = 1, limit = 6) {
+        const response = await api.get(`/brands?search=${search}&page=${page}&limit=${limit}`);
         if (response.status === 201) {
-            setBrands(response.data);
+            setBrands(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);
         }
         console.log(response.data);
@@ -74,6 +77,10 @@ export function AdminBandeiras() {
                             )}
                         </tbody>
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadBrands}
+                    />
                 </div>
             </div>
         </main>

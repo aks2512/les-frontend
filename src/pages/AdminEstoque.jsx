@@ -6,11 +6,13 @@ import api from "../api";
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 import { Modal } from "../components/modal/Modal";
+import { Pagination } from "../components/pagination/Pagination";
 import { ProdutoDetalhes } from "../components/produtoDetalhes/ProdutoDetalhes";
 
 export function AdminEstoque() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState();
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [modal, setModal] = useState({ show: false, product: {} });
     const [modalReason, setModalReason] = useState({ show: false, reason: {} });
@@ -19,10 +21,11 @@ export function AdminEstoque() {
         loadProducts();
     }, [])
 
-    async function loadProducts() {
-        const response = await api.get(`/products?search=${search}`);
+    async function loadProducts(page = 1, limit = 6) {
+        const response = await api.get(`/products?search=${search}&page=${page}&limit=${limit}`);
         if (response.status === 201) {
-            setProducts(response.data);
+            setProducts(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
             setLoading(false);
             setModal({ show: false, product: {} })
         }
@@ -111,6 +114,10 @@ export function AdminEstoque() {
                             )}
                         </tbody>
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadProducts}
+                    />
                 </div>
             </div>
             <Modal

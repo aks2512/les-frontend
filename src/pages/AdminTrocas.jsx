@@ -4,6 +4,7 @@ import api from "../api";
 import { AdminListagem } from "../components/adminListagem/AdminListagem";
 import { AdminSideMenu } from "../components/adminSideMenu/AdminSideMenu";
 import { Modal } from "../components/modal/Modal";
+import { Pagination } from "../components/pagination/Pagination";
 
 const RefundStatusEnum = [
     "EM ANÁLISE",
@@ -17,6 +18,7 @@ export function AdminTrocas() {
     const [modalRestock, setModalRestock] = useState(false);
     const [loading, setLoading] = useState(true);
     const [refunds, setRefunds] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [modal, setModal] = useState(false);
     const [selectedRefund, setSelectedRefund] = useState();
@@ -25,16 +27,19 @@ export function AdminTrocas() {
         loadRefunds();
     }, [])
 
-    async function loadRefunds() {
+    async function loadRefunds(page = 1, limit = 6) {
         try {
             const response = await api.get('/refunds', {
                 params: {
-                    search
+                    search,
+                    page,
+                    limit
                 }
             });
 
             if (response.status === 201) {
-                setRefunds(response.data);
+                setRefunds(response.data.results);
+                setTotalPages(Math.ceil(response.data.total / response.data.limit));
                 setLoading(false);
             }
         } catch (error) {
@@ -125,6 +130,10 @@ export function AdminTrocas() {
                             )}
                         </tbody>
                     </AdminListagem>
+                    <Pagination
+                        totalPages={totalPages}
+                        func={loadRefunds}
+                    />
                 </div>
             </div>
             <Modal
