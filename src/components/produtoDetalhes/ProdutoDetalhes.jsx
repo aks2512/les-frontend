@@ -2,8 +2,8 @@
 export function ProdutoDetalhes({ product }) {
     return (
         <>
-            <div className="col-md-12 container">
-                <img width="100%" src={product.image_url} alt="" />
+            <div className="col-md-12 container text-center">
+                <img width="35%" src={product.image_url} alt="" />
             </div>
             <hr />
             <div className="col-md-6 col-sm-12 container">
