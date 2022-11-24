@@ -32,7 +32,7 @@ export function CarrinhoProdutos({ totalPaid }) {
                         <div className="col-md-6">
                             <p>Desconto</p>
                             <p>
-                                <strong>R$ {cart?.total_price * (totalPaid.discount / 100)} / {totalPaid.discount}%</strong>
+                                <strong>R$ {Math.floor(cart?.total_price * (totalPaid.discount / 100))} / {totalPaid.discount}%</strong>
                             </p>
                         </div>
                     )}
@@ -40,7 +40,7 @@ export function CarrinhoProdutos({ totalPaid }) {
                 <div className="col-md-12">
                     <p>A pagar</p>
                     <p className={cart?.total_price - cardCupomTotal > 0 ? 'alert' : 'success'}>
-                        R$ {(cart?.total_price * (1 - totalPaid.discount / 100) || 0) - cardCupomTotal}
+                        R$ {Math.floor(cart?.total_price * (1 - totalPaid.discount / 100) || 0) - cardCupomTotal}
                     </p>
                 </div>
             </div>
