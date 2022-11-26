@@ -11,11 +11,12 @@ export function Dashboard() {
         start_date: new Date(),
         end_date: new Date(),
         timespan: '1 month',
-        noGroup: true
+        noGroup: false
     });
 
     async function loadDashboardData() {
         const response = await api.get('/dashboard', { params });
+        console.log(response)
         setData(response.data);
     }
 
@@ -26,7 +27,7 @@ export function Dashboard() {
     return (
         <div className="dashboard">
             <div className="container py-4">
-                {/* <label htmlFor="start_date">Data Inicial</label>
+                <label htmlFor="start_date">Data Inicial</label>
                 <input type="month" name="start_date" onChange={(e) => {
                     setParams({
                         ...params, start_date: e.target.value
@@ -47,13 +48,13 @@ export function Dashboard() {
                     <option value="3 months">3 Meses</option>
                     <option value="6 months">6 Meses</option>
                     <option value="1 year">1 Ano</option>
-                </select> */}
+                </select>
                 <div className="row">
                     <div className="col-12 pb-2">
-                        <GraficoColuna data={data?.total} />
+                        <GraficoColuna data={data?.dated} />
                     </div>
                     <div className="col-12 col-md-5 pb-2">
-                        <Resultado data={data?.total} />
+                        <Resultado data={data?.dated} />
                     </div>
                     <div className="col-12 col-md-7 pb-2">
                         <GraficoPizza percentage={data?.ranking} />

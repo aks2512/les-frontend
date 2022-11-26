@@ -12,28 +12,52 @@ export function GraficoColuna({ data }) {
             profit: [],
         };
 
-        data && data.items.map(item => {
+        console.log(data);
+
+        data && data?.months?.map(item => {
             columns.sales.push([
-                Number(item.timestamp), Number(item.value)
+                item.timestamp, Number(item.total_sales) || 0
             ]);
             columns.coupons.push([
-                Number(item.timestamp), Number(item.coupomgen) || 0
+                item.timestamp, Number(item.total_coupons) || 0
             ]);
             columns.profit.push([
-                Number(item.timestamp), (Number(item.value) - Number(item.coupomgen))
+                item.timestamp, (Number(item.total_sales) - Number(item.total_coupons)) || 0
             ]);
         })
 
-        console.log(data)
-        console.log(columns);
+        // setChart({
+        //     title: {
+        //         text: `Grafíco de Vendas`
+        //     },
+        //     chart: {
+        //         alignTicks: false
+        //     },
+        //     xAxis: {
+        //         categories: data && data?.months?.map(month => month.month)
+        //     },
+        //     series: [{
+        //         type: 'column',
+        //         name: 'Lucro (R$)',
+        //         data: columns.sales
+        //     },
+        //     {
+        //         type: 'column',
+        //         name: 'Cupons de troca (R$)',
+        //         data: columns.coupons
+
+        //     }, {
+        //         type: 'column',
+        //         name: 'Lucro líquido (R$)',
+        //         data: columns.profit
+        //     }]
+        // });
 
         setChart({
             chart: {
                 alignTicks: false
             },
-
             rangeSelector: {
-
                 buttons: [{
                     type: 'month',
                     count: 1,
@@ -69,10 +93,6 @@ export function GraficoColuna({ data }) {
                     dataGrouping: {
                         units: [
                             [
-                                'week', // unit name
-                                [1] // allowed multiples
-                            ],
-                            [
                                 'month',
                                 [1, 2, 3, 4, 6]
                             ]
@@ -86,10 +106,6 @@ export function GraficoColuna({ data }) {
                     dataGrouping: {
                         units: [
                             [
-                                'week', // unit name
-                                [1] // allowed multiples
-                            ],
-                            [
                                 'month',
                                 [1, 2, 3, 4, 6]
                             ]
@@ -102,10 +118,6 @@ export function GraficoColuna({ data }) {
                     data: columns.profit,
                     dataGrouping: {
                         units: [
-                            [
-                                'week', // unit name
-                                [1] // allowed multiples
-                            ],
                             [
                                 'month',
                                 [1, 2, 3, 4, 6]
