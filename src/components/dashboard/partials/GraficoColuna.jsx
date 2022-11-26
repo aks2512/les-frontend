@@ -2,7 +2,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
 
-export function GraficoColuna({ data }) {
+export function GraficoColuna({ data, config }) {
     const [chart, setChart] = useState();
 
     useEffect(() => {
@@ -12,7 +12,7 @@ export function GraficoColuna({ data }) {
             profit: [],
         };
 
-        console.log(data);
+        console.log(config);
 
         data && data?.months?.map(item => {
             columns.sales.push([
@@ -53,7 +53,7 @@ export function GraficoColuna({ data }) {
         //     }]
         // });
 
-        let myDateFormat = '%m/%Y';
+        let myDateFormat = /year/.test(config.timespan) ? '%Y' : '%m/%Y';
         setChart({
             chart: {
                 alignTicks: true
