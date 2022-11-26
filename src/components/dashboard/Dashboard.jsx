@@ -16,7 +16,6 @@ export function Dashboard() {
 
     async function loadDashboardData() {
         const response = await api.get('/dashboard', { params });
-        console.log(response)
         setData(response.data);
     }
 

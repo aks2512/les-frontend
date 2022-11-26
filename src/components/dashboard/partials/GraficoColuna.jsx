@@ -12,17 +12,15 @@ export function GraficoColuna({ data, config }) {
             profit: [],
         };
 
-        console.log(config);
-
         data && data?.months?.map(item => {
             columns.sales.push([
-                item.timestamp, Number(item.total_sales) || 0
+                item?.timestamp, Number(item?.total_sales) || 0
             ]);
             columns.coupons.push([
-                item.timestamp, Number(item.total_coupons) || 0
+                item?.timestamp, Number(item?.total_coupons) || 0
             ]);
             columns.profit.push([
-                item.timestamp, (Number(item.total_sales) - Number(item.total_coupons)) || Number(item.total_sales) || 0
+                item?.timestamp, (Number(item?.total_sales) - Number(item?.total_coupons)) || Number(item?.total_sales) || 0
             ]);
         })
 
@@ -53,7 +51,7 @@ export function GraficoColuna({ data, config }) {
         //     }]
         // });
 
-        let myDateFormat = /year/.test(config.timespan) ? '%Y' : '%m/%Y';
+        let myDateFormat = /year/.test(config?.timespan) ? '%Y' : '%m/%Y';
         setChart({
             chart: {
                 alignTicks: true
