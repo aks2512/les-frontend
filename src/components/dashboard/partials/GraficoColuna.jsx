@@ -22,7 +22,7 @@ export function GraficoColuna({ data }) {
                 item.timestamp, Number(item.total_coupons) || 0
             ]);
             columns.profit.push([
-                item.timestamp, (Number(item.total_sales) - Number(item.total_coupons)) || 0
+                item.timestamp, (Number(item.total_sales) - Number(item.total_coupons)) || Number(item.total_sales) || 0
             ]);
         })
 
