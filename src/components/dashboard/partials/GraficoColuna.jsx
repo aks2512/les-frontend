@@ -134,7 +134,7 @@ export function GraficoColuna({ data }) {
                 },
                 {
                     type: 'column',
-                    name: 'Perfil',
+                    name: 'Lucro',
                     data: columns.profit,
                     dataGrouping: {
                         units: [
