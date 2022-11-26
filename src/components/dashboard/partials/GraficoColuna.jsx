@@ -53,9 +53,29 @@ export function GraficoColuna({ data }) {
         //     }]
         // });
 
+        let myDateFormat = '%m/%Y';
         setChart({
             chart: {
-                alignTicks: false
+                alignTicks: true
+            },
+            plotOptions: {
+                bar: {
+                    grouping: false
+                }
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    millisecond: myDateFormat,
+                    second: myDateFormat,
+                    minute: myDateFormat,
+                    hour: myDateFormat,
+                    day: myDateFormat,
+                    week: myDateFormat,
+                    month: myDateFormat,
+                    year: myDateFormat
+                },
+                tickPositions: data && data?.months?.map(month => month.timestamp),
             },
             rangeSelector: {
                 buttons: [{
