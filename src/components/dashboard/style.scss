@@ -5,6 +5,21 @@
     min-height: 100vh;
     background-color: $backgroundColor6;
 
+    .container input + label, .container input + select {
+        margin-left: 10px;
+    }
+    
+    label {
+        padding: 10px;
+    }
+    
+    input, select {
+        height: 30px;
+        outline: none;
+    }
+
+
+
     .resultado-mensal {
         background-color: $backgroundColor4;
         padding: 20px;
