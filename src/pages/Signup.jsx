@@ -86,7 +86,7 @@ export function Signup() {
 
                 toast.success('Cadastro realizado com sucesso!');
 
-                navigage('/login');
+                navigage('/signin');
             } else {
                 if (email !== confirmEmail)
                     toast.error('Campo email divergente de campo confirme o email');
