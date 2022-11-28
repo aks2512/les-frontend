@@ -11,14 +11,17 @@ import pedido from '../assets/imgs/pedido.svg';
 import { toast } from "react-toastify";
 import api from "../api";
 import { useEffect, useState } from "react";
+import { Pagination } from "../components/pagination/Pagination";
 
 export function TrocaProduto() {
     const [refunds, setRefunds] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
 
-    async function loadRefunds() {
+    async function loadRefunds(page = 1, limit = 10) {
         try {
-            const response = await api.get(`refunds`);
-            setRefunds(response.data);
+            const response = await api.get(`refunds?page=${page}&limit=${limit}`);
+            setRefunds(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
         } catch (err) {
             toast.error(err?.response?.data?.message || 'Falha ao carregar pedidos');
         }
@@ -69,8 +72,10 @@ export function TrocaProduto() {
                                         </tbody>
                                     </table>
                                 </div>
-
-
+                                <Pagination
+                                    totalPages={totalPages}
+                                    func={loadRefunds}
+                                />
                             </WhiteBox>
                         </div>
                     </div>

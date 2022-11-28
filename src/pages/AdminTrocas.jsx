@@ -201,6 +201,7 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "ACEITO"
                                     });
+                                    setModal(false);
                                 }}
                             >Aceitar</button>
                             <button
@@ -210,6 +211,7 @@ export function AdminTrocas() {
                                         ...selectedRefund,
                                         status: "RECUSADO"
                                     });
+                                    setModal(false);
                                 }}
                             >Recusar</button>
                         </div>

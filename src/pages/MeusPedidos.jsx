@@ -11,16 +11,19 @@ import api from "../api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Modal } from "../components/modal/Modal";
+import { Pagination } from "../components/pagination/Pagination";
 
 export function MeusPedidos() {
     const [purchases, setPurchases] = useState([]);
     const [modal, setModal] = useState(false);
+    const [totalPages, setTotalPages] = useState(0);
     const [newRefund, setNewRefund] = useState({});
 
-    async function loadPurchases() {
+    async function loadPurchases(page = 1, limit = 10) {
         try {
-            const response = await api.get(`purchases`);
-            setPurchases(response.data);
+            const response = await api.get(`purchases?page=${page}&limit=${limit}`);
+            setPurchases(response.data.results);
+            setTotalPages(Math.ceil(response.data.total / response.data.limit));
         } catch (err) {
             toast.error(err?.response?.data?.message || 'Falha ao carregar pedidos');
         }
@@ -103,6 +106,10 @@ export function MeusPedidos() {
                                     </>
                                     )
                                 })}
+                                <Pagination
+                                    totalPages={totalPages}
+                                    func={loadPurchases}
+                                />
                             </WhiteBox>
                         </div>
                     </div>
