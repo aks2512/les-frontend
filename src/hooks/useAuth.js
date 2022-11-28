@@ -50,9 +50,7 @@ export default function useAuth() {
   async function cartLoadData() {
     try{
       if(user){
-        const response = await api.get(`carts`, {
-          isOpen: true
-        });
+        const response = await api.get(`carts/?isOpen=true`); 
 
         if(cart){
           setCart(response.data[0]);
